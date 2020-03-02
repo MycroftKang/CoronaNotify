@@ -7,9 +7,10 @@ import random
 import os
 import pandas as pd
 from APIKey import *
+import sys
 
-BASE_PATH = LINUX_PATH
-# BASE_PATH = WINDOWS_PATH
+# BASE_PATH = LINUX_PATH
+BASE_PATH = WINDOWS_PATH
 
 def isfile(file='data.bin'):
     if os.path.isfile(BASE_PATH+file):
@@ -134,14 +135,16 @@ class PipeLine1(Tool):
     def parseUpdate(self):
         try:
             self.update = self.soup.select(self.selectors[0])[0].text #기준시간
+            print(self.update)
             m = re.search('\((.+)\)', self.update)
             self.update = m.group(1)
             self.update = self.update.replace('.', '월 ').replace(' 기준', '').replace('\xa0', ' ')
         except Exception as e:
             print("Erro u2")
-            sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
-            # self.update = self.data[0]
-            raise TypeError
+            print(e.with_traceback)
+            # sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
+            self.update = self.data[0]
+            # raise TypeError
 
 class PipeLine2(Tool):
     def __init__(self):
@@ -166,13 +169,15 @@ class PipeLine2(Tool):
     def parseUpdate(self):
         try:
             self.update = self.soup.select(self.selectors[0])[0].text #기준시간
+            print(self.update)
             m = re.search('.+(\(.+\))', self.update)
             self.update = self.update.replace(m.group(1), '').replace('2020년 ', '')
         except Exception as e:
-            sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
+            # sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
             print("Erro u2")
-            # self.update = self.data[0]
-            raise TypeError
+            print(e.with_traceback)
+            self.update = self.data[0]
+            # raise TypeError
 
 class PipeLine3(Tool):
     def __init__(self):
@@ -201,6 +206,7 @@ class PipeLine3(Tool):
     def parseUpdate(self):
         try:
             self.update = self.soup.select(self.selectors[0])[0].text #기준시간
+            print(self.update)
             m = re.search('\((.+)\)', self.update)
             if m:
                 self.update = m.group(1)
@@ -208,9 +214,10 @@ class PipeLine3(Tool):
                 self.update = self.data[0]
         except Exception as e:
             print("Erro u3")
-            # self.update = self.data[0]
-            sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
-            raise TypeError
+            print(e.with_traceback)
+            self.update = self.data[0]
+            # sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
+            # raise TypeError
         
 class Factory:
     def __init__(self):
@@ -247,34 +254,38 @@ class Factory:
         text = "\n{} 천안시 코로나 현황 안내\n\n총확진자: {}".format(index, num)
         sendNoti(text)
 
-    def run(self):
-        sendError('정보 수집 시작! 2')
-        while True:
-            for line in self.lines:
-                if len(self.lines) == 0:
-                    sendError('모든 PIPELINE에서 오류가 발견되어 종료되었습니다.')
-                    return
-                try:
-                    check = line.run()
-                except:
-                    sendError("PIPELINE "+line.id+'에서 오류가 발견되어 삭제합니다.')
-                    self.lines.remove(line)
-                    continue
-                print(line.id+' 업데이트 체크 중...')
-                if check:
-                    print(line.id+' 업데이트 확인됨.')
-                    data = line.get_data()
-                    numls = data[1]
-                    delta = data[2]
-                    sendNoti("\n{} 기준 코로나 현황 업데이트\n\n확진환자수: {} ({:+d})\n확진환자 격리해제수: {} ({:+d})\n사망자수: {} ({:+d})\n\nPIPELINE {}".format(data[0], numls[0], delta[0], numls[1], delta[1], numls[2], delta[2], line.id))
-                    line.save_data()
-                    self.send_local_info()
-                    self.send_local2_info()
-                    return
-                time.sleep(random.uniform(3,7))
+    def run(self, argv):
+        if not len(argv) == 0:
+            self.send_local_info()
+            self.send_local2_info()
+        else:
+            sendError('정보 수집 시작! 2')
+            while True:
+                for line in self.lines:
+                    if len(self.lines) == 0:
+                        sendError('모든 PIPELINE에서 오류가 발견되어 종료되었습니다.')
+                        return
+                    try:
+                        check = line.run()
+                    except:
+                        sendError("PIPELINE "+line.id+'에서 오류가 발견되어 삭제합니다.')
+                        self.lines.remove(line)
+                        continue
+                    print(line.id+' 업데이트 체크 중...')
+                    if check:
+                        print(line.id+' 업데이트 확인됨.')
+                        data = line.get_data()
+                        numls = data[1]
+                        delta = data[2]
+                        sendNoti("\n{} 기준 코로나 현황 업데이트\n\n확진환자수: {} ({:+d})\n확진환자 격리해제수: {} ({:+d})\n사망자수: {} ({:+d})\n\nPIPELINE {}".format(data[0], numls[0], delta[0], numls[1], delta[1], numls[2], delta[2], line.id))
+                        line.save_data()
+                        self.send_local_info()
+                        self.send_local2_info()
+                        return
+                    time.sleep(random.uniform(3,8))
 
 try:
     bot = Factory()
-    bot.run()
+    bot.run(sys.argv)
 except Exception as e:
     sendError('오류로 인한 종료: '+str(e))
