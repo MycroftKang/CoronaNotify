@@ -140,8 +140,8 @@ class PipeLine1(Tool):
         except Exception as e:
             print("Erro u2")
             sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
-            self.update = self.data[0]
-            # raise TypeError
+            # self.update = self.data[0]
+            raise TypeError
 
 class PipeLine2(Tool):
     def __init__(self):
@@ -171,8 +171,8 @@ class PipeLine2(Tool):
         except Exception as e:
             sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
             print("Erro u2")
-            self.update = self.data[0]
-            # raise TypeError
+            # self.update = self.data[0]
+            raise TypeError
 
 class PipeLine3(Tool):
     def __init__(self):
@@ -208,9 +208,9 @@ class PipeLine3(Tool):
                 self.update = self.data[0]
         except Exception as e:
             print("Erro u3")
-            self.update = self.data[0]
+            # self.update = self.data[0]
             sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
-            # raise TypeError
+            raise TypeError
         
 class Factory:
     def __init__(self):
@@ -239,6 +239,14 @@ class Factory:
 
         sendNoti(text)
 
+    def send_local2_info(self):
+        res = requests.get('https://www.cheonan.go.kr/prog/stat/corona/json.do')
+        datadict = res.json()
+        num = datadict['item_1']
+        index = datadict['status_date']
+        text = "\n{} 천안시 코로나 현황 안내\n\n총확진자: {}".format(index, num)
+        sendNoti(text)
+
     def run(self):
         sendError('정보 수집 시작! 2')
         while True:
@@ -259,8 +267,9 @@ class Factory:
                     numls = data[1]
                     delta = data[2]
                     sendNoti("\n{} 기준 코로나 현황 업데이트\n\n확진환자수: {} ({:+d})\n확진환자 격리해제수: {} ({:+d})\n사망자수: {} ({:+d})\n\nPIPELINE {}".format(data[0], numls[0], delta[0], numls[1], delta[1], numls[2], delta[2], line.id))
-                    self.send_local_info()
                     line.save_data()
+                    self.send_local_info()
+                    self.send_local2_info()
                     return
                 time.sleep(random.uniform(3,7))
 
