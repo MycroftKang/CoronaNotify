@@ -3,3 +3,4 @@ read.py
 data.bin
 *.sh
 test*
+*.pyc
