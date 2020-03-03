@@ -28,21 +28,21 @@ def load(file='data.bin'):
         data = pickle.load(f)
     return data
 
-def sendNoti(msg):
+def sendNoti(msg, img=None):
     TARGET_URL = 'https://notify-api.line.me/api/notify'
     TOKEN = API_KEY_FOR_NOTI
-    response = requests.post(TARGET_URL, headers={'Authorization': 'Bearer ' + TOKEN}, data={'message': msg})
+    response = requests.post(TARGET_URL, headers={'Authorization': 'Bearer ' + TOKEN}, data={'message': msg}, files={'imageFile': img})
     return response
 
-def sendError(msg):
+def sendError(msg, img=None):
     TARGET_URL = 'https://notify-api.line.me/api/notify'
     TOKEN = API_KEY_FOR_ERROR
-    response = requests.post(TARGET_URL, headers={'Authorization': 'Bearer ' + TOKEN}, data={'message': msg})
+    response = requests.post(TARGET_URL, headers={'Authorization': 'Bearer ' + TOKEN}, data={'message': msg}, files={'imageFile': img})
     return response
 
-class Tool:
+class Material:
     data = []
-    def __init__(self, url, selectors, id):
+    def __init__(self, url, id):
         self.id = id
         self.http_header1 = {
             'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
@@ -51,18 +51,10 @@ class Tool:
             'Connection':'keep-alive',
             'Host':'ncov.mohw.go.kr',
             'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36'}
-        # index 확진환자 확진환자_격리해제 사망자
         self.url = url
-        self.selectors = selectors
         self.soup = None
         self.update = None
-        self.data = load()
-        self.newls = []
-        if len(self.data) == 0:
-            self.set_data()
-            self.data = [self.update, self.newls[:]]
-            save(self.data)
-            
+
     def request(self, url=None):
         if url == None:
             url = self.url
@@ -74,6 +66,34 @@ class Tool:
             except:
                 continue
 
+    def parseUpdate(self):
+        pass
+
+    def run(self):
+        """
+        return (self.update > Material.data[0])
+        """
+        res = self.request()
+        print(res)
+        self.soup = BeautifulSoup(res.text, 'html.parser')
+        self.parseUpdate()
+        print('PARSE: '+self.update)
+        print('UPDATE: '+str(self.update > Material.data[0]))
+        return (self.update > Material.data[0])
+
+class Tool(Material):
+    def __init__(self, url, selectors, id):
+        # index 확진환자 확진환자_격리해제 사망자
+        super().__init__(url, id)
+        self.selectors = selectors
+        self.newls = []
+        if len(Material.data) == 0:
+            Material.data = load()
+            if len(Material.data) == 0:
+                self.set_data()
+                Material.data = [self.update, self.newls[:]]
+                save(Material.data)
+            
     def get_data(self):
         """
         return [self.update, self.newls, delta]
@@ -81,9 +101,9 @@ class Tool:
         self.parseAll()
         delta = []
 
-        if not (len(self.data) == 0):
+        if not (len(Material.data) == 0):
             for i in range(len(self.newls)):
-                delta.append(self.newls[i]-self.data[1][i])
+                delta.append(self.newls[i]-Material.data[1][i])
 
         return [self.update, self.newls, delta]
 
@@ -91,23 +111,9 @@ class Tool:
         res = self.request()
         self.soup = BeautifulSoup(res.text, 'html.parser')
         self.parseAll()
-    
-    def run(self):
-        """
-        return (self.update > self.data[0])
-        """
-        res = self.request()
-        print(res)
-        self.soup = BeautifulSoup(res.text, 'html.parser')
-        self.parseUpdate()
-        print(self.update > self.data[0])
-        return (self.update > self.data[0])
 
     def parseAll(self):
         self.newls = []
-    
-    def parseUpdate(self):
-        pass
 
     def save_data(self):
         save([self.update, self.newls])
@@ -135,15 +141,15 @@ class PipeLine1(Tool):
     def parseUpdate(self):
         try:
             self.update = self.soup.select(self.selectors[0])[0].text #기준시간
-            print(self.update)
+            print('RAW: '+self.update)
             m = re.search('\((.+)\)', self.update)
             self.update = m.group(1)
-            self.update = self.update.replace('.', '월 ').replace(' 기준', '').replace('\xa0', ' ')
+            self.update = self.update.replace('.', '월 ').replace(' 기준', '').replace('\xa0', ' ').replace('00시', '0시')
         except Exception as e:
             print("Erro u2")
             print(e.with_traceback)
             # sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
-            self.update = self.data[0]
+            self.update = Material.data[0]
             # raise TypeError
 
 class PipeLine2(Tool):
@@ -169,14 +175,14 @@ class PipeLine2(Tool):
     def parseUpdate(self):
         try:
             self.update = self.soup.select(self.selectors[0])[0].text #기준시간
-            print(self.update)
+            print('RAW: '+self.update)
             m = re.search('.+(\(.+\))', self.update)
             self.update = self.update.replace(m.group(1), '').replace('2020년 ', '')
         except Exception as e:
             # sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
             print("Erro u2")
             print(e.with_traceback)
-            self.update = self.data[0]
+            self.update = Material.data[0]
             # raise TypeError
 
 class PipeLine3(Tool):
@@ -206,38 +212,97 @@ class PipeLine3(Tool):
     def parseUpdate(self):
         try:
             self.update = self.soup.select(self.selectors[0])[0].text #기준시간
-            print(self.update)
+            print('RAW: '+self.update)
             m = re.search('\((.+)\)', self.update)
             if m:
                 self.update = m.group(1)
             else:
-                self.update = self.data[0]
+                self.update = Material.data[0]
         except Exception as e:
-            print("Erro u3")
+            print("Error u3")
             print(e.with_traceback)
-            self.update = self.data[0]
+            self.update = Material.data[0]
             # sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
             # raise TypeError
+
+class PipeLine4(Material):
+    def __init__(self):
+        url = 'http://ncov.mohw.go.kr/bdBoardList_Real.do?brdId=&brdGubun=&ncvContSeq=&contSeq=&board_id=&gubun='
+        super().__init__(url, '4')
+
+    def parseUpdate(self):
+        try:
+            bundle = self.soup.find('div', {'class':'bvc_txt'}).findAll('p', {'class':'s_descript'})
+            for idx in bundle:
+                if ('총' in idx.text):
+                    self.update = idx.text
+                    break
+            print('RAW: '+self.update)
+            m = re.search('\(([0-9].+기준)\)', self.update)
+            if m:
+                self.update = m.group(1)
+            else:
+                self.update = Material.data[0]
+            self.update = self.update.replace('.', '월 ').replace(' 기준','').replace('09시', '00시')
+        except Exception as e:
+            print("Erro u3")
+            # print(e.with_traceback(e))
+            self.update = Material.data[0]
+            # sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
+            # raise TypeError
+
+    def send_image(self):
+        a = self.soup.find('div', {'class':'box_image'}).find('img')
+        link = 'http://ncov.mohw.go.kr'+a.get('src')
+        res = requests.get(link)
+        sendNoti('\n전세계 코로나19 발생현황\n\nPIPELINE 4', res.content)
+
+class PipeLine5(Tool):
+    def __init__(self):
+        url = 'http://ncov.mohw.go.kr/bdBoardList_Real.do?brdId=&brdGubun=&ncvContSeq=&contSeq=&board_id=&gubun='
+        super().__init__(url, None,'5')
+
+    def parseUpdate(self):
+        try:
+            bundle = self.soup.find('div', {'class':'bvc_txt'}).findAll('p', {'class':'s_descript'})
+            for idx in bundle:
+                if ('16시' in idx.text) or ('16 시' in idx.text):
+                    m = re.search('.*(\d+월)\s*(\d+일)\s*(\d+시)\s*기준', idx.text)
+                    self.update = ' '.join(m.groups())
+                    sendError(self.update+' 기준 데이터 발견')
+                    m = re.search('\s*([0-9]+)\s*명', idx.text)
+                    num = int(m.group(1))
+                    # self.newls = [self.update, [Material.data[1][0]+num, Material.data[1][1], Material.data[1][2]]]
+                    self.newls.append(Material.data[1][0]+num)
+                    return True
+            return False
+        except Exception as e:
+            print("Error u5")
+            sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
+            raise TypeError
+            # self.update = Material.data[0]
+
+    def parseAll(self):
+        return
+
+    def run(self):
+        res = self.request()
+        print(res)
+        self.soup = BeautifulSoup(res.text, 'html.parser')
+        return self.parseUpdate()
+
+    def save_data(self):
+        save([self.update, [self.newls[0], Material.data[1][1], Material.data[1][2]]])
         
 class Factory:
     def __init__(self):
-        self.line1 = PipeLine1()
-        self.line2 = PipeLine2()
-        self.line3 = PipeLine3()
-        self.lines = [self.line1, self.line2, self.line3]
-
-    def request(self, url=None):
-        i = 0
-        while True:
-            try:
-                res = requests.get(url, headers=self.http_header1)
-                res.raise_for_status()
-                return res
-            except:
-                i += 1
-                if i > 3:
-                    raise ValueError
-                continue
+        if not len(sys.argv) == 1:
+            self.line5 = PipeLine5()
+            self.middle = True
+        else:
+            self.lines = [PipeLine1(), PipeLine2(), PipeLine3()]
+            self.line4 = PipeLine4()
+            self.middle = False
 
     def send_local_info(self):
         #[url, num, index]
@@ -257,20 +322,39 @@ class Factory:
         for i in range(len(num)):
             text = text + '\n\n'+index[i] + ' ' + num[i]
 
+        text = text + self.get_local2_info()
+
         sendNoti(text)
 
-    def send_local2_info(self):
+    def get_local2_info(self):
         res = requests.post('http://27.101.50.5/prog/stat/corona/json.do')
         datadict = res.json()
         num = datadict['item_1']
         index = datadict['status_date']
-        text = "\n{} 천안시 코로나 현황 안내\n\n총확진자: {}".format(index, num)
-        sendNoti(text)
+        text = "\n\n천안시청:\n{} {}명".format(index, num)
+        return text
 
-    def run(self, argv):
-        if not len(argv) == 1:
-            self.send_local_info()
-            self.send_local2_info()
+    def send_img(self):
+        while True:
+            print('4 업데이트 체크 중...')
+            if self.line4.run():
+                print('4 업데이트 확인됨.')
+                self.line4.send_image()
+                break
+            time.sleep(random.uniform(3,8))
+
+    def run(self):
+        if self.middle:
+            while True:
+                print('5 업데이트 체크 중...')
+                if self.line5.run():
+                    print('5 업데이트 확인됨.')
+                    data = self.line5.get_data()
+                    sendNoti("\n{} 기준 코로나 현황 업데이트\n\n확진환자수: {} ({:+d})\n\nPIPELINE 5".format(data[0], data[1][0], data[2][0]))
+                    self.line5.save_data()
+                    self.send_local_info()
+                    return
+                time.sleep(random.uniform(3,8))
         else:
             sendError('정보 수집 시작! 2')
             while True:
@@ -293,13 +377,14 @@ class Factory:
                         sendNoti("\n{} 기준 코로나 현황 업데이트\n\n확진환자수: {} ({:+d})\n확진환자 격리해제수: {} ({:+d})\n사망자수: {} ({:+d})\n\nPIPELINE {}".format(data[0], numls[0], delta[0], numls[1], delta[1], numls[2], delta[2], line.id))
                         line.save_data()
                         self.send_local_info()
-                        self.send_local2_info()
+                        self.send_img()
                         return
                     time.sleep(random.uniform(3,8))
 
+
 try:
     bot = Factory()
-    bot.run(sys.argv)
+    bot.run()
 except Exception as e:
     sendError('오류로 인한 종료: '+str(e))
 else:
