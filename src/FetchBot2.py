@@ -226,6 +226,19 @@ class Factory:
         self.line3 = PipeLine3()
         self.lines = [self.line1, self.line2, self.line3]
 
+    def request(self, url=None):
+        i = 0
+        while True:
+            try:
+                res = requests.get(url, headers=self.http_header1)
+                res.raise_for_status()
+                return res
+            except:
+                i += 1
+                if i > 3:
+                    raise ValueError
+                continue
+
     def send_local_info(self):
         #[url, num, index]
         bundle = [['https://www.suwon.go.kr/web/safesuwon/corona/PD_index.do#none', 'body > div.layout > div > ul > li:nth-child(1) > div > div.status.clearfix > table > tbody > tr > td:nth-child(2) > a', 'body > div.layout > div > ul > li:nth-child(1) > div > div.status.clearfix > div'],
@@ -247,7 +260,11 @@ class Factory:
         sendNoti(text)
 
     def send_local2_info(self):
-        res = requests.get('https://www.cheonan.go.kr/prog/stat/corona/json.do')
+        try:
+            res = self.request('https://www.cheonan.go.kr/prog/stat/corona/json.do')
+        except:
+            sendError('천안시 정보 수집 실패')
+            return
         datadict = res.json()
         num = datadict['item_1']
         index = datadict['status_date']
@@ -255,7 +272,7 @@ class Factory:
         sendNoti(text)
 
     def run(self, argv):
-        if not len(argv) == 0:
+        if not len(argv) == 1:
             self.send_local_info()
             self.send_local2_info()
         else:
