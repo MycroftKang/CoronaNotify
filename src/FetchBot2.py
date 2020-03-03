@@ -260,11 +260,7 @@ class Factory:
         sendNoti(text)
 
     def send_local2_info(self):
-        try:
-            res = self.request('https://www.cheonan.go.kr/prog/stat/corona/json.do')
-        except:
-            sendError('천안시 정보 수집 실패')
-            return
+        res = requests.post('http://27.101.50.5/prog/stat/corona/json.do')
         datadict = res.json()
         num = datadict['item_1']
         index = datadict['status_date']
@@ -306,3 +302,5 @@ try:
     bot.run(sys.argv)
 except Exception as e:
     sendError('오류로 인한 종료: '+str(e))
+else:
+    sendError('정상적으로 종료되었습니다.')
