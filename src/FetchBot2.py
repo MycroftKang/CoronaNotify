@@ -268,7 +268,6 @@ class PipeLine5(Tool):
                     sendError(self.update+' 기준 데이터 발견')
                     m = re.search('\s*([0-9]+)\s*명', idx.text)
                     num = int(m.group(1))
-                    # self.newls = [self.update, [Material.data[1][0]+num, Material.data[1][1], Material.data[1][2]]]
                     self.newls.append(Material.data[1][0]+num)
                     return True
             return False
