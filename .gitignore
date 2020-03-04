@@ -2,6 +2,6 @@ APIKey.py
 read.py
 data.bin
 *.sh
-test*
+test*.py
 *.pyc
-*.jpg
+world.jpg
