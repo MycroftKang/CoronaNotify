@@ -4,3 +4,4 @@ data.bin
 *.sh
 test*
 *.pyc
+*.jpg
