@@ -147,7 +147,6 @@ class PipeLine1(Tool):
             self.update = self.update.replace('.', '월 ').replace(' 기준', '').replace('\xa0', ' ').replace('00시', '0시')
         except Exception as e:
             print("Erro u2")
-            print(e.with_traceback)
             # sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
             self.update = Material.data[0]
             # raise TypeError
@@ -181,7 +180,6 @@ class PipeLine2(Tool):
         except Exception as e:
             # sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
             print("Erro u2")
-            print(e.with_traceback)
             self.update = Material.data[0]
             # raise TypeError
 
@@ -213,14 +211,13 @@ class PipeLine3(Tool):
         try:
             self.update = self.soup.select(self.selectors[0])[0].text #기준시간
             print('RAW: '+self.update)
-            m = re.search('\((.+)\)', self.update)
+            m = re.search('\((\d+월\s*\d+일\s*\d+시)\)', self.update)
             if m:
                 self.update = m.group(1)
             else:
                 self.update = Material.data[0]
         except Exception as e:
             print("Error u3")
-            print(e.with_traceback)
             self.update = Material.data[0]
             # sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
             # raise TypeError
@@ -246,7 +243,6 @@ class PipeLine4(Material):
             self.update = self.update.replace('.', '월 ').replace(' 기준','').replace('09시', '00시')
         except Exception as e:
             print("Erro u3")
-            # print(e.with_traceback(e))
             self.update = Material.data[0]
             # sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
             # raise TypeError
@@ -278,8 +274,8 @@ class PipeLine5(Tool):
             return False
         except Exception as e:
             print("Error u5")
-            sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
-            raise TypeError
+            # sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
+            # raise TypeError
             # self.update = Material.data[0]
 
     def parseAll(self):
@@ -294,13 +290,13 @@ class PipeLine5(Tool):
     def save_data(self):
         save([self.update, [self.newls[0], Material.data[1][1], Material.data[1][2]]])
         
-class Factory:
+class FetchBot:
     def __init__(self):
         if not len(sys.argv) == 1:
             self.line5 = PipeLine5()
             self.middle = True
         else:
-            self.lines = [PipeLine1(), PipeLine2(), PipeLine3()]
+            self.lines = [PipeLine1(), PipeLine3()]
             self.line4 = PipeLine4()
             self.middle = False
 
@@ -336,12 +332,13 @@ class Factory:
 
     def send_img(self):
         while True:
+            self.line4.run()
             print('4 업데이트 체크 중...')
-            if self.line4.run():
+            if True:
                 print('4 업데이트 확인됨.')
                 self.line4.send_image()
                 break
-            time.sleep(random.uniform(3,8))
+            time.sleep(random.uniform(60,90))
 
     def run(self):
         if self.middle:
@@ -383,8 +380,8 @@ class Factory:
 
 
 try:
-    bot = Factory()
-    bot.run()
+    bot = FetchBot()
+    bot.send_img()
 except Exception as e:
     sendError('오류로 인한 종료: '+str(e))
 else:
