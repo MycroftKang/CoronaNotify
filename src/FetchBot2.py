@@ -41,35 +41,23 @@ class FetchBot:
             self.line4 = PipeLine4()
             self.middle = False
 
-    def send_local_info(self):
+    def get_local_data(self):
         #[url, num, index]
         bundle = [['https://www.suwon.go.kr/web/safesuwon/corona/PD_index.do#none', 'body > div.layout > div > ul > li:nth-child(1) > div > div.status.clearfix > table > tbody > tr > td:nth-child(2) > a', 'body > div.layout > div > ul > li:nth-child(1) > div > div.status.clearfix > div'],
         ['http://www.yongin.go.kr/health/ictsd/index.do', '#coronabox_1 > div.coronacon_le > div > div:nth-child(1) > div > table > tbody > tr:nth-child(1) > td > b', '#coronabox_1 > div.coronacon_le > div > div:nth-child(1) > h4 > span']]
-        num = []
-        index = []
+        local_data = []
 
         for data in bundle:
             res = requests.get(data[0])
             soup = BeautifulSoup(res.text, 'html.parser')
-            num.append(soup.select(data[1])[0].text)
-            index.append(soup.select(data[2])[0].text.replace(', ', ':\n'))
+            ni = soup.select(data[2])[0].text.split(',')
+            local_data.append([ni[0], ni[1].strip(' '), soup.select(data[1])[0].text])
 
-        text = '\n지역별 코로나 현황 안내'
-
-        for i in range(len(num)):
-            text = text + '\n\n'+index[i] + ' ' + num[i]
-
-        text = text + self.get_local2_info()
-
-        sendNoti(text)
-
-    def get_local2_info(self):
         res = requests.post('http://27.101.50.5/prog/stat/corona/json.do')
         datadict = res.json()
-        num = datadict['item_1']
-        index = datadict['status_date']
-        text = "\n\n천안시청:\n{} {}명".format(index, num)
-        return text
+        local_data.append(['천안시청', datadict['status_date'], datadict['item_1']])
+
+        return local_data
 
     def send_img(self):
         self.line4.load_img()
@@ -83,7 +71,8 @@ class FetchBot:
 
     def run(self):
         if self.middle:
-            self.send_local_info()
+            sendtoBot_card(edit2_json(self.get_local_data()))
+            # self.send_local_info()
             # while True:
             #     print('5 업데이트 체크 중...')
             #     if self.line5.run():
@@ -111,11 +100,8 @@ class FetchBot:
                     if check:
                         print(line.id+' 업데이트 확인됨.')
                         data = line.get_data()
-                        numls = data[1]
-                        delta = data[2]
-                        sendNoti("\n{} 기준 코로나 현황 업데이트\n\n확진환자수: {} ({:+d})\n확진환자 격리해제수: {} ({:+d})\n사망자수: {} ({:+d})\n\nPIPELINE {}".format(data[0], numls[0], delta[0], numls[1], delta[1], numls[2], delta[2], line.id))
+                        sendtoBot_card(edit1_json(data, line.id, self.get_local_data()))
                         line.save_data()
-                        self.send_local_info()
                         self.send_img()
                         return
                     time.sleep(random.uniform(3,8))

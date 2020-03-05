@@ -1,0 +1,254 @@
+{
+  "type": "carousel",
+  "contents": [
+    {
+      "type": "bubble",
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Corona Notify",
+            "weight": "bold",
+            "color": "#1DB446",
+            "size": "sm"
+          },
+          {
+            "type": "text",
+            "text": "코로나19 현황 업데이트",
+            "weight": "bold",
+            "size": "xl",
+            "margin": "md"
+          },
+          {
+            "type": "text",
+            "text": "3월 5일 0시 기준",
+            "size": "sm",
+            "color": "#aaaaaa",
+            "wrap": true
+          },
+          {
+            "type": "separator",
+            "margin": "xxl"
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "margin": "xxl",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "확진환자수",
+                    "size": "sm",
+                    "color": "#555555",
+                    "flex": 0
+                  },
+                  {
+                    "type": "text",
+                    "text": "5328",
+                    "size": "md",
+                    "color": "#111111",
+                    "align": "end"
+                  }
+                ],
+                "cornerRadius": "100px"
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "확진환자 격리해제수",
+                    "size": "sm",
+                    "color": "#555555",
+                    "flex": 0
+                  },
+                  {
+                    "type": "text",
+                    "text": "41",
+                    "size": "md",
+                    "color": "#111111",
+                    "align": "end"
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "사망자수",
+                    "size": "sm",
+                    "color": "#555555",
+                    "flex": 0
+                  },
+                  {
+                    "type": "text",
+                    "text": "32",
+                    "size": "md",
+                    "color": "#111111",
+                    "align": "end"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "separator",
+            "margin": "xxl"
+          },
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "margin": "xxl",
+            "contents": [
+              {
+                "type": "text",
+                "text": "PIPELINE 3",
+                "size": "sm",
+                "color": "#aaaaaa",
+                "flex": 0,
+                "gravity": "center"
+              }
+            ]
+          }
+        ]
+      },
+      "styles": {
+        "footer": {
+          "separator": true
+        }
+      }
+    },
+    {
+      "type": "bubble",
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "지역별 코로나19 현황",
+            "size": "lg",
+            "weight": "bold"
+          },
+          {
+            "type": "separator",
+            "margin": "xl"
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "수원시"
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--기준",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  },
+                  {
+                    "type": "text",
+                    "text": "정보 수집 실패",
+                    "align": "end",
+                    "gravity": "center",
+                    "size": "md"
+                  }
+                ],
+                "margin": "xs"
+              }
+            ],
+            "margin": "xxl"
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "용인시"
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--기준",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  },
+                  {
+                    "type": "text",
+                    "text": "정보 수집 실패",
+                    "align": "end",
+                    "gravity": "center",
+                    "size": "md"
+                  }
+                ],
+                "margin": "xs"
+              }
+            ],
+            "margin": "xxl"
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "천안시"
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--기준",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  },
+                  {
+                    "type": "text",
+                    "text": "정보 수집 실패",
+                    "align": "end",
+                    "gravity": "center",
+                    "size": "md"
+                  }
+                ],
+                "margin": "xs"
+              }
+            ],
+            "margin": "xxl"
+          }
+        ],
+        "margin": "xxl"
+      }
+    }
+  ]
+}

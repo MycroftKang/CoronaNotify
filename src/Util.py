@@ -27,6 +27,7 @@ import requests
 import pickle
 from bs4 import BeautifulSoup
 import requests
+import json
 from APIKey import *
 
 DEV_MODE = False
@@ -63,6 +64,54 @@ def sendError(msg, img=None):
     response = requests.post(TARGET_URL, headers={'Authorization': 'Bearer ' + TOKEN}, data={'message': msg}, files={'imageFile': img})
     return response
 
+def sendtoBot_card(card):
+    TOKEN = API_KEY_FOR_BOT
+    response = requests.post(API_REQUEST_URL, headers={'Content-Type':'application/json', 'Authorization': 'Bearer ' + TOKEN}, json={'messages':[{'type':'flex', 'altText':'Corona Notify', 'contents':card}]})
+    print(response.text)
+    return response
+
+def edit2_json(local_data, file='send2.json'):
+    with open(file, 'rt', encoding='utf-8') as f:
+        json_dict = json.load(f)
+    
+    json_dict['body']['contents'][3]['contents'][0]['text'] = local_data[0][0] #name
+    json_dict['body']['contents'][3]['contents'][1]['contents'][0]['text'] = local_data[0][1] #index
+    json_dict['body']['contents'][3]['contents'][1]['contents'][1]['text'] = local_data[0][2] #num
+
+    json_dict['body']['contents'][4]['contents'][0]['text'] = local_data[1][0] #name
+    json_dict['body']['contents'][4]['contents'][1]['contents'][0]['text'] = local_data[1][1] #index
+    json_dict['body']['contents'][4]['contents'][1]['contents'][1]['text'] = local_data[1][2] #num
+
+    json_dict['body']['contents'][5]['contents'][0]['text'] = local_data[2][0] #name
+    json_dict['body']['contents'][5]['contents'][1]['contents'][0]['text'] = local_data[2][1] #index
+    json_dict['body']['contents'][5]['contents'][1]['contents'][1]['text'] = '{}명'.format(local_data[2][2]) #num
+
+    return json_dict
+
+def edit1_json(data, id, local_data, file='send1.json'):
+    with open(file, 'rt', encoding='utf-8') as f:
+        json_dict = json.load(f)
+    
+    json_dict['contents'][0]['body']['contents'][2]['text'] = '{} 기준'.format(data[0])
+    json_dict['contents'][0]['body']['contents'][4]['contents'][0]['contents'][1]['text'] = "{} ({:+d})".format(data[1][0], data[2][0])
+    json_dict['contents'][0]['body']['contents'][4]['contents'][1]['contents'][1]['text'] = "{} ({:+d})".format(data[1][1], data[2][1])
+    json_dict['contents'][0]['body']['contents'][4]['contents'][2]['contents'][1]['text'] = "{} ({:+d})".format(data[1][2], data[2][2])
+    json_dict['contents'][0]['body']['contents'][6]['contents'][0]['text'] = 'PIPELINE '+str(id)
+
+    json_dict['contents'][1]['body']['contents'][2]['contents'][0]['text'] = local_data[0][0] #name
+    json_dict['contents'][1]['body']['contents'][2]['contents'][1]['contents'][0]['text'] = local_data[0][1] #index
+    json_dict['contents'][1]['body']['contents'][2]['contents'][1]['contents'][1]['text'] = local_data[0][2] #num
+
+    json_dict['contents'][1]['body']['contents'][3]['contents'][0]['text'] = local_data[1][0] #name
+    json_dict['contents'][1]['body']['contents'][3]['contents'][1]['contents'][0]['text'] = local_data[1][1] #index
+    json_dict['contents'][1]['body']['contents'][3]['contents'][1]['contents'][1]['text'] = local_data[1][2] #num
+
+    json_dict['contents'][1]['body']['contents'][4]['contents'][0]['text'] = local_data[2][0] #name
+    json_dict['contents'][1]['body']['contents'][4]['contents'][1]['contents'][0]['text'] = local_data[2][1] #index
+    json_dict['contents'][1]['body']['contents'][4]['contents'][1]['contents'][1]['text'] = '{}명'.format(local_data[2][2]) #num
+
+    return json_dict
+     
 class Material:
     data = []
     def __init__(self, url, id):
