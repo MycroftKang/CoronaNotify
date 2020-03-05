@@ -12,7 +12,7 @@
             "text": "Corona Notify",
             "weight": "bold",
             "color": "#1DB446",
-            "size": "sm"
+            "size": "md"
           },
           {
             "type": "text",
@@ -26,7 +26,8 @@
             "text": "3월 5일 0시 기준",
             "size": "sm",
             "color": "#aaaaaa",
-            "wrap": true
+            "wrap": true,
+            "margin": "sm"
           },
           {
             "type": "separator",
@@ -116,7 +117,8 @@
                 "size": "sm",
                 "color": "#aaaaaa",
                 "flex": 0,
-                "gravity": "center"
+                "gravity": "center",
+                "margin": "md"
               }
             ]
           }
@@ -248,6 +250,30 @@
           }
         ],
         "margin": "xxl"
+      }
+    },
+    {
+      "type": "bubble",
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "image",
+            "size": "4xl",
+            "url": "https://user-images.githubusercontent.com/58393346/75994948-0df59c80-5f3f-11ea-803e-88c91aab1fe5.png"
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "uri",
+              "label": "Meet @GitHub",
+              "uri": "https://github.com/TaehyeokKang/CoronaNotify"
+            },
+            "style": "secondary",
+            "height": "md"
+          }
+        ]
       }
     }
   ]
