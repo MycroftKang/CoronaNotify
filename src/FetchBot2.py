@@ -27,6 +27,7 @@ from bs4 import BeautifulSoup
 import time
 import random
 import sys
+import re
 
 from Util import *
 from PIPELINES import PipeLine1, PipeLine3, PipeLine4, PipeLine5
@@ -43,19 +44,28 @@ class FetchBot:
 
     def get_local_data(self):
         #[url, num, index]
-        bundle = [['https://www.suwon.go.kr/web/safesuwon/corona/PD_index.do#none', 'body > div.layout > div > ul > li:nth-child(1) > div > div.status.clearfix > table > tbody > tr > td:nth-child(2) > a', 'body > div.layout > div > ul > li:nth-child(1) > div > div.status.clearfix > div'],
+        bundle = [['https://www.suwon.go.kr/web/safesuwon/corona/PD_index.do#none', 'body > div.layout > div > ul > li:nth-child(1) > div > div.status.clearfix > table > tbody > tr > td:nth-child(1) > a', 'body > div.layout > div > ul > li:nth-child(1) > div > div.status.clearfix > div'],
         ['http://www.yongin.go.kr/health/ictsd/index.do', '#coronabox_1 > div.coronacon_le > div > div:nth-child(1) > div > table > tbody > tr:nth-child(1) > td > b', '#coronabox_1 > div.coronacon_le > div > div:nth-child(1) > h4 > span']]
         local_data = []
-
+ 
         for data in bundle:
-            res = requests.get(data[0])
-            soup = BeautifulSoup(res.text, 'html.parser')
-            ni = soup.select(data[2])[0].text.split(',')
-            local_data.append([ni[0], ni[1].strip(' '), soup.select(data[1])[0].text])
-
-        res = requests.post('http://27.101.50.5/prog/stat/corona/json.do')
-        datadict = res.json()
-        local_data.append(['천안시청', datadict['status_date'], datadict['item_1']])
+            try:
+                res = requests.get(data[0])
+                soup = BeautifulSoup(res.text, 'html.parser')
+                ni = soup.select(data[2])[0].text.split(',')
+                local_data.append([ni[0], ni[1].strip(' '), soup.select(data[1])[0].text])
+            except:
+                local_data.append([])
+        try:
+            res = requests.post('http://27.101.50.5/prog/stat/corona/json.do')
+            datadict = res.json()
+            index = datadict['status_date']
+            m = re.search('(.+기준)', index)
+            if m:
+                index = m.group(1)
+            local_data.append(['천안시청', index, datadict['item_1']])
+        except:
+            local_data.append([])
 
         return local_data
 
@@ -99,7 +109,7 @@ class FetchBot:
                     print(line.id+' 업데이트 체크 중...')
                     if check:
                         print(line.id+' 업데이트 확인됨.')
-                        data = line.get_data()
+                        data = line.get_data()                        
                         sendtoBot_card(edit1_json(data, line.id, self.get_local_data()))
                         line.save_data()
                         self.send_img()

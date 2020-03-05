@@ -18,7 +18,7 @@
             "type": "text",
             "text": "코로나19 현황 업데이트",
             "weight": "bold",
-            "size": "xl",
+            "size": "lg",
             "margin": "md"
           },
           {
