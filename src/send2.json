@@ -9,7 +9,7 @@
         "text": "Corona Notify",
         "weight": "bold",
         "color": "#1DB446",
-        "size": "sm"
+        "size": "md"
       },
       {
         "type": "text",
