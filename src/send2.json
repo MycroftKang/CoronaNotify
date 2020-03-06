@@ -20,7 +20,7 @@
       },
       {
         "type": "separator",
-        "margin": "xl"
+        "margin": "lg"
       },
       {
         "type": "box",
@@ -54,7 +54,7 @@
             "margin": "xs"
           }
         ],
-        "margin": "xxl"
+        "margin": "xl"
       },
       {
         "type": "box",
@@ -62,7 +62,8 @@
         "contents": [
           {
             "type": "text",
-            "text": "용인시"
+            "text": "용인시",
+            "size": "md"
           },
           {
             "type": "box",
@@ -88,7 +89,7 @@
             "margin": "xs"
           }
         ],
-        "margin": "xxl"
+        "margin": "md"
       },
       {
         "type": "box",
@@ -96,7 +97,8 @@
         "contents": [
           {
             "type": "text",
-            "text": "천안시"
+            "text": "성남시",
+            "size": "md"
           },
           {
             "type": "box",
@@ -122,7 +124,42 @@
             "margin": "xs"
           }
         ],
-        "margin": "xxl"
+        "margin": "md"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "천안시",
+            "size": "md"
+          },
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "text",
+                "text": "-월 -일 --:--기준",
+                "size": "sm",
+                "gravity": "center",
+                "align": "start",
+                "flex": 0,
+                "color": "#aaaaaa"
+              },
+              {
+                "type": "text",
+                "text": "정보 수집 실패",
+                "align": "end",
+                "gravity": "center",
+                "size": "md"
+              }
+            ],
+            "margin": "xs"
+          }
+        ],
+        "margin": "md"
       }
     ],
     "margin": "xxl"

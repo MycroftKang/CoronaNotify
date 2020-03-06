@@ -98,6 +98,11 @@ def edit2_json(local_data, file='send2.json'):
         json_dict['body']['contents'][5]['contents'][1]['contents'][0]['text'] = local_data[2][1] #index
         json_dict['body']['contents'][5]['contents'][1]['contents'][1]['text'] = '{}명'.format(local_data[2][2]) #num
 
+    if not len(local_data[3]) == 0:
+        json_dict['body']['contents'][6]['contents'][0]['text'] = local_data[3][0] #name
+        json_dict['body']['contents'][6]['contents'][1]['contents'][0]['text'] = local_data[3][1] #index
+        json_dict['body']['contents'][6]['contents'][1]['contents'][1]['text'] = '{}명'.format(local_data[3][2]) #num
+
     return json_dict
 
 def edit1_json(data, id, local_data, file='send1.json'):
@@ -124,6 +129,11 @@ def edit1_json(data, id, local_data, file='send1.json'):
         json_dict['contents'][1]['body']['contents'][4]['contents'][0]['text'] = local_data[2][0] #name
         json_dict['contents'][1]['body']['contents'][4]['contents'][1]['contents'][0]['text'] = local_data[2][1] #index
         json_dict['contents'][1]['body']['contents'][4]['contents'][1]['contents'][1]['text'] = '{}명'.format(local_data[2][2]) #num
+    
+    if not len(local_data[3]) == 0:
+        json_dict['contents'][1]['body']['contents'][5]['contents'][0]['text'] = local_data[3][0] #name
+        json_dict['contents'][1]['body']['contents'][5]['contents'][1]['contents'][0]['text'] = local_data[3][1] #index
+        json_dict['contents'][1]['body']['contents'][5]['contents'][1]['contents'][1]['text'] = '{}명'.format(local_data[3][2]) #num
 
     return json_dict
      
