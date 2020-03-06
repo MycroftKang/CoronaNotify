@@ -87,7 +87,7 @@ class PipeLine2(Tool):
             self.update = self.update.replace(m.group(1), '').replace('2020년 ', '')
         except Exception as e:
             # sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
-            print("Erro u2")
+            print("Erro u2 "+e)
             self.update = Material.data[0]
             # raise TypeError
 
@@ -107,9 +107,9 @@ class PipeLine3(Tool):
             res = self.request(url2)
             ls = pd.read_html(res.text)
             table = ls[0]
-            num1 = int(table[3][3])
-            num2 = int(table[4][3])
-            num3 = int(table[6][3])
+            num1 = int(table.iloc[1,2])
+            num2 = int(table.iloc[1,3])
+            num3 = int(table.iloc[1,5])
             self.newls = [num1, num2, num3]
         except Exception as e:
             sendError(self.id+' parseAll 오류가 발생했습니다. '+str(e))
@@ -125,7 +125,7 @@ class PipeLine3(Tool):
             else:
                 self.update = Material.data[0]
         except Exception as e:
-            print("Error u3")
+            print("Error u3 "+e)
             self.update = Material.data[0]
             # sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
             # raise TypeError
@@ -185,7 +185,7 @@ class PipeLine5(Tool):
                     return True
             return False
         except Exception as e:
-            print("Error u5")
+            print("Error u5 "+e)
             # sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
 
     def parseAll(self):

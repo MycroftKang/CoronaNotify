@@ -35,11 +35,11 @@ from PIPELINES import PipeLine1, PipeLine3, PipeLine4, PipeLine5
 class FetchBot:
     def __init__(self):
         if not len(sys.argv) == 1:
-            self.line5 = PipeLine5()
+            # self.line5 = PipeLine5()
             self.middle = True
         else:
             self.lines = [PipeLine1(), PipeLine3()]
-            self.line4 = PipeLine4()
+            # self.line4 = PipeLine4()
             self.middle = False
 
     def get_local_data(self):
@@ -70,15 +70,15 @@ class FetchBot:
 
         return local_data
 
-    def send_img(self):
-        self.line4.load_img()
-        while True:
-            print('4 업데이트 체크 중...')
-            if self.line4.run():
-                print('4 업데이트 확인됨.')
-                self.line4.send_image()
-                break
-            time.sleep(random.uniform(60,90))
+    # def send_img(self):
+    #     self.line4.load_img()
+    #     while True:
+    #         print('4 업데이트 체크 중...')
+    #         if self.line4.run():
+    #             print('4 업데이트 확인됨.')
+    #             self.line4.send_image()
+    #             break
+    #         time.sleep(random.uniform(60,90))
 
     def run(self):
         if self.middle:
@@ -88,9 +88,9 @@ class FetchBot:
             #     print('5 업데이트 체크 중...')
             #     if self.line5.run():
             #         print('5 업데이트 확인됨.')
-            #         # data = self.line5.get_data()
-            #         # sendNoti("\n{} 기준 코로나 현황 업데이트\n\n확진환자수: {} ({:+d})\n\nPIPELINE 5".format(data[0], data[1][0], data[2][0]))
-            #         # self.line5.save_data()
+            #         data = self.line5.get_data()
+            #         sendNoti("\n{} 기준 코로나 현황 업데이트\n\n확진환자수: {} ({:+d})\n\nPIPELINE 5".format(data[0], data[1][0], data[2][0]))
+            #         self.line5.save_data()
             #         self.send_local_info()
             #         return
             #     time.sleep(random.uniform(7,15))
@@ -113,7 +113,7 @@ class FetchBot:
                         data = line.get_data()                        
                         sendtoBot_card(edit1_json(data, line.id, self.get_local_data()))
                         line.save_data()
-                        self.send_img()
+                        # self.send_img()
                         return
                     time.sleep(random.uniform(3,8))
 
