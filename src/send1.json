@@ -118,7 +118,8 @@
                 "color": "#aaaaaa",
                 "flex": 0,
                 "gravity": "center",
-                "margin": "md"
+                "margin": "md",
+                "wrap": true
               }
             ]
           }
@@ -140,7 +141,8 @@
             "type": "text",
             "text": "지역별 코로나19 현황",
             "size": "lg",
-            "weight": "bold"
+            "weight": "bold",
+            "margin": "md"
           },
           {
             "type": "separator",
@@ -177,8 +179,7 @@
                 ],
                 "margin": "xs"
               }
-            ],
-            "margin": "md"
+            ]
           },
           {
             "type": "box",
@@ -212,8 +213,7 @@
                 ],
                 "margin": "xs"
               }
-            ],
-            "margin": "md"
+            ]
           },
           {
             "type": "box",
@@ -247,8 +247,7 @@
                 ],
                 "margin": "xs"
               }
-            ],
-            "margin": "md"
+            ]
           },
           {
             "type": "box",
@@ -282,10 +281,10 @@
                 ],
                 "margin": "xs"
               }
-            ],
-            "margin": "md"
+            ]
           }
-        ]
+        ],
+        "spacing": "md"
       }
     },
     {
