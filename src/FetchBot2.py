@@ -30,7 +30,7 @@ import sys
 import re
 
 from Util import *
-from PIPELINES import PipeLine1, PipeLine2, PipeLine3
+from PIPELINES import PipeLine1, PipeLine2, PipeLine3, PipeLine6
        
 class FetchBot:
     def __init__(self):
@@ -38,7 +38,7 @@ class FetchBot:
             # self.line5 = PipeLine5()
             self.middle = True
         else:
-            self.lines = [PipeLine1(), PipeLine2(), PipeLine3()]
+            self.lines = [PipeLine1(), PipeLine2(), PipeLine3(), PipeLine6()]
             # self.line4 = PipeLine4()
             self.middle = False
 
@@ -47,8 +47,9 @@ class FetchBot:
         bundle = [['https://www.suwon.go.kr/web/safesuwon/corona/PD_index.do#none', 'body > div.layout > div > ul > li:nth-child(1) > div > div.status.clearfix > table > tbody > tr > td:nth-child(1)', 'body > div.layout > div > ul > li:nth-child(1) > div > div.status.clearfix > div'],
         ['http://www.yongin.go.kr/health/ictsd/index.do', '#coronabox_1 > div.coronacon_le > div > div:nth-child(1) > div > table > tbody > tr:nth-child(1) > td > b', '#coronabox_1 > div.coronacon_le > div > div:nth-child(1) > h4 > span'],
         ['http://www.seongnam.go.kr/coronaIndex.html', '#corona_page > div.corona_page_top > div > div.contents_all > ul > li:nth-child(2) > p > b', '#corona_page > div.corona_page_top > div > div.contents_all > span']]
-        local_data = []
+        
         #[name, index, num]
+        local_data = []
  
         for data in bundle:
             try:
@@ -71,30 +72,9 @@ class FetchBot:
 
         return local_data
 
-    # def send_img(self):
-    #     self.line4.load_img()
-    #     while True:
-    #         print('4 업데이트 체크 중...')
-    #         if self.line4.run():
-    #             print('4 업데이트 확인됨.')
-    #             self.line4.send_image()
-    #             break
-    #         time.sleep(random.uniform(60,90))
-
     def run(self):
         if self.middle:
             sendtoBot_card(edit2_json(self.get_local_data()))
-            # self.send_local_info()
-            # while True:
-            #     print('5 업데이트 체크 중...')
-            #     if self.line5.run():
-            #         print('5 업데이트 확인됨.')
-            #         data = self.line5.get_data()
-            #         sendNoti("\n{} 기준 코로나 현황 업데이트\n\n확진환자수: {} ({:+d})\n\nPIPELINE 5".format(data[0], data[1][0], data[2][0]))
-            #         self.line5.save_data()
-            #         self.send_local_info()
-            #         return
-            #     time.sleep(random.uniform(7,15))
         else:
             sendError('정보 수집 시작! 2')
             while True:
@@ -114,7 +94,6 @@ class FetchBot:
                         data = line.get_data()                        
                         sendtoBot_card(edit1_json(data, line.id, self.get_local_data()))
                         line.save_data()
-                        # self.send_img()
                         return
                     time.sleep(random.uniform(3,8))
 

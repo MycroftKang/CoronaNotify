@@ -26,12 +26,13 @@ from Util import *
 import re
 import pandas as pd
 
+#Cov19 발생동향
 class PipeLine1(Tool):
     def __init__(self):
         url = 'http://ncov.mohw.go.kr/bdBoardList_Real.do?brdId=&brdGubun=&ncvContSeq=&contSeq=&board_id=&gubun='
         selectors = ['#content > div > div.bv_content > div > div:nth-child(3) > table > tbody > tr:nth-child('+str(x)+') > td' for x in range(1,4)]
         selectors.insert(0, '#content > div > div.bv_content > div > p:nth-child(2)')
-        super().__init__(url, selectors, '1')
+        super().__init__(url, selectors, '1 (중앙재난안전대책본부)')
 
     def parseAll(self):
         super().parseAll()
@@ -59,11 +60,12 @@ class PipeLine1(Tool):
             self.update = Material.data[0]
             # raise TypeError
 
+#질병관리본부
 class PipeLine2(Tool):
     def __init__(self):
         url = 'https://www.cdc.go.kr/board/board.es?mid=a20501000000&bid=0015'
         selectors = ['#listView > ul:nth-child(1) > li.title > a']
-        super().__init__(url, selectors, '2')
+        super().__init__(url, selectors, '2 (질병관리본부)')
         self.http_header1 = {
             'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
             'Accept-Encoding':'gzip, deflate, br',
@@ -81,9 +83,14 @@ class PipeLine2(Tool):
             res = self.request(url2)
             ls = pd.read_html(res.text)
             table = ls[0]
-            num1 = int(table.iloc[3,3])
-            num2 = int(table.iloc[3,4])
-            num3 = int(table.iloc[3,6])
+            try:
+                num1 = int(table.iloc[3,3])
+                num2 = int(table.iloc[3,4])
+                num3 = int(table.iloc[3,6])
+            except:
+                num1 = int(table.iloc[1,2])
+                num2 = int(table.iloc[1,3])
+                num3 = int(table.iloc[1,5])
             self.newls = [num1, num2, num3]
         except Exception as e:
             sendError(self.id+' parseAll 오류가 발생했습니다. '+str(e))
@@ -91,7 +98,7 @@ class PipeLine2(Tool):
 
     def parseUpdate(self):
         try:
-            self.update = self.soup.select(self.selectors[0])[0].text #기준시간
+            self.update = self.soup.select(self.selectors[0])[0].get('title') #기준시간
             print('RAW: '+self.update)
             m = re.search('\((\d+월\s*\d+일.*\d+시.*)\)', self.update)
             if m:
@@ -104,11 +111,12 @@ class PipeLine2(Tool):
             # sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
             # raise TypeError
 
+#Cov19
 class PipeLine3(Tool):
     def __init__(self):
         url = 'http://ncov.mohw.go.kr/tcmBoardList.do?brdId=&brdGubun=&dataGubun=&ncvContSeq=&contSeq=&board_id=140&gubun='
         selectors = ['#content > div > div.board_list > table > tbody > tr:nth-child(1) > td.ta_l > a']
-        super().__init__(url, selectors, '3')
+        super().__init__(url, selectors, '3 (중앙재난안전대책본부)')
 
     def parseAll(self):
         try:
@@ -120,9 +128,14 @@ class PipeLine3(Tool):
             res = self.request(url2)
             ls = pd.read_html(res.text)
             table = ls[0]
-            num1 = int(table.iloc[1,2])
-            num2 = int(table.iloc[1,3])
-            num3 = int(table.iloc[1,5])
+            try:
+                num1 = int(table.iloc[3,3])
+                num2 = int(table.iloc[3,4])
+                num3 = int(table.iloc[3,6])
+            except:
+                num1 = int(table.iloc[1,2])
+                num2 = int(table.iloc[1,3])
+                num3 = int(table.iloc[1,5])
             self.newls = [num1, num2, num3]
         except Exception as e:
             sendError(self.id+' parseAll 오류가 발생했습니다. '+str(e))
@@ -132,7 +145,7 @@ class PipeLine3(Tool):
         try:
             self.update = self.soup.select(self.selectors[0])[0].text #기준시간
             print('RAW: '+self.update)
-            m = re.search('\((\d+월\s*\d+일\s*\d+시)\)', self.update)
+            m = re.search('\((\d+월\s*\d+일.*\d+시.*)\)', self.update)
             if m:
                 self.update = m.group(1)
             else:
@@ -212,3 +225,55 @@ class PipeLine5(Tool):
 
     def save_data(self):
         save([self.update, [self.newls[0], Material.data[1][1], Material.data[1][2]]])
+
+#보건복지부
+class PipeLine6(Tool):
+    def __init__(self):
+        url = 'http://www.mohw.go.kr/react/al/sal0301ls.jsp?PAR_MENU_ID=04&MENU_ID=0403'
+        selectors = ['#sub_content > div.board_list > table > tbody > tr:nth-child(1) > td.ta_l.inl_z > a']
+        super().__init__(url, selectors, '6 (보건복지부)')
+        self.http_header1 = {
+            'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+            'Accept-Encoding':'gzip, deflate',
+            'Accept-Language':'ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7',
+            'Connection':'keep-alive',
+            'Host':'www.mohw.go.kr',
+            'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36'}
+
+    def parseAll(self):
+        try:
+            if self.update == None:
+                self.parseUpdate()
+            link = self.soup.select(self.selectors[0])[0].get('href')
+            url2 = 'http://www.mohw.go.kr'+link
+            res = self.request(url2)
+            ls = pd.read_html(res.text)
+            table = ls[0]
+            try:
+                num1 = int(table.iloc[3,3])
+                num2 = int(table.iloc[3,4])
+                num3 = int(table.iloc[3,6])
+            except:
+                num1 = int(table.iloc[1,2])
+                num2 = int(table.iloc[1,3])
+                num3 = int(table.iloc[1,5])
+            self.newls = [num1, num2, num3]
+            print('NEWLS', self.newls)
+        except Exception as e:
+            sendError(self.id+' parseAll 오류가 발생했습니다. '+str(e))
+            raise TypeError
+
+    def parseUpdate(self):
+        try:
+            self.update = self.soup.select(self.selectors[0])[0].text #기준시간
+            print('RAW: '+self.update)
+            m = re.search('\((\d+월\s*\d+일.*\d+시.*)\)', self.update)
+            if m:
+                self.update = m.group(1)
+            else:
+                self.update = Material.data[0]
+        except Exception as e:
+            print("Error u3 "+e)
+            self.update = Material.data[0]
+            # sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
+            # raise TypeError
