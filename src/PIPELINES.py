@@ -61,20 +61,30 @@ class PipeLine1(Tool):
 
 class PipeLine2(Tool):
     def __init__(self):
-        url = 'http://ncov.mohw.go.kr/bdBoardList_Real.do?brdId=1&brdGubun=13&ncvContSeq=&contSeq=&board_id=&gubun='
-        selectors = ['#content > div > div.data_table.tbl_scrl_mini2.mgt24 > table > tbody > tr.sumline > td:nth-child('+str(x)+')' for x in [3, 5, 6]]
-        selectors.insert(0, '#content > div > div.timetable > p > span')
+        url = 'https://www.cdc.go.kr/board/board.es?mid=a20501000000&bid=0015'
+        selectors = ['#listView > ul:nth-child(1) > li.title > a']
         super().__init__(url, selectors, '2')
+        self.http_header1 = {
+            'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+            'Accept-Encoding':'gzip, deflate, br',
+            'Accept-Language':'ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7',
+            'Connection':'keep-alive',
+            'Host':'www.cdc.go.kr',
+            'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36'}
 
     def parseAll(self):
-        super().parseAll()
         try:
             if self.update == None:
                 self.parseUpdate()
-            for i in range(len(self.selectors)):
-                if i == 0:
-                    continue
-                self.newls.append(int(self.soup.select(self.selectors[i])[0].text.replace(',','')))
+            link = self.soup.select(self.selectors[0])[0].get('href')
+            url2 = 'https://www.cdc.go.kr'+link
+            res = self.request(url2)
+            ls = pd.read_html(res.text)
+            table = ls[0]
+            num1 = int(table.iloc[3,3])
+            num2 = int(table.iloc[3,4])
+            num3 = int(table.iloc[3,6])
+            self.newls = [num1, num2, num3]
         except Exception as e:
             sendError(self.id+' parseAll 오류가 발생했습니다. '+str(e))
             raise TypeError
@@ -83,12 +93,15 @@ class PipeLine2(Tool):
         try:
             self.update = self.soup.select(self.selectors[0])[0].text #기준시간
             print('RAW: '+self.update)
-            m = re.search('.+(\(.+\))', self.update)
-            self.update = self.update.replace(m.group(1), '').replace('2020년 ', '')
+            m = re.search('\((\d+월\s*\d+일.*\d+시.*)\)', self.update)
+            if m:
+                self.update = m.group(1).replace(',','').replace(' 기준', '')
+            else:
+                self.update = Material.data[0]
         except Exception as e:
-            # sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
-            print("Erro u2 "+e)
+            print("Error u3 "+e)
             self.update = Material.data[0]
+            # sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
             # raise TypeError
 
 class PipeLine3(Tool):
