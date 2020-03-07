@@ -79,33 +79,27 @@ def sendtoBot_card(card):
     else:
         sendtoBot_Error(card)
 
-def edit2_json(local_data, file='send2.json'):
+def edit2_json(local_data, world_data, file='send2.json'):
     with open(file, 'rt', encoding='utf-8') as f:
         json_dict = json.load(f)
+
+    for i in range(len(local_data)):
+        if not len(local_data[i]) == 0:
+            json_dict['contents'][0]['body']['contents'][i+3]['contents'][0]['text'] = local_data[i][0] #name
+            json_dict['contents'][0]['body']['contents'][i+3]['contents'][1]['contents'][0]['text'] = local_data[i][1] #index
+            json_dict['contents'][0]['body']['contents'][i+3]['contents'][1]['contents'][1]['text'] = local_data[i][2] #num
     
-    if not len(local_data[0]) == 0:
-        json_dict['body']['contents'][3]['contents'][0]['text'] = local_data[0][0] #name
-        json_dict['body']['contents'][3]['contents'][1]['contents'][0]['text'] = local_data[0][1] #index
-        json_dict['body']['contents'][3]['contents'][1]['contents'][1]['text'] = local_data[0][2] #num
-
-    if not len(local_data[1]) == 0:
-        json_dict['body']['contents'][4]['contents'][0]['text'] = local_data[1][0] #name
-        json_dict['body']['contents'][4]['contents'][1]['contents'][0]['text'] = local_data[1][1] #index
-        json_dict['body']['contents'][4]['contents'][1]['contents'][1]['text'] = local_data[1][2] #num
-
-    if not len(local_data[2]) == 0:
-        json_dict['body']['contents'][5]['contents'][0]['text'] = local_data[2][0] #name
-        json_dict['body']['contents'][5]['contents'][1]['contents'][0]['text'] = local_data[2][1] #index
-        json_dict['body']['contents'][5]['contents'][1]['contents'][1]['text'] = '{}명'.format(local_data[2][2]) #num
-
-    if not len(local_data[3]) == 0:
-        json_dict['body']['contents'][6]['contents'][0]['text'] = local_data[3][0] #name
-        json_dict['body']['contents'][6]['contents'][1]['contents'][0]['text'] = local_data[3][1] #index
-        json_dict['body']['contents'][6]['contents'][1]['contents'][1]['text'] = '{}명'.format(local_data[3][2]) #num
-
+    halflen = int(len(world_data)/2)
+    for j in range(2):
+        for i in range(halflen): #10
+            _id = halflen*j+i
+            json_dict['contents'][j+1]['body']['contents'][i+2]['contents'][0]['text'] = world_data[_id][0] #name
+            json_dict['contents'][j+1]['body']['contents'][i+2]['contents'][1]['contents'][0]['text'] = world_data[_id][1] #index
+            json_dict['contents'][j+1]['body']['contents'][i+2]['contents'][1]['contents'][1]['text'] = '{}명'.format(world_data[_id][2]) #num
+    
     return json_dict
 
-def edit1_json(data, id, local_data, file='send1.json'):
+def edit1_json(data, id, local_data, world_data, file='send1.json'):
     with open(file, 'rt', encoding='utf-8') as f:
         json_dict = json.load(f)
     
@@ -115,25 +109,19 @@ def edit1_json(data, id, local_data, file='send1.json'):
     json_dict['contents'][0]['body']['contents'][4]['contents'][2]['contents'][1]['text'] = "{} ({:+d})".format(data[1][2], data[2][2])
     json_dict['contents'][0]['body']['contents'][6]['contents'][0]['text'] = 'PIPELINE '+str(id)
 
-    if not len(local_data[0]) == 0:
-        json_dict['contents'][1]['body']['contents'][2]['contents'][0]['text'] = local_data[0][0] #name
-        json_dict['contents'][1]['body']['contents'][2]['contents'][1]['contents'][0]['text'] = local_data[0][1] #index
-        json_dict['contents'][1]['body']['contents'][2]['contents'][1]['contents'][1]['text'] = local_data[0][2] #num
+    for i in range(len(local_data)):
+        if not len(local_data[i]) == 0:
+            json_dict['contents'][1]['body']['contents'][i+2]['contents'][0]['text'] = local_data[i][0] #name
+            json_dict['contents'][1]['body']['contents'][i+2]['contents'][1]['contents'][0]['text'] = local_data[i][1] #index
+            json_dict['contents'][1]['body']['contents'][i+2]['contents'][1]['contents'][1]['text'] = local_data[i][2] #num
     
-    if not len(local_data[1]) == 0:
-        json_dict['contents'][1]['body']['contents'][3]['contents'][0]['text'] = local_data[1][0] #name
-        json_dict['contents'][1]['body']['contents'][3]['contents'][1]['contents'][0]['text'] = local_data[1][1] #index
-        json_dict['contents'][1]['body']['contents'][3]['contents'][1]['contents'][1]['text'] = local_data[1][2] #num
-    
-    if not len(local_data[2]) == 0:
-        json_dict['contents'][1]['body']['contents'][4]['contents'][0]['text'] = local_data[2][0] #name
-        json_dict['contents'][1]['body']['contents'][4]['contents'][1]['contents'][0]['text'] = local_data[2][1] #index
-        json_dict['contents'][1]['body']['contents'][4]['contents'][1]['contents'][1]['text'] = '{}명'.format(local_data[2][2]) #num
-    
-    if not len(local_data[3]) == 0:
-        json_dict['contents'][1]['body']['contents'][5]['contents'][0]['text'] = local_data[3][0] #name
-        json_dict['contents'][1]['body']['contents'][5]['contents'][1]['contents'][0]['text'] = local_data[3][1] #index
-        json_dict['contents'][1]['body']['contents'][5]['contents'][1]['contents'][1]['text'] = '{}명'.format(local_data[3][2]) #num
+    halflen = int(len(world_data)/2)
+    for j in range(2):
+        for i in range(halflen): #8
+            _id = halflen*j+i
+            json_dict['contents'][j+2]['body']['contents'][i+2]['contents'][0]['text'] = world_data[_id][0] #name
+            json_dict['contents'][j+2]['body']['contents'][i+2]['contents'][1]['contents'][0]['text'] = world_data[_id][1] #index
+            json_dict['contents'][j+2]['body']['contents'][i+2]['contents'][1]['contents'][1]['text'] = '{}명'.format(world_data[_id][2]) #num
 
     return json_dict
      

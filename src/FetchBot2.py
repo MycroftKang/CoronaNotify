@@ -46,7 +46,7 @@ class FetchBot:
         #[url, num, index]
         bundle = [['https://www.suwon.go.kr/web/safesuwon/corona/PD_index.do#none', 'body > div.layout > div > ul > li:nth-child(1) > div > div.status.clearfix > table > tbody > tr > td:nth-child(1)', 'body > div.layout > div > ul > li:nth-child(1) > div > div.status.clearfix > div'],
         ['http://www.yongin.go.kr/health/ictsd/index.do', '#coronabox_1 > div.coronacon_le > div > div:nth-child(1) > div > table > tbody > tr:nth-child(1) > td > b', '#coronabox_1 > div.coronacon_le > div > div:nth-child(1) > h4 > span'],
-        ['http://www.seongnam.go.kr/coronaIndex.html', '#corona_page > div.corona_page_top > div > div.contents_all > ul > li:nth-child(2) > p > b', '#corona_page > div.corona_page_top > div > div.contents_all > span']]
+        ['http://www.seongnam.go.kr/coronaIndex.html', '#corona_page > div.corona_page_top > div > div.contents_all > ul > li:nth-child(2) > p', '#corona_page > div.corona_page_top > div > div.contents_all > span']]
         
         #[name, index, num]
         local_data = []
@@ -66,15 +66,29 @@ class FetchBot:
             m = re.search('(.+기준)', index)
             if m:
                 index = m.group(1)
-            local_data.append(['천안시청', index, datadict['item_1']])
+            local_data.append(['천안시청', index, str(datadict['item_1'])+'명'])
         except:
             local_data.append([])
 
         return local_data
 
+    def get_world_data(self, num):
+        x = requests.get('https://services1.arcgis.com/0MSEUqKaxRlEPj5g/arcgis/rest/services/ncov_cases/FeatureServer/2/query?f=json&where=Confirmed%20%3E%200&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&orderByFields=Confirmed%20desc&resultOffset=0&resultRecordCount=200&cacheHint=true')
+        data_dict = x.json()
+
+        world_data = []
+
+        for i in range(num):
+            last = int(data_dict['features'][i]['attributes']['Last_Update']/1000)
+            last_str = 'KST '+time.strftime('%m.%d %H:%M', time.localtime(last))+' 기준'
+            country_data = [data_dict['features'][i]['attributes']['Country_Region'], last_str, data_dict['features'][i]['attributes']['Confirmed']]
+            world_data.append(country_data)
+
+        return world_data
+
     def run(self):
         if self.middle:
-            sendtoBot_card(edit2_json(self.get_local_data()))
+            sendtoBot_card(edit2_json(self.get_local_data(), self.get_world_data(10)))
         else:
             sendError('정보 수집 시작! 2')
             while True:
@@ -92,7 +106,7 @@ class FetchBot:
                     if check:
                         print(line.id+' 업데이트 확인됨.')
                         data = line.get_data()                        
-                        sendtoBot_card(edit1_json(data, line.id, self.get_local_data()))
+                        sendtoBot_card(edit1_json(data, line.id, self.get_local_data(), self.get_world_data(8)))
                         line.save_data()
                         return
                     time.sleep(random.uniform(3,8))
