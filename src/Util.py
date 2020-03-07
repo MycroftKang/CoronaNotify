@@ -153,6 +153,7 @@ class Material:
         self.update = None
 
     def request(self, url=None):
+        i = 0
         if url == None:
             url = self.url
         while True:
@@ -160,7 +161,12 @@ class Material:
                 res = requests.get(url, headers=self.http_header1)
                 res.raise_for_status()
                 return res
-            except:
+            except Exception as e:
+                i+=1
+                print(e)
+                if i == 5:
+                    sendError('request Error: '+e)
+                    raise e
                 continue
 
     def parseUpdate(self):
