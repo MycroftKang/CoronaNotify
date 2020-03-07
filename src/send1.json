@@ -294,9 +294,324 @@
         "layout": "vertical",
         "contents": [
           {
+            "type": "text",
+            "text": "국가별 코로나19 현황 (1/2)",
+            "size": "lg",
+            "weight": "bold",
+            "margin": "md"
+          },
+          {
+            "type": "separator",
+            "margin": "md"
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "국가"
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--기준",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  },
+                  {
+                    "type": "text",
+                    "text": "정보 수집 실패",
+                    "align": "end",
+                    "gravity": "center",
+                    "size": "md"
+                  }
+                ],
+                "margin": "xs"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "국가",
+                "size": "md"
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--기준",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  },
+                  {
+                    "type": "text",
+                    "text": "정보 수집 실패",
+                    "align": "end",
+                    "gravity": "center",
+                    "size": "md"
+                  }
+                ],
+                "margin": "xs"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "국가",
+                "size": "md"
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--기준",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  },
+                  {
+                    "type": "text",
+                    "text": "정보 수집 실패",
+                    "align": "end",
+                    "gravity": "center",
+                    "size": "md"
+                  }
+                ],
+                "margin": "xs"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "국가",
+                "size": "md"
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--기준",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  },
+                  {
+                    "type": "text",
+                    "text": "정보 수집 실패",
+                    "align": "end",
+                    "gravity": "center",
+                    "size": "md"
+                  }
+                ],
+                "margin": "xs"
+              }
+            ]
+          }
+        ],
+        "spacing": "md"
+      }
+    },
+    {
+      "type": "bubble",
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "국가별 코로나19 현황 (2/2)",
+            "size": "lg",
+            "weight": "bold",
+            "margin": "md"
+          },
+          {
+            "type": "separator",
+            "margin": "md"
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "국가"
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--기준",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  },
+                  {
+                    "type": "text",
+                    "text": "정보 수집 실패",
+                    "align": "end",
+                    "gravity": "center",
+                    "size": "md"
+                  }
+                ],
+                "margin": "xs"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "국가",
+                "size": "md"
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--기준",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  },
+                  {
+                    "type": "text",
+                    "text": "정보 수집 실패",
+                    "align": "end",
+                    "gravity": "center",
+                    "size": "md"
+                  }
+                ],
+                "margin": "xs"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "국가",
+                "size": "md"
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--기준",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  },
+                  {
+                    "type": "text",
+                    "text": "정보 수집 실패",
+                    "align": "end",
+                    "gravity": "center",
+                    "size": "md"
+                  }
+                ],
+                "margin": "xs"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "국가",
+                "size": "md"
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--기준",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  },
+                  {
+                    "type": "text",
+                    "text": "정보 수집 실패",
+                    "align": "end",
+                    "gravity": "center",
+                    "size": "md"
+                  }
+                ],
+                "margin": "xs"
+              }
+            ]
+          }
+        ],
+        "spacing": "md"
+      }
+    },
+    {
+      "type": "bubble",
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
             "type": "image",
             "size": "4xl",
-            "url": "https://user-images.githubusercontent.com/58393346/75994948-0df59c80-5f3f-11ea-803e-88c91aab1fe5.png"
+            "url": "https://user-images.githubusercontent.com/58393346/75994948-0df59c80-5f3f-11ea-803e-88c91aab1fe5.png",
+            "flex": 1,
+            "gravity": "center",
+            "align": "center"
           },
           {
             "type": "button",
@@ -306,7 +621,8 @@
               "uri": "https://github.com/TaehyeokKang/CoronaNotify"
             },
             "style": "secondary",
-            "height": "md"
+            "height": "md",
+            "flex": 1
           }
         ]
       }
