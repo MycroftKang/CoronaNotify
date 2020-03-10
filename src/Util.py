@@ -139,6 +139,7 @@ class Material:
         self.url = url
         self.soup = None
         self.update = None
+        self.strfupdate = None
 
     def request(self, url=None):
         i = 0
@@ -168,7 +169,7 @@ class Material:
         print(res)
         self.soup = BeautifulSoup(res.text, 'html.parser')
         self.parseUpdate()
-        print('PARSE: '+self.update)
+        print('PARSE: '+str(self.update))
         print('UPDATE: '+str(self.update > Material.data[0]))
         return (self.update > Material.data[0])
 
@@ -196,7 +197,7 @@ class Tool(Material):
             for i in range(len(self.newls)):
                 delta.append(self.newls[i]-Material.data[1][i])
 
-        return [self.update, self.newls, delta]
+        return [self.strfupdate, self.newls, delta]
 
     def set_data(self):
         res = self.request()

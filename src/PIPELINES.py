@@ -23,6 +23,7 @@ SOFTWARE.
 """
 
 from Util import *
+import time
 import re
 import pandas as pd
 
@@ -49,11 +50,13 @@ class PipeLine1(Tool):
 
     def parseUpdate(self):
         try:
-            self.update = self.soup.select(self.selectors[0])[0].text #기준시간
-            print('RAW: '+self.update)
-            m = re.search('\((.+)\)', self.update)
-            self.update = m.group(1)
-            self.update = self.update.replace('.', '월 ').replace(' 기준', '').replace('\xa0', ' ').replace('00시', '0시')
+            updatestr = self.soup.select(self.selectors[0])[0].text #기준시간
+            print('RAW: '+updatestr)
+            m = re.search('\((.+)\)', updatestr)
+            updatestr = m.group(1)
+            updatestr = updatestr.replace('.', '월 ').replace(' 기준', '').replace('\xa0', ' ').replace('00시', '0시').strip()
+            self.strfupdate = updatestr
+            self.update = time.mktime(time.strptime('2020년 '+updatestr, '%Y년 %m월 %d일 %H시'))
         except Exception as e:
             print("Erro u2")
             # sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
@@ -98,11 +101,13 @@ class PipeLine2(Tool):
 
     def parseUpdate(self):
         try:
-            self.update = self.soup.select(self.selectors[0])[0].get('title') #기준시간
-            print('RAW: '+self.update)
-            m = re.search('\((\d+월\s*\d+일.*\d+시.*)\)', self.update)
+            updatestr = self.soup.select(self.selectors[0])[0].get('title') #기준시간
+            print('RAW: '+updatestr)
+            m = re.search('\((\d+월\s*\d+일.*\d+시.*)\)', updatestr)
             if m:
-                self.update = m.group(1).replace(',','').replace(' 기준', '')
+                updatestr = m.group(1).replace(',','').replace(' 기준', '').strip()
+                self.strfupdate = updatestr
+                self.update = time.mktime(time.strptime('2020년 '+updatestr, '%Y년 %m월 %d일 %H시'))
             else:
                 self.update = Material.data[0]
         except Exception as e:
@@ -143,11 +148,13 @@ class PipeLine3(Tool):
 
     def parseUpdate(self):
         try:
-            self.update = self.soup.select(self.selectors[0])[0].text #기준시간
-            print('RAW: '+self.update)
-            m = re.search('\((\d+월\s*\d+일.*\d+시.*)\)', self.update)
+            updatestr = self.soup.select(self.selectors[0])[0].text #기준시간
+            print('RAW: '+updatestr)
+            m = re.search('\((\d+월\s*\d+일.*\d+시.*)\)', updatestr)
             if m:
-                self.update = m.group(1)
+                updatestr = m.group(1).strip()
+                self.strfupdate = updatestr
+                self.update = time.mktime(time.strptime('2020년 '+updatestr, '%Y년 %m월 %d일 %H시'))
             else:
                 self.update = Material.data[0]
         except Exception as e:
@@ -265,11 +272,13 @@ class PipeLine6(Tool):
 
     def parseUpdate(self):
         try:
-            self.update = self.soup.select(self.selectors[0])[0].text #기준시간
-            print('RAW: '+self.update)
-            m = re.search('\((\d+월\s*\d+일.*\d+시.*)\)', self.update)
+            updatestr = self.soup.select(self.selectors[0])[0].text #기준시간
+            print('RAW: '+updatestr)
+            m = re.search('\((\d+월\s*\d+일.*\d+시.*)\)', updatestr)
             if m:
-                self.update = m.group(1)
+                updatestr = m.group(1).strip()
+                self.strfupdate = updatestr
+                self.update = time.mktime(time.strptime('2020년 '+updatestr, '%Y년 %m월 %d일 %H시'))
             else:
                 self.update = Material.data[0]
         except Exception as e:
