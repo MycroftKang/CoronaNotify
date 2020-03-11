@@ -31,8 +31,8 @@ import pandas as pd
 class PipeLine1(Tool):
     def __init__(self):
         url = 'http://ncov.mohw.go.kr/bdBoardList_Real.do?brdId=&brdGubun=&ncvContSeq=&contSeq=&board_id=&gubun='
-        selectors = ['#content > div > div.bv_content > div > div:nth-child(3) > table > tbody > tr:nth-child('+str(x)+') > td' for x in range(1,4)]
-        selectors.insert(0, '#content > div > div.bv_content > div > p:nth-child(2)')
+        selectors = ['#content > div > div:nth-child(7) > table > tbody > tr > td:nth-child('+str(x)+')' for x in [1, 2, 4]]
+        selectors.insert(0, '#content > div > p')
         super().__init__(url, selectors, '1 (중앙재난안전대책본부)')
 
     def parseAll(self):
@@ -54,11 +54,12 @@ class PipeLine1(Tool):
             print('RAW: '+updatestr)
             m = re.search('\((.+)\)', updatestr)
             updatestr = m.group(1)
-            updatestr = updatestr.replace('.', '월 ').replace(' 기준', '').replace('\xa0', ' ').replace('00시', '0시').strip()
+            updatestr = updatestr.replace('.', '월 ').replace(' 기준', '').replace('\xa0', ' ').replace(' 00시', '일 0시').strip()
             self.strfupdate = updatestr
             self.update = time.mktime(time.strptime('2020년 '+updatestr, '%Y년 %m월 %d일 %H시'))
         except Exception as e:
-            print("Erro u2")
+            print("Erro u2 "+str(e))
+            # raise e
             # sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
             self.update = Material.data[0]
             # raise TypeError
@@ -111,7 +112,7 @@ class PipeLine2(Tool):
             else:
                 self.update = Material.data[0]
         except Exception as e:
-            print("Error u3 "+e)
+            print("Error u3 "+str(e))
             self.update = Material.data[0]
             # sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
             # raise TypeError
@@ -158,7 +159,7 @@ class PipeLine3(Tool):
             else:
                 self.update = Material.data[0]
         except Exception as e:
-            print("Error u3 "+e)
+            print("Error u3 "+str(e))
             self.update = Material.data[0]
             # sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
             # raise TypeError
@@ -282,7 +283,7 @@ class PipeLine6(Tool):
             else:
                 self.update = Material.data[0]
         except Exception as e:
-            print("Error u3 "+e)
+            print("Error u3 "+str(e))
             self.update = Material.data[0]
             # sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
             # raise TypeError
