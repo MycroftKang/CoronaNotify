@@ -8,7 +8,7 @@ test:
     - master
   script:
     - ls
-    - cp -r src/ /home/gitlab-runner/CoronaNotify/test/
+    - cp src/* /home/gitlab-runner/CoronaNotify/test/
     - cd /home/gitlab-runner/CoronaNotify/test
     - ls
     - python3 FetchBot2.py --test
@@ -22,7 +22,7 @@ deploy-to-server:
     - master
   script:
     - ls
-    - cp -r src/ /home/gitlab-runner/CoronaNotify/src/
+    - cp src/* /home/gitlab-runner/CoronaNotify/src/
     - cd /home/gitlab-runner/CoronaNotify/src
     - ls
   tags:
