@@ -1,0 +1,28 @@
+stages:
+  - test
+  - deploy
+
+test:
+  stage: test
+  only:
+    - master
+  script:
+    - ls
+    - cp -r src/ /root/CoronaNotify/test/
+    - cd /root/CoronaNotify/test
+    - python3 FetchBot2.py --test
+    - ls
+  tags:
+    - deploy
+
+deploy-to-server:
+  stage: deploy
+  only:
+    - master
+  script:
+    - ls
+    - cp -r src/ /root/CoronaNotify/src/
+    - cd /root/CoronaNotify/src
+    - ls
+  tags:
+    - deploy
