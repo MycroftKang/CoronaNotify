@@ -108,6 +108,7 @@ def edit1_json(data, id, local_data, world_data, file='send1.json'):
     json_dict['contents'][0]['body']['contents'][4]['contents'][1]['contents'][1]['text'] = "{} ({:+d})".format(data[1][1], data[2][1])
     json_dict['contents'][0]['body']['contents'][4]['contents'][2]['contents'][1]['text'] = "{} ({:+d})".format(data[1][2], data[2][2])
     json_dict['contents'][0]['body']['contents'][6]['contents'][0]['text'] = 'PIPELINE '+str(id)
+    # json_dict['contents'][0]['body']['contents'][6]['contents'][0]['text'] = '알고리즘 업데이트에 따른 테스트 알림'
 
     for i in range(len(local_data)):
         if not len(local_data[i]) == 0:
@@ -124,6 +125,21 @@ def edit1_json(data, id, local_data, world_data, file='send1.json'):
             json_dict['contents'][j+2]['body']['contents'][i+2]['contents'][1]['contents'][1]['text'] = '{}명'.format(world_data[_id][2]) #num
 
     return json_dict
+
+def table_parse(table):
+    """
+    return ['계', '격리해제', '사망']
+    """
+    index_names = ['계', '격리해제', '사망']
+    newls = []
+    for i in range(len(table.columns)):
+        if (table[i][0].replace(' ','') == '확진환자현황'):
+            try:
+                insertnum = index_names.index(table[i][1].replace(' ',''))
+                newls.insert(insertnum, int(table[i][3]))
+            except:
+                pass
+    return newls
      
 class Material:
     data = []
@@ -172,6 +188,18 @@ class Material:
         print('PARSE: '+str(self.update))
         print('UPDATE: '+str(self.update > Material.data[0]))
         return (self.update > Material.data[0])
+
+    def test_run(self):
+        """
+        return (self.update > Material.data[0])
+        """
+        res = self.request()
+        self.soup = BeautifulSoup(res.text, 'html.parser')
+        self.parseUpdate()
+        print('TESTRUN::P'+self.id+'::self.strfupdate '+str(self.strfupdate))
+        print('TESTRUN::P'+self.id+'::self.update '+str(self.update))
+        print('TESTRUN::P'+self.id+'::compare '+str(self.update > Material.data[0]))
+        return True
 
 class Tool(Material):
     def __init__(self, url, selectors, id):

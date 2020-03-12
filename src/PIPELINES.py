@@ -52,9 +52,9 @@ class PipeLine1(Tool):
         try:
             updatestr = self.soup.select(self.selectors[0])[0].text #기준시간
             print('RAW: '+updatestr)
-            m = re.search('\((.+)\)', updatestr)
-            updatestr = m.group(1)
-            updatestr = updatestr.replace('.', '월 ').replace(' 기준', '').replace('\xa0', ' ').replace(' 00시', '일 0시').strip()
+            m = re.search('\((\d+)\D+(\d+)\D+(\d+시).*\)', updatestr)
+            updatestr = '{}월 {}일 {}'.format(m.group(1), m.group(2), m.group(3))
+            updatestr = updatestr.replace('00시', '0시')
             self.strfupdate = updatestr
             self.update = time.mktime(time.strptime('2020년 '+updatestr, '%Y년 %m월 %d일 %H시'))
         except Exception as e:
@@ -66,9 +66,12 @@ class PipeLine1(Tool):
 
 #질병관리본부
 class PipeLine2(Tool):
-    def __init__(self):
+    def __init__(self, test_selectors=None):
         url = 'https://www.cdc.go.kr/board/board.es?mid=a20501000000&bid=0015'
-        selectors = ['#listView > ul:nth-child(1) > li.title > a']
+        if test_selectors == None:
+            selectors = ['#listView > ul:nth-child(1) > li.title > a']
+        else:
+            selectors = test_selectors
         super().__init__(url, selectors, '2 (질병관리본부)')
         self.http_header1 = {
             'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
@@ -88,14 +91,12 @@ class PipeLine2(Tool):
             ls = pd.read_html(res.text)
             table = ls[0]
             try:
-                num1 = int(table.iloc[3,3])
-                num2 = int(table.iloc[3,4])
-                num3 = int(table.iloc[3,6])
+                self.newls = table_parse(table)
             except:
                 num1 = int(table.iloc[1,2])
                 num2 = int(table.iloc[1,3])
                 num3 = int(table.iloc[1,5])
-            self.newls = [num1, num2, num3]
+                self.newls = [num1, num2, num3]
         except Exception as e:
             sendError(self.id+' parseAll 오류가 발생했습니다. '+str(e))
             raise TypeError
@@ -119,9 +120,12 @@ class PipeLine2(Tool):
 
 #Cov19
 class PipeLine3(Tool):
-    def __init__(self):
+    def __init__(self, test_selectors=None):
         url = 'http://ncov.mohw.go.kr/tcmBoardList.do?brdId=&brdGubun=&dataGubun=&ncvContSeq=&contSeq=&board_id=140&gubun='
-        selectors = ['#content > div > div.board_list > table > tbody > tr:nth-child(1) > td.ta_l > a']
+        if test_selectors == None:
+            selectors = ['#content > div > div.board_list > table > tbody > tr:nth-child(1) > td.ta_l > a']
+        else:
+            selectors = test_selectors
         super().__init__(url, selectors, '3 (중앙재난안전대책본부)')
 
     def parseAll(self):
@@ -135,14 +139,12 @@ class PipeLine3(Tool):
             ls = pd.read_html(res.text)
             table = ls[0]
             try:
-                num1 = int(table.iloc[3,3])
-                num2 = int(table.iloc[3,4])
-                num3 = int(table.iloc[3,6])
+                self.newls = table_parse(table)
             except:
                 num1 = int(table.iloc[1,2])
                 num2 = int(table.iloc[1,3])
                 num3 = int(table.iloc[1,5])
-            self.newls = [num1, num2, num3]
+                self.newls = [num1, num2, num3]
         except Exception as e:
             sendError(self.id+' parseAll 오류가 발생했습니다. '+str(e))
             raise TypeError
@@ -236,9 +238,12 @@ class PipeLine5(Tool):
 
 #보건복지부
 class PipeLine6(Tool):
-    def __init__(self):
+    def __init__(self, test_selectors=None):
         url = 'http://www.mohw.go.kr/react/al/sal0301ls.jsp?PAR_MENU_ID=04&MENU_ID=0403'
-        selectors = ['#sub_content > div.board_list > table > tbody > tr:nth-child(1) > td.ta_l.inl_z > a']
+        if test_selectors == None:
+            selectors = ['#sub_content > div.board_list > table > tbody > tr:nth-child(1) > td.ta_l.inl_z > a']
+        else:
+            selectors = test_selectors
         super().__init__(url, selectors, '6 (보건복지부)')
         self.http_header1 = {
             'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
@@ -258,14 +263,12 @@ class PipeLine6(Tool):
             ls = pd.read_html(res.text)
             table = ls[0]
             try:
-                num1 = int(table.iloc[3,3])
-                num2 = int(table.iloc[3,4])
-                num3 = int(table.iloc[3,6])
+                self.newls = table_parse(table)
             except:
                 num1 = int(table.iloc[1,2])
                 num2 = int(table.iloc[1,3])
                 num3 = int(table.iloc[1,5])
-            self.newls = [num1, num2, num3]
+                self.newls = [num1, num2, num3]
             print('NEWLS', self.newls)
         except Exception as e:
             sendError(self.id+' parseAll 오류가 발생했습니다. '+str(e))

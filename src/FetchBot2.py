@@ -33,20 +33,25 @@ from Util import *
 from PIPELINES import PipeLine1, PipeLine2, PipeLine3, PipeLine6
        
 class FetchBot:
-    def __init__(self):
-        if not len(sys.argv) == 1:
+    def __init__(self, test_selector={'2':None, '3':None, '6':None}):
+        if '-l' in sys.argv:
             # self.line5 = PipeLine5()
             self.middle = True
         else:
-            self.lines = [PipeLine1(), PipeLine2(), PipeLine3(), PipeLine6()]
-            # self.line4 = PipeLine4()
             self.middle = False
+            if '--test' in sys.argv:
+                self.lines = [PipeLine1(), PipeLine2(test_selector['2']), PipeLine3(test_selector['3']), PipeLine6(test_selector['6'])] 
+                # self.lines = [PipeLine1()]
+            else:
+                self.lines = [PipeLine1(), PipeLine2(), PipeLine3(), PipeLine6()]
+                # self.line4 = PipeLine4()
+                
 
     def get_local_data(self):
         #[url, num, index]
         bundle = [['https://www.suwon.go.kr/web/safesuwon/corona/PD_index.do#none', 'body > div.layout > div > ul > li:nth-child(1) > div > div.status.clearfix > table > tbody > tr > td:nth-child(1)', 'body > div.layout > div > ul > li:nth-child(1) > div > div.status.clearfix > div'],
-        ['http://www.yongin.go.kr/health/ictsd/index.do', '#coronabox_1 > div.coronacon_le > div > div:nth-child(1) > div > table > tbody > tr:nth-child(1) > td > b', '#coronabox_1 > div.coronacon_le > div > div:nth-child(1) > h4 > span'],
-        ['http://www.seongnam.go.kr/coronaIndex.html', '#corona_page > div.corona_page_top > div > div.contents_all > ul > li.deep > p', '#corona_page > div.corona_page_top > div > div.contents_all > span']]
+        ['http://www.yongin.go.kr/index.do', '#corona_top > div > ul > li:nth-child(1) > p', '#corona_top > div > p:nth-child(5)'],
+        ['http://www.seongnam.go.kr/coronaIndex.html', '#corona_page > div.corona_page_top > div > div.contents_all > div.pc_view > table > tbody > tr > td:nth-child(1)', '#corona_page > div.corona_page_top > div > div.contents_all > span']]
         
         #[name, index, num]
         local_data = []
@@ -111,9 +116,27 @@ class FetchBot:
                         return
                     time.sleep(random.uniform(3,8))
 
+    def test_run(self):
+        if self.middle:
+            sendtoBot_Error(edit2_json(self.get_local_data(), self.get_world_data(10)))
+        else:
+            print('테스트 정보 수집 시작!')
+            for line in self.lines:
+                print(line.id+' 업데이트 체크 중...')
+                if line.test_run():
+                    print(line.id+' 업데이트 확인됨.')
+                    data = line.get_data()                  
+                    sendtoBot_Error(edit1_json(data, line.id, self.get_local_data(), self.get_world_data(8)))
+                time.sleep(3)
+
 try:
-    bot = FetchBot()
-    bot.run()
+    if '--test' in sys.argv:
+        ts = [['#listView > ul:nth-child(3) > li.title > a'], ['#content > div > div.board_list > table > tbody > tr:nth-child(4) > td.ta_l > a'], ['#sub_content > div.board_list > table > tbody > tr:nth-child(4) > td.ta_l.inl_z > a']]
+        bot = FetchBot({'2':ts[0], '3':ts[1], '6':ts[2]})
+        bot.test_run()
+    else:
+        bot = FetchBot()
+        bot.run()
 except Exception as e:
     sendError('오류로 인한 종료: '+str(e))
 else:
