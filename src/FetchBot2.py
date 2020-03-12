@@ -95,7 +95,7 @@ class FetchBot:
         if self.middle:
             sendtoBot_card(edit2_json(self.get_local_data(), self.get_world_data(10)))
         else:
-            sendError('정보 수집 시작! 2')
+            sendError('정보 수집 시작!')
             while True:
                 for line in self.lines:
                     if len(self.lines) == 0:
