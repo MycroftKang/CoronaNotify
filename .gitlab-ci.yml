@@ -8,8 +8,9 @@ test:
     - master
   script:
     - ls
-    - cp -r src/ /home/gitlab-runner/CoronaNotify/test
+    - cp -r src/ /home/gitlab-runner/CoronaNotify/test/
     - cd /home/gitlab-runner/CoronaNotify/test
+    - ls
     - python3 FetchBot2.py --test
     - ls
   tags:
@@ -21,8 +22,8 @@ deploy-to-server:
     - master
   script:
     - ls
-    - cp -r src/ /home/gitlab-runner/CoronaNotify/src
-    - cd /home/gitlab-runner/CoronaNotify/test
+    - cp -r src/ /home/gitlab-runner/CoronaNotify/src/
+    - cd /home/gitlab-runner/CoronaNotify/src
     - ls
   tags:
     - deploy
