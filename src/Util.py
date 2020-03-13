@@ -102,7 +102,7 @@ def edit2_json(local_data, world_data, file='send2.json'):
 def edit1_json(data, id, local_data, world_data, file='send1.json'):
     with open(file, 'rt', encoding='utf-8') as f:
         json_dict = json.load(f)
-    
+
     json_dict['contents'][0]['body']['contents'][2]['text'] = '{} 기준'.format(data[0])
     json_dict['contents'][0]['body']['contents'][4]['contents'][0]['contents'][1]['text'] = "{} ({:+d})".format(data[1][0], data[2][0])
     json_dict['contents'][0]['body']['contents'][4]['contents'][1]['contents'][1]['text'] = "{} ({:+d})".format(data[1][1], data[2][1])
@@ -128,17 +128,14 @@ def edit1_json(data, id, local_data, world_data, file='send1.json'):
 
 def table_parse(table):
     """
-    return ['계', '격리해제', '사망']
+    return ['확진환자', '격리해제', '사망']
     """
-    index_names = ['계', '격리해제', '사망']
     newls = []
     for i in range(len(table.columns)):
         if (table[i][0].replace(' ','') == '확진환자현황'):
-            try:
-                insertnum = index_names.index(table[i][1].replace(' ',''))
-                newls.insert(insertnum, int(table[i][3]))
-            except:
-                pass
+            for j in [i, i+1, i+3]:
+                newls.append(int(table[j][3]))
+            break
     return newls
      
 class Material:
@@ -189,17 +186,6 @@ class Material:
         print('UPDATE: '+str(self.update > Material.data[0]))
         return (self.update > Material.data[0])
 
-    def test_run(self):
-        """
-        return (self.update > Material.data[0])
-        """
-        res = self.request()
-        self.soup = BeautifulSoup(res.text, 'html.parser')
-        self.parseUpdate()
-        print('TESTRUN::P'+self.id+'::self.strfupdate '+str(self.strfupdate))
-        print('TESTRUN::P'+self.id+'::self.update '+str(self.update))
-        print('TESTRUN::P'+self.id+'::compare '+str(self.update > Material.data[0]))
-        return True
 
 class Tool(Material):
     def __init__(self, url, selectors, id):
@@ -207,12 +193,37 @@ class Tool(Material):
         super().__init__(url, id)
         self.selectors = selectors
         self.newls = []
+        self.linenum = 0
+        self.test_seltem = None
         if len(Material.data) == 0:
             Material.data = load()
             if len(Material.data) == 0:
                 self.set_data()
                 Material.data = [self.update, self.newls[:]]
                 save(Material.data)
+
+    def test_setNextSelector(self):
+        if self.test_seltem == None:
+            self.test_seltem = self.selectors[0]
+        self.linenum += 1
+        self.selectors[0] = self.test_seltem.replace('?', str(self.linenum))
+        print(self.selectors[0])
+
+    def test_run(self):
+        """
+        return (self.update > Material.data[0])
+        """
+        res = self.request()
+        self.soup = BeautifulSoup(res.text, 'html.parser')
+        self.test_setNextSelector()
+        try:
+            self.parseUpdate()
+        except TypeError:
+            return False
+        print('TESTRUN::P'+self.id+'::self.strfupdate '+str(self.strfupdate))
+        print('TESTRUN::P'+self.id+'::self.update '+str(self.update))
+        print('TESTRUN::P'+self.id+'::compare '+str(self.update > Material.data[0]))
+        return True
             
     def get_data(self):
         """

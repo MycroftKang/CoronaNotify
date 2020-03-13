@@ -28,6 +28,7 @@ import time
 import random
 import sys
 import re
+import traceback
 
 from Util import *
 from PIPELINES import PipeLine1, PipeLine2, PipeLine3, PipeLine6
@@ -121,17 +122,20 @@ class FetchBot:
             sendtoBot_Error(edit2_json(self.get_local_data(), self.get_world_data(10)))
         else:
             print('테스트 정보 수집 시작!')
-            for line in self.lines:
+            while len(self.lines) != 0:
+                line = self.lines[0]
                 print(line.id+' 업데이트 체크 중...')
                 if line.test_run():
                     print(line.id+' 업데이트 확인됨.')
-                    data = line.get_data()                  
+                    data = line.get_data()
                     sendtoBot_Error(edit1_json(data, line.id, self.get_local_data(), self.get_world_data(8)))
+                    self.lines.remove(line)
                 time.sleep(3)
+            print('테스트 완료')
 
 try:
     if '--test' in sys.argv:
-        ts = [['#listView > ul:nth-child(3) > li.title > a'], ['#content > div > div.board_list > table > tbody > tr:nth-child(4) > td.ta_l > a'], ['#sub_content > div.board_list > table > tbody > tr:nth-child(4) > td.ta_l.inl_z > a']]
+        ts = [['#listView > ul:nth-child(?) > li.title > a'], ['#content > div > div.board_list > table > tbody > tr:nth-child(?) > td.ta_l > a'], ['#sub_content > div.board_list > table > tbody > tr:nth-child(?) > td.ta_l.inl_z > a']]
         bot = FetchBot({'2':ts[0], '3':ts[1], '6':ts[2]})
         bot.test_run()
     else:
@@ -139,5 +143,6 @@ try:
         bot.run()
 except Exception as e:
     sendError('오류로 인한 종료: '+str(e))
+    print(traceback.format_exc())
 else:
     sendError('정상적으로 종료되었습니다.')

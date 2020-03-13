@@ -31,7 +31,7 @@ import pandas as pd
 class PipeLine1(Tool):
     def __init__(self):
         url = 'http://ncov.mohw.go.kr/bdBoardList_Real.do?brdId=&brdGubun=&ncvContSeq=&contSeq=&board_id=&gubun='
-        selectors = ['#content > div > div:nth-child(7) > table > tbody > tr > td:nth-child('+str(x)+')' for x in [1, 2, 4]]
+        selectors = ['#content > div > div:nth-child(6) > table > tbody > tr > td:nth-child('+str(x)+')' for x in [1, 2, 4]]
         selectors.insert(0, '#content > div > p')
         super().__init__(url, selectors, '1 (중앙재난안전대책본부)')
 
@@ -70,8 +70,10 @@ class PipeLine2(Tool):
         url = 'https://www.cdc.go.kr/board/board.es?mid=a20501000000&bid=0015'
         if test_selectors == None:
             selectors = ['#listView > ul:nth-child(1) > li.title > a']
+            self.TEST_MODE = False
         else:
             selectors = test_selectors
+            self.TEST_MODE = True
         super().__init__(url, selectors, '2 (질병관리본부)')
         self.http_header1 = {
             'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
@@ -110,13 +112,23 @@ class PipeLine2(Tool):
                 updatestr = m.group(1).replace(',','').replace(' 기준', '').strip()
                 self.strfupdate = updatestr
                 self.update = time.mktime(time.strptime('2020년 '+updatestr, '%Y년 %m월 %d일 %H시'))
+            elif self.TEST_MODE:
+                raise TypeError
             else:
                 self.update = Material.data[0]
+        except TypeError as e:
+            raise e
         except Exception as e:
             print("Error u3 "+str(e))
             self.update = Material.data[0]
             # sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
             # raise TypeError
+
+    def test_setNextSelector(self):
+        if self.test_seltem == None:
+            self.test_seltem = self.selectors[0]
+        self.linenum += 1
+        self.selectors[0] = self.test_seltem.replace('?', str(2*self.linenum-1))
 
 #Cov19
 class PipeLine3(Tool):
@@ -124,8 +136,10 @@ class PipeLine3(Tool):
         url = 'http://ncov.mohw.go.kr/tcmBoardList.do?brdId=&brdGubun=&dataGubun=&ncvContSeq=&contSeq=&board_id=140&gubun='
         if test_selectors == None:
             selectors = ['#content > div > div.board_list > table > tbody > tr:nth-child(1) > td.ta_l > a']
+            self.TEST_MODE = False
         else:
             selectors = test_selectors
+            self.TEST_MODE = True
         super().__init__(url, selectors, '3 (중앙재난안전대책본부)')
 
     def parseAll(self):
@@ -158,8 +172,12 @@ class PipeLine3(Tool):
                 updatestr = m.group(1).strip()
                 self.strfupdate = updatestr
                 self.update = time.mktime(time.strptime('2020년 '+updatestr, '%Y년 %m월 %d일 %H시'))
+            elif self.TEST_MODE:
+                raise TypeError('매칭되지 않음')
             else:
                 self.update = Material.data[0]
+        except TypeError as e:
+            raise e
         except Exception as e:
             print("Error u3 "+str(e))
             self.update = Material.data[0]
@@ -242,8 +260,10 @@ class PipeLine6(Tool):
         url = 'http://www.mohw.go.kr/react/al/sal0301ls.jsp?PAR_MENU_ID=04&MENU_ID=0403'
         if test_selectors == None:
             selectors = ['#sub_content > div.board_list > table > tbody > tr:nth-child(1) > td.ta_l.inl_z > a']
+            self.TEST_MODE = False
         else:
             selectors = test_selectors
+            self.TEST_MODE = True
         super().__init__(url, selectors, '6 (보건복지부)')
         self.http_header1 = {
             'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
@@ -283,8 +303,12 @@ class PipeLine6(Tool):
                 updatestr = m.group(1).strip()
                 self.strfupdate = updatestr
                 self.update = time.mktime(time.strptime('2020년 '+updatestr, '%Y년 %m월 %d일 %H시'))
+            elif self.TEST_MODE:
+                raise TypeError
             else:
                 self.update = Material.data[0]
+        except TypeError as e:
+            raise e
         except Exception as e:
             print("Error u3 "+str(e))
             self.update = Material.data[0]

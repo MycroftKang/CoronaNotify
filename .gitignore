@@ -5,3 +5,4 @@ data.bin
 test*.py
 *.pyc
 world.jpg
+launch.json
