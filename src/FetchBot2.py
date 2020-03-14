@@ -111,7 +111,12 @@ class FetchBot:
                     print(line.id+' 업데이트 체크 중...')
                     if check:
                         print(line.id+' 업데이트 확인됨.')
-                        data = line.get_data()                        
+                        try:
+                            data = line.get_data()
+                        except:
+                            sendError("PIPELINE "+line.id+'에서 get_data() 오류가 발견되어 삭제합니다.')
+                            self.lines.remove(line)
+                            continue
                         sendtoBot_card(edit1_json(data, line.id, self.get_local_data(), self.get_world_data(8)))
                         line.save_data()
                         return
