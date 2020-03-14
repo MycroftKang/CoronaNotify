@@ -31,7 +31,7 @@ import pandas as pd
 class PipeLine1(Tool):
     def __init__(self):
         url = 'http://ncov.mohw.go.kr/bdBoardList_Real.do?brdId=&brdGubun=&ncvContSeq=&contSeq=&board_id=&gubun='
-        selectors = ['#content > div > div:nth-child(6) > table > tbody > tr > td:nth-child('+str(x)+')' for x in [1, 2, 4]]
+        selectors = ['#content > div > div:nth-child(5) > table > tbody > tr > td:nth-child('+str(x)+')' for x in [1, 2, 4]]
         selectors.insert(0, '#content > div > p')
         super().__init__(url, selectors, '1 (중앙재난안전대책본부)')
 
@@ -93,7 +93,7 @@ class PipeLine2(Tool):
             ls = pd.read_html(res.text)
             table = ls[0]
             try:
-                self.newls = table_parse(table)
+                self.newls = table_parse(table, self.data)
             except:
                 num1 = int(table.iloc[1,2])
                 num2 = int(table.iloc[1,3])
@@ -153,7 +153,7 @@ class PipeLine3(Tool):
             ls = pd.read_html(res.text)
             table = ls[0]
             try:
-                self.newls = table_parse(table)
+                self.newls = table_parse(table, self.data)
             except:
                 num1 = int(table.iloc[1,2])
                 num2 = int(table.iloc[1,3])
@@ -283,7 +283,7 @@ class PipeLine6(Tool):
             ls = pd.read_html(res.text)
             table = ls[0]
             try:
-                self.newls = table_parse(table)
+                self.newls = table_parse(table, self.data)
             except:
                 num1 = int(table.iloc[1,2])
                 num2 = int(table.iloc[1,3])

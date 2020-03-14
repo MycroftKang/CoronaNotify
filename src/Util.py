@@ -126,16 +126,21 @@ def edit1_json(data, id, local_data, world_data, file='send1.json'):
 
     return json_dict
 
-def table_parse(table):
+def table_parse(table, data):
     """
     return ['확진환자', '격리해제', '사망']
     """
     newls = []
+    t = 0
     for i in range(len(table.columns)):
-        if (table[i][0].replace(' ','') == '확진환자현황'):
-            for j in [i, i+1, i+3]:
-                newls.append(int(table[j][3]))
-            break
+        tar = str(table[i][2])
+        if tar.isdigit():
+            if (int(tar) == data[1][t]):
+                newls.append(int(table[i][3]))
+                if t>1:
+                    break
+                else:
+                    t += 1
     return newls
      
 class Material:
