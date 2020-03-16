@@ -64,16 +64,16 @@ def sendError(msg, img=None):
     response = requests.post(TARGET_URL, headers={'Authorization': 'Bearer ' + TOKEN}, data={'message': msg}, files={'imageFile': img})
     return response
 
-def sendtoBot_Error(card):
+def sendtoBot_Error(card, title='Corona Notify'):
     TOKEN = API_KEY_FOR_BOT
-    response = requests.post(API_REQUEST_URL, headers={'Content-Type':'application/json', 'Authorization': 'Bearer ' + TOKEN}, json={'to':TEST_GROUP_ID,'messages':[{'type':'flex', 'altText':'Corona Notify', 'contents':card}]})
+    response = requests.post(API_REQUEST_URL, headers={'Content-Type':'application/json', 'Authorization': 'Bearer ' + TOKEN}, json={'to':TEST_GROUP_ID,'messages':[{'type':'flex', 'altText':title, 'contents':card}]})
     print(response.text)
     return response
 
-def sendtoBot_card(card):
+def sendtoBot_card(card, title='Corona Notify'):
     if not DEV_MODE:
         TOKEN = API_KEY_FOR_BOT
-        response = requests.post(API_REQUEST_URL, headers={'Content-Type':'application/json', 'Authorization': 'Bearer ' + TOKEN}, json={'to':GROUP_ID,'messages':[{'type':'flex', 'altText':'Corona Notify', 'contents':card}]})
+        response = requests.post(API_REQUEST_URL, headers={'Content-Type':'application/json', 'Authorization': 'Bearer ' + TOKEN}, json={'to':GROUP_ID,'messages':[{'type':'flex', 'altText':title, 'contents':card}]})
         print(response.text)
         return response
     else:
@@ -99,16 +99,20 @@ def edit2_json(local_data, world_data, file='send2.json'):
     
     return json_dict
 
-def edit1_json(data, id, local_data, world_data, file='send1.json'):
+def edit1_json(data, id, link, local_data, world_data, file='send1.json'):
     with open(file, 'rt', encoding='utf-8') as f:
         json_dict = json.load(f)
 
-    json_dict['contents'][0]['body']['contents'][2]['text'] = '{} 기준'.format(data[0])
-    json_dict['contents'][0]['body']['contents'][4]['contents'][0]['contents'][1]['text'] = "{} ({:+d})".format(data[1][0], data[2][0])
-    json_dict['contents'][0]['body']['contents'][4]['contents'][1]['contents'][1]['text'] = "{} ({:+d})".format(data[1][1], data[2][1])
-    json_dict['contents'][0]['body']['contents'][4]['contents'][2]['contents'][1]['text'] = "{} ({:+d})".format(data[1][2], data[2][2])
-    json_dict['contents'][0]['body']['contents'][6]['contents'][0]['text'] = 'PIPELINE '+str(id)
+    json_dict['contents'][0]['header']['contents'][2]['text'] = '{} 기준'.format(data[0])
+
+    for i in range(3):
+        j = 2*i
+        json_dict['contents'][0]['body']['contents'][0]['contents'][j]['contents'][1]['contents'][0]['text'] = "{}".format(data[1][i])
+        json_dict['contents'][0]['body']['contents'][0]['contents'][j]['contents'][1]['contents'][1]['text'] = "({:+d})".format(data[2][i])
+
+    json_dict['contents'][0]['body']['contents'][1]['contents'][1]['text'] = 'PIPELINE '+str(id)
     # json_dict['contents'][0]['body']['contents'][6]['contents'][0]['text'] = '알고리즘 업데이트에 따른 테스트 알림'
+    json_dict['contents'][0]['footer']['contents'][0]['action']['uri'] = link
 
     for i in range(len(local_data)):
         if not len(local_data[i]) == 0:
@@ -116,9 +120,9 @@ def edit1_json(data, id, local_data, world_data, file='send1.json'):
             json_dict['contents'][1]['body']['contents'][i+2]['contents'][1]['contents'][0]['text'] = local_data[i][1] #index
             json_dict['contents'][1]['body']['contents'][i+2]['contents'][1]['contents'][1]['text'] = local_data[i][2] #num
     
-    halflen = int(len(world_data)/2)
-    for j in range(2):
-        for i in range(halflen): #8
+    halflen = int(len(world_data)/4)
+    for j in range(4):
+        for i in range(halflen):
             _id = halflen*j+i
             json_dict['contents'][j+2]['body']['contents'][i+2]['contents'][0]['text'] = world_data[_id][0] #name
             json_dict['contents'][j+2]['body']['contents'][i+2]['contents'][1]['contents'][0]['text'] = world_data[_id][1] #index

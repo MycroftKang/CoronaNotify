@@ -3,129 +3,220 @@
   "contents": [
     {
       "type": "bubble",
-      "body": {
+      "header": {
         "type": "box",
         "layout": "vertical",
         "contents": [
           {
             "type": "text",
             "text": "Corona Notify",
-            "weight": "bold",
-            "color": "#1DB446",
-            "size": "md"
+            "size": "md",
+            "color": "#ffffff",
+            "weight": "bold"
           },
           {
             "type": "text",
-            "text": "코로나19 현황 업데이트",
+            "text": "COVID-19 현황 업데이트",
             "weight": "bold",
             "size": "lg",
+            "color": "#ffffff",
             "margin": "md"
           },
           {
             "type": "text",
-            "text": "3월 5일 0시 기준",
+            "text": "3월 16일 0시 기준",
             "size": "sm",
-            "color": "#aaaaaa",
+            "color": "#ffffff99",
             "wrap": true,
             "margin": "sm"
-          },
-          {
-            "type": "separator",
-            "margin": "xxl"
-          },
+          }
+        ]
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
           {
             "type": "box",
-            "layout": "vertical",
-            "margin": "xxl",
-            "spacing": "sm",
+            "layout": "horizontal",
             "contents": [
               {
                 "type": "box",
-                "layout": "horizontal",
+                "layout": "vertical",
                 "contents": [
                   {
                     "type": "text",
-                    "text": "확진환자수",
-                    "size": "sm",
+                    "text": "확진환자",
+                    "size": "xs",
                     "color": "#555555",
-                    "flex": 0
+                    "align": "center",
+                    "weight": "bold"
                   },
                   {
-                    "type": "text",
-                    "text": "5328",
-                    "size": "md",
-                    "color": "#111111",
-                    "align": "end"
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "8236",
+                        "size": "xl",
+                        "color": "#de481f",
+                        "align": "center",
+                        "flex": 1
+                      },
+                      {
+                        "type": "text",
+                        "text": "(+74)",
+                        "align": "center",
+                        "size": "sm",
+                        "flex": 1
+                      }
+                    ]
                   }
                 ],
-                "cornerRadius": "100px"
+                "flex": 1,
+                "spacing": "sm"
+              },
+              {
+                "type": "separator"
               },
               {
                 "type": "box",
-                "layout": "horizontal",
+                "layout": "vertical",
                 "contents": [
                   {
                     "type": "text",
-                    "text": "확진환자 격리해제수",
-                    "size": "sm",
+                    "text": "격리해제",
+                    "size": "xs",
                     "color": "#555555",
-                    "flex": 0
+                    "align": "center",
+                    "weight": "bold"
                   },
                   {
-                    "type": "text",
-                    "text": "41",
-                    "size": "md",
-                    "color": "#111111",
-                    "align": "end"
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "1137",
+                        "size": "xl",
+                        "color": "#2b81c8",
+                        "align": "center",
+                        "flex": 1
+                      },
+                      {
+                        "type": "text",
+                        "text": "(+303)",
+                        "align": "center",
+                        "size": "sm",
+                        "flex": 1
+                      }
+                    ]
                   }
-                ]
+                ],
+                "flex": 1,
+                "spacing": "sm"
+              },
+              {
+                "type": "separator"
               },
               {
                 "type": "box",
-                "layout": "horizontal",
+                "layout": "vertical",
                 "contents": [
                   {
                     "type": "text",
-                    "text": "사망자수",
-                    "size": "sm",
+                    "text": "사망",
+                    "size": "xs",
                     "color": "#555555",
-                    "flex": 0
+                    "align": "center",
+                    "weight": "bold"
                   },
                   {
-                    "type": "text",
-                    "text": "32",
-                    "size": "md",
-                    "color": "#111111",
-                    "align": "end"
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "75",
+                        "size": "xl",
+                        "color": "#464646",
+                        "align": "center",
+                        "flex": 1
+                      },
+                      {
+                        "type": "text",
+                        "text": "(+0)",
+                        "align": "center",
+                        "size": "sm",
+                        "flex": 1
+                      }
+                    ]
                   }
-                ]
+                ],
+                "flex": 1,
+                "spacing": "sm"
               }
-            ]
-          },
-          {
-            "type": "separator",
-            "margin": "xxl"
+            ],
+            "spacing": "xxl"
           },
           {
             "type": "box",
             "layout": "horizontal",
-            "margin": "xxl",
             "contents": [
               {
+                "type": "filler",
+                "flex": 1
+              },
+              {
                 "type": "text",
-                "text": "PIPELINE 3",
-                "size": "sm",
-                "color": "#aaaaaa",
+                "text": "PIPELINE 6",
+                "size": "xs",
+                "color": "#aaaaaaaa",
+                "align": "center",
+                "flex": 0
+              },
+              {
+                "type": "separator",
+                "margin": "md"
+              },
+              {
+                "type": "text",
+                "text": "보건복지부",
+                "size": "xs",
+                "color": "#aaaaaaaa",
+                "align": "center",
                 "flex": 0,
-                "gravity": "center",
-                "margin": "md",
-                "wrap": true
+                "margin": "md"
+              },
+              {
+                "type": "filler",
+                "flex": 1
               }
             ]
+          }
+        ],
+        "spacing": "xl"
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "button",
+            "action": {
+              "type": "uri",
+              "label": "Learn more",
+              "uri": "http://linecorp.com/"
+            },
+            "height": "sm"
           }
         ]
       },
       "styles": {
+        "header": {
+          "backgroundColor": "#283e69"
+        },
         "footer": {
           "separator": true
         }
@@ -142,7 +233,8 @@
             "text": "지역별 코로나19 현황",
             "size": "lg",
             "weight": "bold",
-            "margin": "md"
+            "margin": "md",
+            "color": "#283e69"
           },
           {
             "type": "separator",
@@ -284,7 +376,7 @@
             ]
           }
         ],
-        "spacing": "md"
+        "spacing": "lg"
       }
     },
     {
@@ -295,10 +387,11 @@
         "contents": [
           {
             "type": "text",
-            "text": "국가별 코로나19 현황 (1/2)",
+            "text": "국가별 코로나19 현황 (1/4)",
             "size": "lg",
             "weight": "bold",
-            "margin": "md"
+            "margin": "md",
+            "color": "#283e69"
           },
           {
             "type": "separator",
@@ -440,7 +533,7 @@
             ]
           }
         ],
-        "spacing": "md"
+        "spacing": "lg"
       }
     },
     {
@@ -451,10 +544,11 @@
         "contents": [
           {
             "type": "text",
-            "text": "국가별 코로나19 현황 (2/2)",
+            "text": "국가별 코로나19 현황 (2/4)",
             "size": "lg",
             "weight": "bold",
-            "margin": "md"
+            "margin": "md",
+            "color": "#283e69"
           },
           {
             "type": "separator",
@@ -596,7 +690,321 @@
             ]
           }
         ],
-        "spacing": "md"
+        "spacing": "lg"
+      }
+    },
+    {
+      "type": "bubble",
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "국가별 코로나19 현황 (3/4)",
+            "size": "lg",
+            "weight": "bold",
+            "margin": "md",
+            "color": "#283e69"
+          },
+          {
+            "type": "separator",
+            "margin": "md"
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "국가"
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--기준",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  },
+                  {
+                    "type": "text",
+                    "text": "정보 수집 실패",
+                    "align": "end",
+                    "gravity": "center",
+                    "size": "md"
+                  }
+                ],
+                "margin": "xs"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "국가",
+                "size": "md"
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--기준",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  },
+                  {
+                    "type": "text",
+                    "text": "정보 수집 실패",
+                    "align": "end",
+                    "gravity": "center",
+                    "size": "md"
+                  }
+                ],
+                "margin": "xs"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "국가",
+                "size": "md"
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--기준",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  },
+                  {
+                    "type": "text",
+                    "text": "정보 수집 실패",
+                    "align": "end",
+                    "gravity": "center",
+                    "size": "md"
+                  }
+                ],
+                "margin": "xs"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "국가",
+                "size": "md"
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--기준",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  },
+                  {
+                    "type": "text",
+                    "text": "정보 수집 실패",
+                    "align": "end",
+                    "gravity": "center",
+                    "size": "md"
+                  }
+                ],
+                "margin": "xs"
+              }
+            ]
+          }
+        ],
+        "spacing": "lg"
+      }
+    },
+    {
+      "type": "bubble",
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "국가별 코로나19 현황 (4/4)",
+            "size": "lg",
+            "weight": "bold",
+            "margin": "md",
+            "color": "#283e69"
+          },
+          {
+            "type": "separator",
+            "margin": "md"
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "국가"
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--기준",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  },
+                  {
+                    "type": "text",
+                    "text": "정보 수집 실패",
+                    "align": "end",
+                    "gravity": "center",
+                    "size": "md"
+                  }
+                ],
+                "margin": "xs"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "국가",
+                "size": "md"
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--기준",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  },
+                  {
+                    "type": "text",
+                    "text": "정보 수집 실패",
+                    "align": "end",
+                    "gravity": "center",
+                    "size": "md"
+                  }
+                ],
+                "margin": "xs"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "국가",
+                "size": "md"
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--기준",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  },
+                  {
+                    "type": "text",
+                    "text": "정보 수집 실패",
+                    "align": "end",
+                    "gravity": "center",
+                    "size": "md"
+                  }
+                ],
+                "margin": "xs"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "국가",
+                "size": "md"
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--기준",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  },
+                  {
+                    "type": "text",
+                    "text": "정보 수집 실패",
+                    "align": "end",
+                    "gravity": "center",
+                    "size": "md"
+                  }
+                ],
+                "margin": "xs"
+              }
+            ]
+          }
+        ],
+        "spacing": "lg"
       }
     },
     {
@@ -607,7 +1015,7 @@
         "contents": [
           {
             "type": "image",
-            "size": "4xl",
+            "size": "5xl",
             "url": "https://user-images.githubusercontent.com/58393346/75994948-0df59c80-5f3f-11ea-803e-88c91aab1fe5.png",
             "flex": 1,
             "gravity": "center",
@@ -618,9 +1026,9 @@
             "action": {
               "type": "uri",
               "label": "Meet @GitHub",
-              "uri": "https://github.com/TaehyeokKang/CoronaNotify"
+              "uri": "https://github.com/MycroftKang/CoronaNotify"
             },
-            "style": "secondary",
+            "style": "primary",
             "height": "md",
             "flex": 1
           }

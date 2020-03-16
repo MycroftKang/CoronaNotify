@@ -33,7 +33,7 @@ class PipeLine1(Tool):
         url = 'http://ncov.mohw.go.kr/bdBoardList_Real.do?brdId=&brdGubun=&ncvContSeq=&contSeq=&board_id=&gubun='
         selectors = ['#content > div > div:nth-child(5) > table > tbody > tr > td:nth-child('+str(x)+')' for x in [1, 2, 4]]
         selectors.insert(0, '#content > div > p')
-        super().__init__(url, selectors, '1 (중앙재난안전대책본부)')
+        super().__init__(url, selectors, '1')
 
     def parseAll(self):
         super().parseAll()
@@ -44,6 +44,8 @@ class PipeLine1(Tool):
                 if i == 0:
                     continue
                 self.newls.append(int(self.soup.select(self.selectors[i])[0].text.replace('\xa0', '').replace(',','').replace('명', '')))
+            self.url2 = self.url
+            print('NEWLS', self.newls)
         except Exception as e:
             sendError(self.id+' parseAll 오류가 발생했습니다. '+str(e))
             raise TypeError
@@ -74,7 +76,7 @@ class PipeLine2(Tool):
         else:
             selectors = test_selectors
             self.TEST_MODE = True
-        super().__init__(url, selectors, '2 (질병관리본부)')
+        super().__init__(url, selectors, '2')
         self.http_header1 = {
             'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
             'Accept-Encoding':'gzip, deflate, br',
@@ -88,8 +90,8 @@ class PipeLine2(Tool):
             if self.update == None:
                 self.parseUpdate()
             link = self.soup.select(self.selectors[0])[0].get('href')
-            url2 = 'https://www.cdc.go.kr'+link
-            res = self.request(url2)
+            self.url2 = 'https://www.cdc.go.kr'+link
+            res = self.request(self.url2)
             ls = pd.read_html(res.text)
             table = ls[0]
             try:
@@ -99,6 +101,7 @@ class PipeLine2(Tool):
                 num2 = int(table.iloc[1,3])
                 num3 = int(table.iloc[1,5])
                 self.newls = [num1, num2, num3]
+            print('NEWLS', self.newls)
         except Exception as e:
             sendError(self.id+' parseAll 오류가 발생했습니다. '+str(e))
             raise TypeError
@@ -140,7 +143,7 @@ class PipeLine3(Tool):
         else:
             selectors = test_selectors
             self.TEST_MODE = True
-        super().__init__(url, selectors, '3 (중앙재난안전대책본부)')
+        super().__init__(url, selectors, '3')
 
     def parseAll(self):
         try:
@@ -148,8 +151,8 @@ class PipeLine3(Tool):
                 self.parseUpdate()
             code = self.soup.select(self.selectors[0])[0].get('onclick')
             code = code.split(',')[3].replace("'", '')
-            url2 = 'http://ncov.mohw.go.kr/tcmBoardView.do?brdId=&brdGubun=&dataGubun=&ncvContSeq={0}&contSeq={0}&board_id=140&gubun=BDJ'.format(code)
-            res = self.request(url2)
+            self.url2 = 'http://ncov.mohw.go.kr/tcmBoardView.do?brdId=&brdGubun=&dataGubun=&ncvContSeq={0}&contSeq={0}&board_id=140&gubun=BDJ'.format(code)
+            res = self.request(self.url2)
             ls = pd.read_html(res.text)
             table = ls[0]
             try:
@@ -159,6 +162,7 @@ class PipeLine3(Tool):
                 num2 = int(table.iloc[1,3])
                 num3 = int(table.iloc[1,5])
                 self.newls = [num1, num2, num3]
+            print('NEWLS', self.newls)
         except Exception as e:
             sendError(self.id+' parseAll 오류가 발생했습니다. '+str(e))
             raise TypeError
@@ -264,7 +268,7 @@ class PipeLine6(Tool):
         else:
             selectors = test_selectors
             self.TEST_MODE = True
-        super().__init__(url, selectors, '6 (보건복지부)')
+        super().__init__(url, selectors, '6')
         self.http_header1 = {
             'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
             'Accept-Encoding':'gzip, deflate',
@@ -278,8 +282,8 @@ class PipeLine6(Tool):
             if self.update == None:
                 self.parseUpdate()
             link = self.soup.select(self.selectors[0])[0].get('href')
-            url2 = 'http://www.mohw.go.kr'+link
-            res = self.request(url2)
+            self.url2 = 'http://www.mohw.go.kr'+link
+            res = self.request(self.url2)
             ls = pd.read_html(res.text)
             table = ls[0]
             try:
