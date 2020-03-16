@@ -318,3 +318,41 @@ class PipeLine6(Tool):
             self.update = Material.data[0]
             # sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
             # raise TypeError
+
+class PipeLine7(Tool):
+    def __init__(self):
+        url = 'http://ncov.mohw.go.kr/'
+        selectors = ['body > div > div.mainlive_container > div > div > div > div.live_left > div.liveNum > ul > li:nth-child('+str(x)+') > span.num' for x in [1, 2, 4]]
+        selectors.insert(0, 'body > div > div.mainlive_container > div > div > div > div.live_left > h2 > a > span')
+        super().__init__(url, selectors, '7')
+
+    def parseAll(self):
+        super().parseAll()
+        try:
+            if self.update == None:
+                self.parseUpdate()
+            for i in range(len(self.selectors)):
+                if i == 0:
+                    continue
+                self.newls.append(int(self.soup.select(self.selectors[i])[0].text.replace('\xa0', '').replace(',','').replace('명', '').replace('(누적)', '')))
+            self.url2 = self.url
+            print('NEWLS', self.newls)
+        except Exception as e:
+            sendError(self.id+' parseAll 오류가 발생했습니다. '+str(e))
+            raise TypeError
+
+    def parseUpdate(self):
+        try:
+            updatestr = self.soup.select(self.selectors[0])[0].text #기준시간
+            print('RAW: '+updatestr)
+            m = re.search('\((\d+)\D+(\d+)\D+(\d+시).*\)', updatestr)
+            updatestr = '{}월 {}일 {}'.format(m.group(1), m.group(2), m.group(3))
+            updatestr = updatestr.replace('00시', '0시')
+            self.strfupdate = updatestr
+            self.update = time.mktime(time.strptime('2020년 '+updatestr, '%Y년 %m월 %d일 %H시'))
+        except Exception as e:
+            print("Erro u7 "+str(e))
+            # raise e
+            # sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
+            self.update = Material.data[0]
+            # raise TypeError

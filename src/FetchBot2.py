@@ -31,7 +31,7 @@ import re
 import traceback
 
 from Util import *
-from PIPELINES import PipeLine1, PipeLine2, PipeLine3, PipeLine6
+from PIPELINES import PipeLine1, PipeLine2, PipeLine3, PipeLine6, PipeLine7
        
 class FetchBot:
     def __init__(self, test_selector={'2':None, '3':None, '6':None}):
@@ -41,10 +41,10 @@ class FetchBot:
         else:
             self.middle = False
             if '--test' in sys.argv:
-                self.lines = [PipeLine1(), PipeLine2(test_selector['2']), PipeLine3(test_selector['3']), PipeLine6(test_selector['6'])] 
-                # self.lines = [PipeLine1()]
+                # self.lines = [PipeLine1(), PipeLine2(test_selector['2']), PipeLine3(test_selector['3']), PipeLine6(test_selector['6']), PipeLine7()] 
+                self.lines = [PipeLine7()]
             else:
-                self.lines = [PipeLine1(), PipeLine2(), PipeLine3(), PipeLine6()]
+                self.lines = [PipeLine1(), PipeLine2(), PipeLine3(), PipeLine6(), PipeLine7()]
                 # self.line4 = PipeLine4()
                 
 
