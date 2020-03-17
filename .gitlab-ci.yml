@@ -1,20 +1,20 @@
 stages:
-  - test
+  # - test
   - deploy
 
-test:
-  stage: test
-  only:
-    - master
-  script:
-    - ls
-    - cp src/* /home/gitlab-runner/CoronaNotify/test/
-    - cd /home/gitlab-runner/CoronaNotify/test
-    - ls
-    - python3 FetchBot2.py --test
-    - ls
-  tags:
-    - deploy
+# test:
+#   stage: test
+#   only:
+#     - master
+#   script:
+#     - ls
+#     - cp src/* /home/gitlab-runner/CoronaNotify/test/
+#     - cd /home/gitlab-runner/CoronaNotify/test
+#     - ls
+#     - python3 FetchBot2.py --test
+#     - ls
+#   tags:
+#     - deploy
 
 deploy-to-server:
   stage: deploy

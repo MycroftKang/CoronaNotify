@@ -41,8 +41,8 @@ class FetchBot:
         else:
             self.middle = False
             if '--test' in sys.argv:
-                # self.lines = [PipeLine1(), PipeLine2(test_selector['2']), PipeLine3(test_selector['3']), PipeLine6(test_selector['6']), PipeLine7()] 
-                self.lines = [PipeLine7()]
+                self.lines = [PipeLine1(), PipeLine2(test_selector['2']), PipeLine3(test_selector['3']), PipeLine6(test_selector['6']), PipeLine7()] 
+                # self.lines = [PipeLine7()]
             else:
                 self.lines = [PipeLine1(), PipeLine2(), PipeLine3(), PipeLine6(), PipeLine7()]
                 # self.line4 = PipeLine4()
@@ -117,7 +117,7 @@ class FetchBot:
                             sendError("PIPELINE "+line.id+'에서 get_data() 오류가 발견되어 삭제합니다.')
                             self.lines.remove(line)
                             continue
-                        sendtoBot_card(edit1_json(data, line.id, line.url2, self.get_local_data(), self.get_world_data(12)), 'MGLabsBot: 전일대비 {}명 증가'.format(data[2][0]))
+                        sendtoBot_card(edit1_json(data, line.id, line.url2, self.get_local_data(), self.get_world_data(16)), 'MGLabsBot: 전일대비 {}명 증가'.format(data[2][0]))
                         line.save_data()
                         return
                     time.sleep(random.uniform(3,8))
