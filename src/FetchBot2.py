@@ -94,7 +94,7 @@ class FetchBot:
         for i in range(num):
             last = int(data_dict['features'][i]['attributes']['Last_Update']/1000)
             last_str = 'KST '+time.strftime('%m.%d %H:%M', time.localtime(last))+' 기준'
-            country_data = [data_dict['features'][i]['attributes']['Country_Region'], last_str, data_dict['features'][i]['attributes']['Confirmed']]
+            country_data = [str(i+1)+'. '+data_dict['features'][i]['attributes']['Country_Region'], last_str, data_dict['features'][i]['attributes']['Confirmed']]
             world_data.append(country_data)
 
         end = time.time()
