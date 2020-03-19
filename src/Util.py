@@ -105,20 +105,22 @@ def edit1_json(data, id, link, local_data, world_data, file='send1.json'):
 
     json_dict['contents'][0]['header']['contents'][2]['text'] = '{} 기준'.format(data[0])
 
+    base = json_dict['contents'][0]['body']['contents'][0]['contents']
     for i in range(3):
         j = 2*i
-        json_dict['contents'][0]['body']['contents'][0]['contents'][j]['contents'][1]['contents'][0]['text'] = "{}".format(data[1][i])
-        json_dict['contents'][0]['body']['contents'][0]['contents'][j]['contents'][1]['contents'][1]['text'] = "({:+d})".format(data[2][i])
+        base[j]['contents'][1]['contents'][0]['text'] = "{}".format(data[1][i])
+        base[j]['contents'][1]['contents'][1]['text'] = "({:+d})".format(data[2][i])
 
     json_dict['contents'][0]['body']['contents'][1]['contents'][1]['text'] = 'PIPELINE '+str(id)
     # json_dict['contents'][0]['body']['contents'][6]['contents'][0]['text'] = '알고리즘 업데이트에 따른 테스트 알림'
     json_dict['contents'][0]['footer']['contents'][0]['action']['uri'] = link
 
+    base = json_dict['contents'][1]['body']['contents']
     for i in range(len(local_data)):
         if not len(local_data[i]) == 0:
-            json_dict['contents'][1]['body']['contents'][i+2]['contents'][0]['text'] = local_data[i][0] #name
-            json_dict['contents'][1]['body']['contents'][i+2]['contents'][1]['contents'][0]['text'] = local_data[i][1] #index
-            json_dict['contents'][1]['body']['contents'][i+2]['contents'][1]['contents'][1]['text'] = local_data[i][2] #num
+            base[i+2]['contents'][0]['text'] = local_data[i][0] #name
+            base[i+2]['contents'][1]['contents'][0]['text'] = local_data[i][1] #index
+            base[i+2]['contents'][1]['contents'][1]['text'] = local_data[i][2] #num
     
     halflen = int(len(world_data)/4)
     for j in range(4):

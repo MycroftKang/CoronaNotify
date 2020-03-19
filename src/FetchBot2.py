@@ -49,6 +49,8 @@ class FetchBot:
                 
 
     def get_local_data(self):
+        print('Local Data 수집 시작')
+        start = time.time()
         #[url, num, index]
         bundle = [['https://www.suwon.go.kr/web/safesuwon/corona/PD_index.do#none', 'body > div.layout > div > ul > li:nth-child(1) > div > div.status.clearfix > table > tbody > tr > td:nth-child(1)', 'body > div.layout > div > ul > li:nth-child(1) > div > div.status.clearfix > div'],
         ['http://www.yongin.go.kr/index.do', '#corona_top > div > ul > li:nth-child(1) > p', '#corona_top > div > p:nth-child(5)'],
@@ -59,14 +61,15 @@ class FetchBot:
  
         for data in bundle:
             try:
-                res = requests.get(data[0])
+                res = requests.get(data[0], timeout=3)
                 soup = BeautifulSoup(res.text, 'html.parser')
                 ni = soup.select(data[2])[0].text.split(',')
                 local_data.append([ni[0], ni[1].strip(' '), soup.select(data[1])[0].text.replace('\r', '').replace('\n', '').replace('\t', '')])
             except:
                 local_data.append([])
+        
         try:
-            res = requests.post('http://27.101.50.5/prog/stat/corona/json.do')
+            res = requests.post('http://27.101.50.5/prog/stat/corona/json.do', timeout=3)
             datadict = res.json()
             index = datadict['status_date']
             m = re.search('(.+기준)', index)
@@ -75,10 +78,14 @@ class FetchBot:
             local_data.append(['천안시청', index, str(datadict['item_1'])+'명'])
         except:
             local_data.append([])
-
+        
+        end = time.time()
+        print('Local Data 수집 끝', end-start)
         return local_data
 
     def get_world_data(self, num):
+        print('World Data 수집 시작')
+        start = time.time()
         x = requests.get('https://services1.arcgis.com/0MSEUqKaxRlEPj5g/arcgis/rest/services/ncov_cases/FeatureServer/2/query?f=json&where=Confirmed%20%3E%200&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&orderByFields=Confirmed%20desc&resultOffset=0&resultRecordCount=200&cacheHint=true')
         data_dict = x.json()
 
@@ -90,6 +97,8 @@ class FetchBot:
             country_data = [data_dict['features'][i]['attributes']['Country_Region'], last_str, data_dict['features'][i]['attributes']['Confirmed']]
             world_data.append(country_data)
 
+        end = time.time()
+        print('World Data 수집 끝', end-start)
         return world_data
 
     def run(self):
@@ -111,6 +120,7 @@ class FetchBot:
                     print(line.id+' 업데이트 체크 중...')
                     if check:
                         print(line.id+' 업데이트 확인됨.')
+                        sendError("PIPELINE "+line.id+'에서 업데이트 확인됨.')
                         try:
                             data = line.get_data()
                         except:
@@ -120,7 +130,7 @@ class FetchBot:
                         sendtoBot_card(edit1_json(data, line.id, line.url2, self.get_local_data(), self.get_world_data(16)), 'MGLabsBot: 전일대비 {}명 증가'.format(data[2][0]))
                         line.save_data()
                         return
-                    time.sleep(random.uniform(3,8))
+                    time.sleep(random.uniform(3,5))
 
     def test_run(self):
         if self.middle:
