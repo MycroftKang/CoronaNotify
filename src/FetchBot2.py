@@ -151,9 +151,12 @@ class FetchBot:
 
     @staticmethod
     def renew(replyToken):
-        data = load()
-        replybyBot_card(edit1_json(data, '#RENEW', 'http://ncov.mohw.go.kr/', FetchBot.get_local_data(), FetchBot.get_world_data(16)), replyToken, 'MGLabsBot: 정보가 업데이트 되었습니다.')
-
+        line = PipeLine1()
+        if line.test_run():
+            data = line.get_data()
+            replybyBot_card(edit1_json(data, '#RENEW', line.url2, FetchBot.get_local_data(), FetchBot.get_world_data(16)), replyToken, 'MGLabsBot: 정보가 업데이트 되었습니다.')
+        print('업데이트 완료')
+        
 try:
     if '--test' in sys.argv:
         ts = [['#listView > ul:nth-child(?) > li.title > a'], ['#content > div > div.board_list > table > tbody > tr:nth-child(?) > td.ta_l > a'], ['#sub_content > div.board_list > table > tbody > tr:nth-child(?) > td.ta_l.inl_z > a']]
