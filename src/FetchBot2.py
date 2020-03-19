@@ -47,8 +47,8 @@ class FetchBot:
                 self.lines = [PipeLine1(), PipeLine2(), PipeLine3(), PipeLine6(), PipeLine7()]
                 # self.line4 = PipeLine4()
                 
-
-    def get_local_data(self):
+    @staticmethod
+    def get_local_data():
         print('Local Data 수집 시작')
         start = time.time()
         #[url, num, index]
@@ -83,7 +83,8 @@ class FetchBot:
         print('Local Data 수집 끝', end-start)
         return local_data
 
-    def get_world_data(self, num):
+    @staticmethod
+    def get_world_data(num):
         print('World Data 수집 시작')
         start = time.time()
         x = requests.get('https://services1.arcgis.com/0MSEUqKaxRlEPj5g/arcgis/rest/services/ncov_cases/FeatureServer/2/query?f=json&where=Confirmed%20%3E%200&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&orderByFields=Confirmed%20desc&resultOffset=0&resultRecordCount=200&cacheHint=true')
@@ -148,11 +149,19 @@ class FetchBot:
                 time.sleep(3)
             print('테스트 완료')
 
+    @staticmethod
+    def renew(replyToken):
+        data = load()
+        replybyBot_card(edit1_json(data, '#RENEW', 'http://ncov.mohw.go.kr/', FetchBot.get_local_data(), FetchBot.get_world_data(16)), replyToken, 'MGLabsBot: 정보가 업데이트 되었습니다.')
+
 try:
     if '--test' in sys.argv:
         ts = [['#listView > ul:nth-child(?) > li.title > a'], ['#content > div > div.board_list > table > tbody > tr:nth-child(?) > td.ta_l > a'], ['#sub_content > div.board_list > table > tbody > tr:nth-child(?) > td.ta_l.inl_z > a']]
         bot = FetchBot({'2':ts[0], '3':ts[1], '6':ts[2]})
         bot.test_run()
+    elif '--renew' in sys.argv:
+        indexnum = sys.argv.index('--renew')
+        FetchBot.renew(sys.argv[indexnum+1])
     else:
         bot = FetchBot()
         bot.run()
