@@ -151,10 +151,7 @@ class FetchBot:
 
     @staticmethod
     def renew(replyToken):
-        line = PipeLine1()
-        if line.test_run():
-            data = line.get_data()
-            replybyBot_card(edit1_json(data, '#RENEW', line.url2, FetchBot.get_local_data(), FetchBot.get_world_data(16)), replyToken, 'MGLabsBot: 정보가 업데이트 되었습니다.')
+        replybyBot_card(edit2_json(FetchBot.get_local_data(), FetchBot.get_world_data(16)), replyToken, 'MGLabsBot: 정보가 업데이트 되었습니다.')
         print('업데이트 완료')
         
 try:

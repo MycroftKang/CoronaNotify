@@ -89,20 +89,21 @@ def edit2_json(local_data, world_data, file='send2.json'):
     with open(file, 'rt', encoding='utf-8') as f:
         json_dict = json.load(f)
 
+    base = json_dict['contents'][0]['body']['contents']
     for i in range(len(local_data)):
         if not len(local_data[i]) == 0:
-            json_dict['contents'][0]['body']['contents'][i+3]['contents'][0]['text'] = local_data[i][0] #name
-            json_dict['contents'][0]['body']['contents'][i+3]['contents'][1]['contents'][0]['text'] = local_data[i][1] #index
-            json_dict['contents'][0]['body']['contents'][i+3]['contents'][1]['contents'][1]['text'] = local_data[i][2] #num
+            base[i+2]['contents'][0]['text'] = local_data[i][0] #name
+            base[i+2]['contents'][1]['contents'][0]['text'] = local_data[i][1] #index
+            base[i+2]['contents'][1]['contents'][1]['text'] = local_data[i][2] #num
     
-    halflen = int(len(world_data)/2)
-    for j in range(2):
-        for i in range(halflen): #10
+    halflen = int(len(world_data)/4)
+    for j in range(4):
+        for i in range(halflen):
             _id = halflen*j+i
             json_dict['contents'][j+1]['body']['contents'][i+2]['contents'][0]['text'] = world_data[_id][0] #name
             json_dict['contents'][j+1]['body']['contents'][i+2]['contents'][1]['contents'][0]['text'] = world_data[_id][1] #index
             json_dict['contents'][j+1]['body']['contents'][i+2]['contents'][1]['contents'][1]['text'] = '{}명'.format(world_data[_id][2]) #num
-    
+
     return json_dict
 
 def edit1_json(data, id, link, local_data, world_data, file='send1.json'):
