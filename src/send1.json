@@ -140,7 +140,7 @@
                         "type": "text",
                         "text": "75",
                         "size": "xl",
-                        "color": "#464646",
+                        "color": "#858585",
                         "align": "center",
                         "flex": 1
                       },
@@ -224,159 +224,604 @@
     },
     {
       "type": "bubble",
+      "header": {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Local Cases",
+            "size": "md",
+            "margin": "md",
+            "color": "#283e69",
+            "flex": 0,
+            "weight": "bold"
+          },
+          {
+            "type": "text",
+            "text": "MGFetch Bot",
+            "size": "xs",
+            "gravity": "center",
+            "align": "end"
+          }
+        ]
+      },
       "body": {
         "type": "box",
         "layout": "vertical",
         "contents": [
           {
-            "type": "text",
-            "text": "지역별 COVID-19 현황",
-            "size": "lg",
-            "weight": "bold",
-            "margin": "md",
-            "color": "#283e69"
-          },
-          {
-            "type": "separator",
-            "margin": "md"
-          },
-          {
             "type": "box",
-            "layout": "vertical",
+            "layout": "horizontal",
             "contents": [
               {
-                "type": "text",
-                "text": "수원시"
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "수원시"
+                  },
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "color": "#aaaaaa"
+                  }
+                ],
+                "flex": 0
               },
               {
                 "type": "box",
                 "layout": "horizontal",
                 "contents": [
                   {
-                    "type": "text",
-                    "text": "-월 -일 --:--기준",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
-                  },
-                  {
-                    "type": "text",
-                    "text": "정보 수집 실패",
-                    "align": "end",
-                    "gravity": "center",
-                    "size": "md"
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "N/A",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#de481f"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
                   }
-                ],
-                "margin": "xs"
+                ]
               }
             ]
           },
           {
             "type": "box",
-            "layout": "vertical",
+            "layout": "horizontal",
             "contents": [
               {
-                "type": "text",
-                "text": "용인시",
-                "size": "md"
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "용인시"
+                  },
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "color": "#aaaaaa"
+                  }
+                ],
+                "flex": 7
               },
               {
                 "type": "box",
                 "layout": "horizontal",
                 "contents": [
                   {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "N/A",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#de481f"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
+                  }
+                ],
+                "flex": 1
+              }
+            ],
+            "flex": 0
+          },
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
                     "type": "text",
-                    "text": "-월 -일 --:--기준",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
+                    "text": "성남시"
                   },
                   {
                     "type": "text",
-                    "text": "정보 수집 실패",
-                    "align": "end",
+                    "text": "-월 -일 --:--",
+                    "size": "sm",
                     "gravity": "center",
-                    "size": "md"
+                    "align": "start",
+                    "color": "#aaaaaa"
                   }
                 ],
-                "margin": "xs"
+                "flex": 7
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "N/A",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#de481f"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
+                  }
+                ],
+                "flex": 1
               }
             ]
           },
           {
             "type": "box",
-            "layout": "vertical",
+            "layout": "horizontal",
             "contents": [
               {
-                "type": "text",
-                "text": "성남시",
-                "size": "md"
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "천안시"
+                  },
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "color": "#aaaaaa"
+                  }
+                ],
+                "flex": 7
               },
               {
                 "type": "box",
                 "layout": "horizontal",
                 "contents": [
                   {
-                    "type": "text",
-                    "text": "-월 -일 --:--기준",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
-                  },
-                  {
-                    "type": "text",
-                    "text": "정보 수집 실패",
-                    "align": "end",
-                    "gravity": "center",
-                    "size": "md"
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "N/A",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#de481f"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
                   }
                 ],
-                "margin": "xs"
-              }
-            ]
-          },
-          {
-            "type": "box",
-            "layout": "vertical",
-            "contents": [
-              {
-                "type": "text",
-                "text": "천안시",
-                "size": "md"
-              },
-              {
-                "type": "box",
-                "layout": "horizontal",
-                "contents": [
-                  {
-                    "type": "text",
-                    "text": "-월 -일 --:--기준",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
-                  },
-                  {
-                    "type": "text",
-                    "text": "정보 수집 실패",
-                    "align": "end",
-                    "gravity": "center",
-                    "size": "md"
-                  }
-                ],
-                "margin": "xs"
+                "flex": 1
               }
             ]
           }
         ],
-        "spacing": "lg"
+        "spacing": "xl"
+      },
+      "styles": {
+        "header": {
+          "backgroundColor": "#eceff1"
+        }
+      }
+    },
+    {
+      "type": "bubble",
+      "header": {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Global Cases",
+            "size": "md",
+            "weight": "bold",
+            "margin": "md",
+            "color": "#283e69",
+            "flex": 0
+          },
+          {
+            "type": "text",
+            "text": "Johns Hopkins Univ.",
+            "size": "xs",
+            "gravity": "center",
+            "align": "end"
+          }
+        ]
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "국가"
+                  },
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  }
+                ],
+                "flex": 15
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#de481f"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "separator",
+                    "margin": "sm"
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#858585"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
+                  }
+                ],
+                "flex": 12
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "국가"
+                  },
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  }
+                ],
+                "flex": 15
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#de481f"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "separator",
+                    "margin": "sm"
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#858585"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
+                  }
+                ],
+                "flex": 12
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "국가"
+                  },
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  }
+                ],
+                "flex": 15
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#de481f"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "separator",
+                    "margin": "sm"
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#858585"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
+                  }
+                ],
+                "flex": 12
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "국가"
+                  },
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  }
+                ],
+                "flex": 15
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#de481f"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "separator",
+                    "margin": "sm"
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#858585"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
+                  }
+                ],
+                "flex": 12
+              }
+            ]
+          }
+        ],
+        "spacing": "xl"
+      },
+      "styles": {
+        "header": {
+          "backgroundColor": "#eceff1"
+        }
       }
     },
     {
@@ -386,154 +831,407 @@
         "layout": "vertical",
         "contents": [
           {
-            "type": "text",
-            "text": "국가별 COVID-19 현황 (1/4)",
-            "size": "lg",
-            "weight": "bold",
-            "margin": "md",
-            "color": "#283e69"
-          },
-          {
-            "type": "separator",
-            "margin": "md"
-          },
-          {
             "type": "box",
-            "layout": "vertical",
+            "layout": "horizontal",
             "contents": [
               {
-                "type": "text",
-                "text": "국가"
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "국가"
+                  },
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  }
+                ],
+                "flex": 15
               },
               {
                 "type": "box",
                 "layout": "horizontal",
                 "contents": [
                   {
-                    "type": "text",
-                    "text": "-월 -일 --:--기준",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#de481f"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
                   },
                   {
-                    "type": "text",
-                    "text": "정보 수집 실패",
-                    "align": "end",
-                    "gravity": "center",
-                    "size": "md"
+                    "type": "separator",
+                    "margin": "sm"
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#858585"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
                   }
                 ],
-                "margin": "xs"
+                "flex": 12
               }
             ]
           },
           {
             "type": "box",
-            "layout": "vertical",
+            "layout": "horizontal",
             "contents": [
               {
-                "type": "text",
-                "text": "국가",
-                "size": "md"
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "국가"
+                  },
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  }
+                ],
+                "flex": 15
               },
               {
                 "type": "box",
                 "layout": "horizontal",
                 "contents": [
                   {
-                    "type": "text",
-                    "text": "-월 -일 --:--기준",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#de481f"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
                   },
                   {
-                    "type": "text",
-                    "text": "정보 수집 실패",
-                    "align": "end",
-                    "gravity": "center",
-                    "size": "md"
+                    "type": "separator",
+                    "margin": "sm"
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#858585"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
                   }
                 ],
-                "margin": "xs"
+                "flex": 12
               }
             ]
           },
           {
             "type": "box",
-            "layout": "vertical",
+            "layout": "horizontal",
             "contents": [
               {
-                "type": "text",
-                "text": "국가",
-                "size": "md"
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "국가"
+                  },
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  }
+                ],
+                "flex": 15
               },
               {
                 "type": "box",
                 "layout": "horizontal",
                 "contents": [
                   {
-                    "type": "text",
-                    "text": "-월 -일 --:--기준",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#de481f"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
                   },
                   {
-                    "type": "text",
-                    "text": "정보 수집 실패",
-                    "align": "end",
-                    "gravity": "center",
-                    "size": "md"
+                    "type": "separator",
+                    "margin": "sm"
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#858585"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
                   }
                 ],
-                "margin": "xs"
+                "flex": 12
               }
             ]
           },
           {
             "type": "box",
-            "layout": "vertical",
+            "layout": "horizontal",
             "contents": [
               {
-                "type": "text",
-                "text": "국가",
-                "size": "md"
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "국가"
+                  },
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  }
+                ],
+                "flex": 15
               },
               {
                 "type": "box",
                 "layout": "horizontal",
                 "contents": [
                   {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#de481f"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "separator",
+                    "margin": "sm"
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#858585"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
+                  }
+                ],
+                "flex": 12
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
                     "type": "text",
-                    "text": "-월 -일 --:--기준",
+                    "text": "국가"
+                  },
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--",
                     "size": "sm",
                     "gravity": "center",
                     "align": "start",
                     "flex": 0,
                     "color": "#aaaaaa"
-                  },
-                  {
-                    "type": "text",
-                    "text": "정보 수집 실패",
-                    "align": "end",
-                    "gravity": "center",
-                    "size": "md"
                   }
                 ],
-                "margin": "xs"
+                "flex": 15
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#de481f"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "separator",
+                    "margin": "sm"
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#858585"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
+                  }
+                ],
+                "flex": 12
               }
             ]
           }
         ],
-        "spacing": "lg"
+        "spacing": "xl"
+      },
+      "styles": {
+        "header": {
+          "backgroundColor": "#eceff1"
+        }
       }
     },
     {
@@ -543,154 +1241,407 @@
         "layout": "vertical",
         "contents": [
           {
-            "type": "text",
-            "text": "국가별 COVID-19 현황 (2/4)",
-            "size": "lg",
-            "weight": "bold",
-            "margin": "md",
-            "color": "#283e69"
-          },
-          {
-            "type": "separator",
-            "margin": "md"
-          },
-          {
             "type": "box",
-            "layout": "vertical",
+            "layout": "horizontal",
             "contents": [
               {
-                "type": "text",
-                "text": "국가"
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "국가"
+                  },
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  }
+                ],
+                "flex": 15
               },
               {
                 "type": "box",
                 "layout": "horizontal",
                 "contents": [
                   {
-                    "type": "text",
-                    "text": "-월 -일 --:--기준",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#de481f"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
                   },
                   {
-                    "type": "text",
-                    "text": "정보 수집 실패",
-                    "align": "end",
-                    "gravity": "center",
-                    "size": "md"
+                    "type": "separator",
+                    "margin": "sm"
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#858585"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
                   }
                 ],
-                "margin": "xs"
+                "flex": 12
               }
             ]
           },
           {
             "type": "box",
-            "layout": "vertical",
+            "layout": "horizontal",
             "contents": [
               {
-                "type": "text",
-                "text": "국가",
-                "size": "md"
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "국가"
+                  },
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  }
+                ],
+                "flex": 15
               },
               {
                 "type": "box",
                 "layout": "horizontal",
                 "contents": [
                   {
-                    "type": "text",
-                    "text": "-월 -일 --:--기준",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#de481f"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
                   },
                   {
-                    "type": "text",
-                    "text": "정보 수집 실패",
-                    "align": "end",
-                    "gravity": "center",
-                    "size": "md"
+                    "type": "separator",
+                    "margin": "sm"
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#858585"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
                   }
                 ],
-                "margin": "xs"
+                "flex": 12
               }
             ]
           },
           {
             "type": "box",
-            "layout": "vertical",
+            "layout": "horizontal",
             "contents": [
               {
-                "type": "text",
-                "text": "국가",
-                "size": "md"
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "국가"
+                  },
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  }
+                ],
+                "flex": 15
               },
               {
                 "type": "box",
                 "layout": "horizontal",
                 "contents": [
                   {
-                    "type": "text",
-                    "text": "-월 -일 --:--기준",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#de481f"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
                   },
                   {
-                    "type": "text",
-                    "text": "정보 수집 실패",
-                    "align": "end",
-                    "gravity": "center",
-                    "size": "md"
+                    "type": "separator",
+                    "margin": "sm"
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#858585"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
                   }
                 ],
-                "margin": "xs"
+                "flex": 12
               }
             ]
           },
           {
             "type": "box",
-            "layout": "vertical",
+            "layout": "horizontal",
             "contents": [
               {
-                "type": "text",
-                "text": "국가",
-                "size": "md"
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "국가"
+                  },
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  }
+                ],
+                "flex": 15
               },
               {
                 "type": "box",
                 "layout": "horizontal",
                 "contents": [
                   {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#de481f"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "separator",
+                    "margin": "sm"
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#858585"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
+                  }
+                ],
+                "flex": 12
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
                     "type": "text",
-                    "text": "-월 -일 --:--기준",
+                    "text": "국가"
+                  },
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--",
                     "size": "sm",
                     "gravity": "center",
                     "align": "start",
                     "flex": 0,
                     "color": "#aaaaaa"
-                  },
-                  {
-                    "type": "text",
-                    "text": "정보 수집 실패",
-                    "align": "end",
-                    "gravity": "center",
-                    "size": "md"
                   }
                 ],
-                "margin": "xs"
+                "flex": 15
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#de481f"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "separator",
+                    "margin": "sm"
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#858585"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
+                  }
+                ],
+                "flex": 12
               }
             ]
           }
         ],
-        "spacing": "lg"
+        "spacing": "xl"
+      },
+      "styles": {
+        "header": {
+          "backgroundColor": "#eceff1"
+        }
       }
     },
     {
@@ -700,311 +1651,407 @@
         "layout": "vertical",
         "contents": [
           {
-            "type": "text",
-            "text": "국가별 COVID-19 현황 (3/4)",
-            "size": "lg",
-            "weight": "bold",
-            "margin": "md",
-            "color": "#283e69"
-          },
-          {
-            "type": "separator",
-            "margin": "md"
-          },
-          {
             "type": "box",
-            "layout": "vertical",
+            "layout": "horizontal",
             "contents": [
               {
-                "type": "text",
-                "text": "국가"
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "국가"
+                  },
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  }
+                ],
+                "flex": 15
               },
               {
                 "type": "box",
                 "layout": "horizontal",
                 "contents": [
                   {
-                    "type": "text",
-                    "text": "-월 -일 --:--기준",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#de481f"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
                   },
                   {
-                    "type": "text",
-                    "text": "정보 수집 실패",
-                    "align": "end",
-                    "gravity": "center",
-                    "size": "md"
+                    "type": "separator",
+                    "margin": "sm"
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#858585"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
                   }
                 ],
-                "margin": "xs"
+                "flex": 12
               }
             ]
           },
           {
             "type": "box",
-            "layout": "vertical",
+            "layout": "horizontal",
             "contents": [
               {
-                "type": "text",
-                "text": "국가",
-                "size": "md"
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "국가"
+                  },
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  }
+                ],
+                "flex": 15
               },
               {
                 "type": "box",
                 "layout": "horizontal",
                 "contents": [
                   {
-                    "type": "text",
-                    "text": "-월 -일 --:--기준",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#de481f"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
                   },
                   {
-                    "type": "text",
-                    "text": "정보 수집 실패",
-                    "align": "end",
-                    "gravity": "center",
-                    "size": "md"
+                    "type": "separator",
+                    "margin": "sm"
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#858585"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
                   }
                 ],
-                "margin": "xs"
+                "flex": 12
               }
             ]
           },
           {
             "type": "box",
-            "layout": "vertical",
+            "layout": "horizontal",
             "contents": [
               {
-                "type": "text",
-                "text": "국가",
-                "size": "md"
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "국가"
+                  },
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  }
+                ],
+                "flex": 15
               },
               {
                 "type": "box",
                 "layout": "horizontal",
                 "contents": [
                   {
-                    "type": "text",
-                    "text": "-월 -일 --:--기준",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#de481f"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
                   },
                   {
-                    "type": "text",
-                    "text": "정보 수집 실패",
-                    "align": "end",
-                    "gravity": "center",
-                    "size": "md"
+                    "type": "separator",
+                    "margin": "sm"
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#858585"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
                   }
                 ],
-                "margin": "xs"
+                "flex": 12
               }
             ]
           },
           {
             "type": "box",
-            "layout": "vertical",
+            "layout": "horizontal",
             "contents": [
               {
-                "type": "text",
-                "text": "국가",
-                "size": "md"
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "국가"
+                  },
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--",
+                    "size": "sm",
+                    "gravity": "center",
+                    "align": "start",
+                    "flex": 0,
+                    "color": "#aaaaaa"
+                  }
+                ],
+                "flex": 15
               },
               {
                 "type": "box",
                 "layout": "horizontal",
                 "contents": [
                   {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#de481f"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "separator",
+                    "margin": "sm"
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#858585"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
+                  }
+                ],
+                "flex": 12
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "vertical",
+                "contents": [
+                  {
                     "type": "text",
-                    "text": "-월 -일 --:--기준",
+                    "text": "국가"
+                  },
+                  {
+                    "type": "text",
+                    "text": "-월 -일 --:--",
                     "size": "sm",
                     "gravity": "center",
                     "align": "start",
                     "flex": 0,
                     "color": "#aaaaaa"
-                  },
-                  {
-                    "type": "text",
-                    "text": "정보 수집 실패",
-                    "align": "end",
-                    "gravity": "center",
-                    "size": "md"
                   }
                 ],
-                "margin": "xs"
+                "flex": 15
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#de481f"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "separator",
+                    "margin": "sm"
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#858585"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ]
+                  }
+                ],
+                "flex": 12
               }
             ]
           }
         ],
-        "spacing": "lg"
-      }
-    },
-    {
-      "type": "bubble",
-      "body": {
-        "type": "box",
-        "layout": "vertical",
-        "contents": [
-          {
-            "type": "text",
-            "text": "국가별 COVID-19 현황 (4/4)",
-            "size": "lg",
-            "weight": "bold",
-            "margin": "md",
-            "color": "#283e69"
-          },
-          {
-            "type": "separator",
-            "margin": "md"
-          },
-          {
-            "type": "box",
-            "layout": "vertical",
-            "contents": [
-              {
-                "type": "text",
-                "text": "국가"
-              },
-              {
-                "type": "box",
-                "layout": "horizontal",
-                "contents": [
-                  {
-                    "type": "text",
-                    "text": "-월 -일 --:--기준",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
-                  },
-                  {
-                    "type": "text",
-                    "text": "정보 수집 실패",
-                    "align": "end",
-                    "gravity": "center",
-                    "size": "md"
-                  }
-                ],
-                "margin": "xs"
-              }
-            ]
-          },
-          {
-            "type": "box",
-            "layout": "vertical",
-            "contents": [
-              {
-                "type": "text",
-                "text": "국가",
-                "size": "md"
-              },
-              {
-                "type": "box",
-                "layout": "horizontal",
-                "contents": [
-                  {
-                    "type": "text",
-                    "text": "-월 -일 --:--기준",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
-                  },
-                  {
-                    "type": "text",
-                    "text": "정보 수집 실패",
-                    "align": "end",
-                    "gravity": "center",
-                    "size": "md"
-                  }
-                ],
-                "margin": "xs"
-              }
-            ]
-          },
-          {
-            "type": "box",
-            "layout": "vertical",
-            "contents": [
-              {
-                "type": "text",
-                "text": "국가",
-                "size": "md"
-              },
-              {
-                "type": "box",
-                "layout": "horizontal",
-                "contents": [
-                  {
-                    "type": "text",
-                    "text": "-월 -일 --:--기준",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
-                  },
-                  {
-                    "type": "text",
-                    "text": "정보 수집 실패",
-                    "align": "end",
-                    "gravity": "center",
-                    "size": "md"
-                  }
-                ],
-                "margin": "xs"
-              }
-            ]
-          },
-          {
-            "type": "box",
-            "layout": "vertical",
-            "contents": [
-              {
-                "type": "text",
-                "text": "국가",
-                "size": "md"
-              },
-              {
-                "type": "box",
-                "layout": "horizontal",
-                "contents": [
-                  {
-                    "type": "text",
-                    "text": "-월 -일 --:--기준",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
-                  },
-                  {
-                    "type": "text",
-                    "text": "정보 수집 실패",
-                    "align": "end",
-                    "gravity": "center",
-                    "size": "md"
-                  }
-                ],
-                "margin": "xs"
-              }
-            ]
-          }
-        ],
-        "spacing": "lg"
+        "spacing": "xl"
+      },
+      "styles": {
+        "header": {
+          "backgroundColor": "#eceff1"
+        }
       }
     },
     {

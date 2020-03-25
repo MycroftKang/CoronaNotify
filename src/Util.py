@@ -33,18 +33,18 @@ from APIKey import *
 DEV_MODE = False
 BASE_PATH=''
 
-def isfile(file='data.bin'):
+def isfile(file='data.bin', default=[]):
     if os.path.isfile(BASE_PATH+file):
         return
     else:
-        save([], file)
+        save(default, file)
 
 def save(data, file='data.bin'):
     with open(BASE_PATH+file, 'wb') as f:
         pickle.dump(data, f)
 
-def load(file='data.bin'):
-    isfile(file)
+def load(file='data.bin', default=[]):
+    isfile(file, default)
     with open(BASE_PATH+file, 'rb') as f:
         data = pickle.load(f)
     return data
@@ -92,17 +92,32 @@ def edit2_json(local_data, world_data, file='send2.json'):
     base = json_dict['contents'][0]['body']['contents']
     for i in range(len(local_data)):
         if not len(local_data[i]) == 0:
-            base[i+2]['contents'][0]['text'] = local_data[i][0] #name
-            base[i+2]['contents'][1]['contents'][0]['text'] = local_data[i][1] #index
-            base[i+2]['contents'][1]['contents'][1]['text'] = local_data[i][2] #num
+            base[i]['contents'][0]['contents'][0]['text'] = local_data[i][0] #name
+            base[i]['contents'][0]['contents'][1]['text'] = local_data[i][1] #index
+            base[i]['contents'][1]['contents'][0]['contents'][0]['text'] = str(local_data[i][2]) #num
+            base[i]['contents'][1]['contents'][0]['contents'][1]['text'] = '{:+,d}'.format(local_data[i][3]) #delta
     
-    halflen = int(len(world_data)/4)
-    for j in range(4):
-        for i in range(halflen):
-            _id = halflen*j+i
-            json_dict['contents'][j+1]['body']['contents'][i+2]['contents'][0]['text'] = world_data[_id][0] #name
-            json_dict['contents'][j+1]['body']['contents'][i+2]['contents'][1]['contents'][0]['text'] = world_data[_id][1] #index
-            json_dict['contents'][j+1]['body']['contents'][i+2]['contents'][1]['contents'][1]['text'] = '{}명'.format(world_data[_id][2]) #num
+    forms = [4, 5, 5, 5]
+    cum = 0
+    
+    for c, j in enumerate(forms):
+        for i in range(j):
+            json_dict['contents'][c+1]['body']['contents'][i]['contents'][0]['contents'][0]['text'] = world_data[cum][0] #name
+            json_dict['contents'][c+1]['body']['contents'][i]['contents'][0]['contents'][1]['text'] = world_data[cum][1] #index
+            json_dict['contents'][c+1]['body']['contents'][i]['contents'][1]['contents'][0]['contents'][0]['text'] = '{:,}'.format(world_data[cum][2]) #confirmed_num
+            if world_data[cum][3] == 'NEW':
+                confirm_delta = 'NEW'
+            else:
+                confirm_delta = '{:+,d}'.format(world_data[cum][3])
+            json_dict['contents'][c+1]['body']['contents'][i]['contents'][1]['contents'][0]['contents'][1]['text'] = confirm_delta
+            
+            json_dict['contents'][c+1]['body']['contents'][i]['contents'][1]['contents'][2]['contents'][0]['text'] = '{:,}'.format(world_data[cum][4]) #death_num
+            if world_data[cum][5] == 'NEW':
+                confirm_delta = 'NEW'
+            else:
+                confirm_delta = '{:+,d}'.format(world_data[cum][5])
+            json_dict['contents'][c+1]['body']['contents'][i]['contents'][1]['contents'][2]['contents'][1]['text'] = confirm_delta
+            cum += 1
 
     return json_dict
 
@@ -115,8 +130,8 @@ def edit1_json(data, id, link, local_data, world_data, file='send1.json'):
     base = json_dict['contents'][0]['body']['contents'][0]['contents']
     for i in range(3):
         j = 2*i
-        base[j]['contents'][1]['contents'][0]['text'] = "{}".format(data[1][i])
-        base[j]['contents'][1]['contents'][1]['text'] = "({:+d})".format(data[2][i])
+        base[j]['contents'][1]['contents'][0]['text'] = "{:,}".format(data[1][i])
+        base[j]['contents'][1]['contents'][1]['text'] = "({:+,d})".format(data[2][i])
 
     json_dict['contents'][0]['body']['contents'][1]['contents'][1]['text'] = 'PIPELINE '+str(id)
     # json_dict['contents'][0]['body']['contents'][6]['contents'][0]['text'] = '알고리즘 업데이트에 따른 테스트 알림'
@@ -125,17 +140,32 @@ def edit1_json(data, id, link, local_data, world_data, file='send1.json'):
     base = json_dict['contents'][1]['body']['contents']
     for i in range(len(local_data)):
         if not len(local_data[i]) == 0:
-            base[i+2]['contents'][0]['text'] = local_data[i][0] #name
-            base[i+2]['contents'][1]['contents'][0]['text'] = local_data[i][1] #index
-            base[i+2]['contents'][1]['contents'][1]['text'] = local_data[i][2] #num
+            base[i]['contents'][0]['contents'][0]['text'] = local_data[i][0] #name
+            base[i]['contents'][0]['contents'][1]['text'] = local_data[i][1] #index
+            base[i]['contents'][1]['contents'][0]['contents'][0]['text'] = str(local_data[i][2]) #num
+            base[i]['contents'][1]['contents'][0]['contents'][1]['text'] = '{:+,d}'.format(local_data[i][3]) #delta
     
-    halflen = int(len(world_data)/4)
-    for j in range(4):
-        for i in range(halflen):
-            _id = halflen*j+i
-            json_dict['contents'][j+2]['body']['contents'][i+2]['contents'][0]['text'] = world_data[_id][0] #name
-            json_dict['contents'][j+2]['body']['contents'][i+2]['contents'][1]['contents'][0]['text'] = world_data[_id][1] #index
-            json_dict['contents'][j+2]['body']['contents'][i+2]['contents'][1]['contents'][1]['text'] = '{}명'.format(world_data[_id][2]) #num
+    forms = [4, 5, 5, 5]
+    cum = 0
+    
+    for c, j in enumerate(forms):
+        for i in range(j):
+            json_dict['contents'][c+2]['body']['contents'][i]['contents'][0]['contents'][0]['text'] = world_data[cum][0] #name
+            json_dict['contents'][c+2]['body']['contents'][i]['contents'][0]['contents'][1]['text'] = world_data[cum][1] #index
+            json_dict['contents'][c+2]['body']['contents'][i]['contents'][1]['contents'][0]['contents'][0]['text'] = '{:,}'.format(world_data[cum][2]) #confirmed_num
+            if world_data[cum][3] == 'NEW':
+                confirm_delta = 'NEW'
+            else:
+                confirm_delta = '{:+,d}'.format(world_data[cum][3])
+            json_dict['contents'][c+2]['body']['contents'][i]['contents'][1]['contents'][0]['contents'][1]['text'] = confirm_delta
+            
+            json_dict['contents'][c+2]['body']['contents'][i]['contents'][1]['contents'][2]['contents'][0]['text'] = '{:,}'.format(world_data[cum][4]) #death_num
+            if world_data[cum][5] == 'NEW':
+                confirm_delta = 'NEW'
+            else:
+                confirm_delta = '{:+,d}'.format(world_data[cum][5])
+            json_dict['contents'][c+2]['body']['contents'][i]['contents'][1]['contents'][2]['contents'][1]['text'] = confirm_delta
+            cum += 1
 
     return json_dict
 
