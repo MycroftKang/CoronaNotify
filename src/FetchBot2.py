@@ -75,8 +75,8 @@ class FetchBot:
 
         if savedata:
             save(old, 'globaldata.bin')
-        print(numdict)
-        print(world_data)
+        # print(numdict)
+        # print(world_data)
         end = time.time()
         print('World Data 수집 끝', end-start)
         return world_data

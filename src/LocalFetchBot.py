@@ -43,11 +43,11 @@ class MGLocalFetchBot:
             else:
                 numls.append(v[2])
         
-        print(numls)
+        # print(numls)
         save(numls, 'localdata.bin')
         
         print('Local Data 수집 끝', end-start)
-        print(datals)
+        # print(datals)
         return datals
 
     @staticmethod
