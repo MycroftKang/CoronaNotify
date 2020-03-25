@@ -1,6 +1,6 @@
 APIKey.py
 read.py
-data.bin
+*.bin
 *.sh
 test*.py
 *.pyc
