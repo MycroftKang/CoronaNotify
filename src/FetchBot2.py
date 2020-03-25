@@ -24,7 +24,7 @@ SOFTWARE.
 
 import requests
 from bs4 import BeautifulSoup
-import time, random, sys, re, traceback, threading
+import time, random, sys, re, traceback
 
 from Util import *
 from LocalFetchBot import MGLocalFetchBot
@@ -49,7 +49,6 @@ class FetchBot:
         old = load('globaldata.bin', {})
 
         world_data = []
-        numdict = {}
 
         for i in range(num):
             attribute = data_dict['features'][i]['attributes']
@@ -75,7 +74,7 @@ class FetchBot:
 
         if savedata:
             save(old, 'globaldata.bin')
-        # print(numdict)
+        
         # print(world_data)
         end = time.time()
         print('World Data 수집 끝', end-start)
