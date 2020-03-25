@@ -8,7 +8,7 @@ class MGLocalFetchBot:
     local_data = {}
     old = []
     @staticmethod
-    def getAll():
+    def getAll(datasave=True):
         print('Local Data 수집 시작')
         
         MGLocalFetchBot.old = load('localdata.bin')
@@ -35,16 +35,19 @@ class MGLocalFetchBot:
         end = time.time()
 
         datals = []
-        numls = []
+        if datasave:
+            numls = []
         for k, v in sorted(MGLocalFetchBot.local_data.items()):
             datals.append(v)
-            if len(v) == 0:
-                numls.append(MGLocalFetchBot.old[k])
-            else:
-                numls.append(v[2])
+            if datasave:
+                if len(v) == 0:
+                    numls.append(MGLocalFetchBot.old[k])
+                else:
+                    numls.append(v[2])
         
         # print(numls)
-        save(numls, 'localdata.bin')
+        if datasave:
+            save(numls, 'localdata.bin')
         
         print('Local Data 수집 끝', end-start)
         # print(datals)
