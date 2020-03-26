@@ -116,7 +116,7 @@ class FetchBot:
             if line.test_run():
                 print(line.id+' 업데이트 확인됨.')
                 data = line.get_data()
-                sendtoBot_Error(edit1_json(data, line.id, line.url2, MGLocalFetchBot.getAll(), self.get_world_data(19)), 'MGLabsBot: 전일대비 {}명 증가'.format(data[2][0]))
+                sendtoBot_Error(edit1_json(data, line.id, line.url2, MGLocalFetchBot.getAll(False), self.get_world_data(19, False)), 'MGLabsBot: 전일대비 {}명 증가'.format(data[2][0]))
                 self.lines.remove(line)
             time.sleep(3)
         print('테스트 완료')
