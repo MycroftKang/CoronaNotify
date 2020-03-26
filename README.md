@@ -11,14 +11,14 @@
 *  class Pipeline
 
 | Pipeline | Role | Organization | Request URL | Note |
-| :------: | :------: | :------: | :------: | :------ |
-| 1 | 국내 09시 기준 현황 정보 수집 | 중앙재난안전대책본부 | [바로가기](http://ncov.mohw.go.kr/bdBoardList_Real.do?brdId=&brdGubun=&ncvContSeq=&contSeq=&board_id=&gubun=) |
-| 2 | 국내 09시 기준 현황 정보 수집 | 질병관리본부 | [바로가기](https://www.cdc.go.kr/board/board.es?mid=a20501000000&bid=0015) | 
-| 3 | 국내 09시 기준 현황 정보 수집 | 중앙재난안전대책본부 | [바로가기](http://ncov.mohw.go.kr/tcmBoardList.do?brdId=&brdGubun=&dataGubun=&ncvContSeq=&contSeq=&board_id=140&gubun=) |
+| :------: | :------: | :------: | :------: | :------: |
+| 1 | 국내 0시 기준 현황 정보 수집 | 중앙재난안전대책본부 | [바로가기](http://ncov.mohw.go.kr/bdBoardList_Real.do?brdId=&brdGubun=&ncvContSeq=&contSeq=&board_id=&gubun=) |
+| 2 | 국내 0시 기준 현황 정보 수집 | 질병관리본부 | [바로가기](https://www.cdc.go.kr/board/board.es?mid=a20501000000&bid=0015) | 
+| 3 | 국내 0시 기준 현황 정보 수집 | 중앙재난안전대책본부 | [바로가기](http://ncov.mohw.go.kr/tcmBoardList.do?brdId=&brdGubun=&dataGubun=&ncvContSeq=&contSeq=&board_id=140&gubun=) |
 | ~~[-4-]~~ | ~~[-국외 현황 정보 수집-]~~ | ~~[-중앙재난안전대책본부-]~~ | [~~[-바로가기-]~~](http://ncov.mohw.go.kr/bdBoardList_Real.do?brdId=&brdGubun=&ncvContSeq=&contSeq=&board_id=&gubun=) | 발표 종료 |
 | ~~[-5-]~~ | ~~[-국내 16시 기준 현황 정보 수집-]~~ | ~~[-중앙재난안전대책본부-]~~ | [~~[-바로가기-]~~](http://ncov.mohw.go.kr/bdBoardList_Real.do?brdId=&brdGubun=&ncvContSeq=&contSeq=&board_id=&gubun=) | 발표 종료 |
-| 6 | 국내 09시 기준 현황 정보 수집 | 보건복지부 | [바로가기](http://www.mohw.go.kr/react/al/sal0301ls.jsp?PAR_MENU_ID=04&MENU_ID=0403) |
-| 7 | 국내 09시 기준 현황 정보 수집 | 중앙재난안전대책본부 | [바로가기](http://ncov.mohw.go.kr/) |
+| 6 | 국내 0시 기준 현황 정보 수집 | 보건복지부 | [바로가기](http://www.mohw.go.kr/react/al/sal0301ls.jsp?PAR_MENU_ID=04&MENU_ID=0403) |
+| 7 | 국내 0시 기준 현황 정보 수집 | 중앙재난안전대책본부 | [바로가기](http://ncov.mohw.go.kr/) |
 
 ### FetchBot2.py
 
