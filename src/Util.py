@@ -134,7 +134,7 @@ def edit2_json(local_data, world_data, file='send2.json'):
                 rank_delta = 'UN'
                 rank_color = Color.GREEN
             elif delta == 0:
-                rank_delta = 'MA'
+                rank_delta = 'NC'
                 rank_color = Color.GRAY
             elif delta<0:
                 rank_delta = 'U{}'.format(delta*(-1))
@@ -200,7 +200,7 @@ def edit1_json(data, id, link, local_data, world_data, file='send1.json'):
                 rank_delta = 'UN'
                 rank_color = Color.GREEN
             elif delta == 0:
-                rank_delta = 'MA'
+                rank_delta = 'NC'
                 rank_color = Color.GRAY
             elif delta<0:
                 rank_delta = 'U{}'.format(delta*(-1))
