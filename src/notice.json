@@ -1,0 +1,15 @@
+{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "horizontal",
+    "contents": [
+      {
+        "type": "text",
+        "text": "이 파이프라인은 Learn more을 통해\n지역별 상세통계를 제공합니다.",
+        "size": "sm",
+        "wrap": true
+      }
+    ]
+  }
+}

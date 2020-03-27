@@ -32,6 +32,7 @@ class PipeLine1(Tool):
     def __init__(self):
         url = 'http://ncov.mohw.go.kr/bdBoardList_Real.do?brdId=&brdGubun=&ncvContSeq=&contSeq=&board_id=&gubun='
         selectors = ['#content > div > div:nth-child(5) > table > tbody > tr > td:nth-child('+str(x)+')' for x in [1, 2, 4]]
+        self.msg = None
         selectors.insert(0, '#content > div > p')
         super().__init__(url, selectors, '1')
 
@@ -77,6 +78,7 @@ class PipeLine2(Tool):
             selectors = test_selectors
             self.TEST_MODE = True
         super().__init__(url, selectors, '2')
+        self.msg = '이 파이프라인은 Learn more을 통해\n지역별 상세통계를 제공합니다.'
         self.http_header1 = {
             'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
             'Accept-Encoding':'gzip, deflate, br',
@@ -144,6 +146,7 @@ class PipeLine3(Tool):
             selectors = test_selectors
             self.TEST_MODE = True
         super().__init__(url, selectors, '3')
+        self.msg = '이 파이프라인은 Learn more을 통해\n지역별 상세통계를 제공합니다.'
 
     def parseAll(self):
         try:
@@ -269,6 +272,7 @@ class PipeLine6(Tool):
             selectors = test_selectors
             self.TEST_MODE = True
         super().__init__(url, selectors, '6')
+        self.msg = '이 파이프라인은 Learn more을 통해\n지역별 상세통계를 제공합니다.'
         self.http_header1 = {
             'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
             'Accept-Encoding':'gzip, deflate',
@@ -325,6 +329,7 @@ class PipeLine7(Tool):
         selectors = ['body > div > div.mainlive_container > div > div > div > div.live_left > div.liveNum > ul > li:nth-child('+str(x)+') > span.num' for x in [1, 2, 4]]
         selectors.insert(0, 'body > div > div.mainlive_container > div > div > div > div.live_left > h2 > a > span')
         super().__init__(url, selectors, '7')
+        self.msg = None
 
     def parseAll(self):
         super().parseAll()

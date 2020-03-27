@@ -33,6 +33,12 @@ from APIKey import *
 DEV_MODE = False
 BASE_PATH=''
 
+class Color:
+    RED = '#de481f'
+    BLUE = '#2b81c8'
+    GRAY = '#aaaaaa'
+    GREEN = '#00b900'
+
 def isfile(file='data.bin', default=[]):
     if os.path.isfile(BASE_PATH+file):
         return
@@ -64,20 +70,36 @@ def sendError(msg, img=None):
     response = requests.post(TARGET_URL, headers={'Authorization': 'Bearer ' + TOKEN}, data={'message': msg}, files={'imageFile': img})
     return response
 
-def sendtoBot_Error(card, title='Corona Notify'):
+def sendtoBot_Error(card, title='Corona Notify', notice=None):
     TOKEN = API_KEY_FOR_BOT
-    response = requests.post(API_REQUEST_URL, headers={'Content-Type':'application/json', 'Authorization': 'Bearer ' + TOKEN}, json={'to':TEST_GROUP_ID,'messages':[{'type':'flex', 'altText':title, 'contents':card}]})
-    print(response.text)
-    return response
-
-def sendtoBot_card(card, title='Corona Notify'):
-    if not DEV_MODE:
-        TOKEN = API_KEY_FOR_BOT
-        response = requests.post(API_REQUEST_URL, headers={'Content-Type':'application/json', 'Authorization': 'Bearer ' + TOKEN}, json={'to':GROUP_ID,'messages':[{'type':'flex', 'altText':title, 'contents':card}]})
+    if notice != None:
+        with open('notice.json', 'rt', encoding='utf-8') as f:
+            json_dict = json.load(f)
+        json_dict['body']['contents'][0]['text'] = notice
+        response = requests.post(API_REQUEST_URL, headers={'Content-Type':'application/json', 'Authorization': 'Bearer ' + TOKEN}, json={'to':TEST_GROUP_ID,'messages':[{'type':'flex', 'altText':title, 'contents':card}, {'type':'flex', 'altText':title, 'contents':json_dict}]})
         print(response.text)
         return response
     else:
-        sendtoBot_Error(card)
+        response = requests.post(API_REQUEST_URL, headers={'Content-Type':'application/json', 'Authorization': 'Bearer ' + TOKEN}, json={'to':TEST_GROUP_ID,'messages':[{'type':'flex', 'altText':title, 'contents':card}]})
+        print(response.text)
+        return response
+
+def sendtoBot_card(card, title='Corona Notify', notice=None):
+    if not DEV_MODE:
+        TOKEN = API_KEY_FOR_BOT
+        if notice != None:
+            with open('notice.json', 'rt', encoding='utf-8') as f:
+                json_dict = json.load(f)
+            json_dict['body']['contents'][0]['text'] = notice
+            response = requests.post(API_REQUEST_URL, headers={'Content-Type':'application/json', 'Authorization': 'Bearer ' + TOKEN}, json={'to':GROUP_ID,'messages':[{'type':'flex', 'altText':title, 'contents':card}, {'type':'flex', 'altText':title, 'contents':json_dict}]})
+            print(response.text)
+            return response
+        else:
+            response = requests.post(API_REQUEST_URL, headers={'Content-Type':'application/json', 'Authorization': 'Bearer ' + TOKEN}, json={'to':GROUP_ID,'messages':[{'type':'flex', 'altText':title, 'contents':card}]})
+            print(response.text)
+            return response
+    else:
+        sendtoBot_Error(card, title, notice)
 
 def replybyBot_card(card, replyToken, title='Corona Notify'):
     TOKEN = API_KEY_FOR_BOT
@@ -102,21 +124,40 @@ def edit2_json(local_data, world_data, file='send2.json'):
     
     for c, j in enumerate(forms):
         for i in range(j):
-            json_dict['contents'][c+1]['body']['contents'][i]['contents'][0]['contents'][0]['text'] = world_data[cum][0] #name
-            json_dict['contents'][c+1]['body']['contents'][i]['contents'][0]['contents'][1]['text'] = world_data[cum][1] #index
-            json_dict['contents'][c+1]['body']['contents'][i]['contents'][1]['contents'][0]['contents'][0]['text'] = '{:,}'.format(world_data[cum][2]) #confirmed_num
+            base = json_dict['contents'][c+1]['body']['contents'][i]['contents']
+
+            base[0]['contents'][0]['text'] = world_data[cum][0] #name
+            base[0]['contents'][1]['contents'][0]['text'] = world_data[cum][1] #index
+
+            delta = world_data[cum][6]
+            if delta == '-':
+                rank_delta = 'UN'
+                rank_color = Color.GREEN
+            elif delta == 0:
+                rank_delta = 'MA'
+                rank_color = Color.GRAY
+            elif delta<0:
+                rank_delta = 'U{}'.format(delta*(-1))
+                rank_color = Color.RED
+            else:
+                rank_delta = 'D{}'.format(delta)
+                rank_color = Color.BLUE
+
+            base[0]['contents'][1]['contents'][2]['text'] = rank_delta
+            base[0]['contents'][1]['contents'][2]['color'] = rank_color
+
+            base[1]['contents'][0]['contents'][0]['text'] = '{:,}'.format(world_data[cum][2]) #confirmed_num
             if world_data[cum][3] == 'NEW':
-                confirm_delta = 'NEW'
+                delta = 'NEW'
             else:
-                confirm_delta = '{:+,d}'.format(world_data[cum][3])
-            json_dict['contents'][c+1]['body']['contents'][i]['contents'][1]['contents'][0]['contents'][1]['text'] = confirm_delta
-            
-            json_dict['contents'][c+1]['body']['contents'][i]['contents'][1]['contents'][2]['contents'][0]['text'] = '{:,}'.format(world_data[cum][4]) #death_num
+                delta = '{:+,d}'.format(world_data[cum][3])
+            base[1]['contents'][0]['contents'][1]['text'] = delta
+            base[1]['contents'][2]['contents'][0]['text'] = '{:,}'.format(world_data[cum][4]) #death_num
             if world_data[cum][5] == 'NEW':
-                confirm_delta = 'NEW'
+                delta = 'NEW'
             else:
-                confirm_delta = '{:+,d}'.format(world_data[cum][5])
-            json_dict['contents'][c+1]['body']['contents'][i]['contents'][1]['contents'][2]['contents'][1]['text'] = confirm_delta
+                delta = '{:+,d}'.format(world_data[cum][5])
+            base[1]['contents'][2]['contents'][1]['text'] = delta
             cum += 1
 
     return json_dict
@@ -134,7 +175,6 @@ def edit1_json(data, id, link, local_data, world_data, file='send1.json'):
         base[j]['contents'][1]['contents'][1]['text'] = "({:+,d})".format(data[2][i])
 
     json_dict['contents'][0]['body']['contents'][1]['contents'][1]['text'] = 'PIPELINE '+str(id)
-    # json_dict['contents'][0]['body']['contents'][6]['contents'][0]['text'] = '알고리즘 업데이트에 따른 테스트 알림'
     json_dict['contents'][0]['footer']['contents'][0]['action']['uri'] = link
 
     base = json_dict['contents'][1]['body']['contents']
@@ -150,21 +190,40 @@ def edit1_json(data, id, link, local_data, world_data, file='send1.json'):
     
     for c, j in enumerate(forms):
         for i in range(j):
-            json_dict['contents'][c+2]['body']['contents'][i]['contents'][0]['contents'][0]['text'] = world_data[cum][0] #name
-            json_dict['contents'][c+2]['body']['contents'][i]['contents'][0]['contents'][1]['text'] = world_data[cum][1] #index
-            json_dict['contents'][c+2]['body']['contents'][i]['contents'][1]['contents'][0]['contents'][0]['text'] = '{:,}'.format(world_data[cum][2]) #confirmed_num
+            base = json_dict['contents'][c+2]['body']['contents'][i]['contents']
+
+            base[0]['contents'][0]['text'] = world_data[cum][0] #name
+            base[0]['contents'][1]['contents'][0]['text'] = world_data[cum][1] #index
+
+            delta = world_data[cum][6]
+            if delta == '-':
+                rank_delta = 'UN'
+                rank_color = Color.GREEN
+            elif delta == 0:
+                rank_delta = 'MA'
+                rank_color = Color.GRAY
+            elif delta<0:
+                rank_delta = 'U{}'.format(delta*(-1))
+                rank_color = Color.RED
+            else:
+                rank_delta = 'D{}'.format(delta)
+                rank_color = Color.BLUE
+
+            base[0]['contents'][1]['contents'][2]['text'] = rank_delta
+            base[0]['contents'][1]['contents'][2]['color'] = rank_color
+
+            base[1]['contents'][0]['contents'][0]['text'] = '{:,}'.format(world_data[cum][2]) #confirmed_num
             if world_data[cum][3] == 'NEW':
-                confirm_delta = 'NEW'
+                delta = 'NEW'
             else:
-                confirm_delta = '{:+,d}'.format(world_data[cum][3])
-            json_dict['contents'][c+2]['body']['contents'][i]['contents'][1]['contents'][0]['contents'][1]['text'] = confirm_delta
-            
-            json_dict['contents'][c+2]['body']['contents'][i]['contents'][1]['contents'][2]['contents'][0]['text'] = '{:,}'.format(world_data[cum][4]) #death_num
+                delta = '{:+,d}'.format(world_data[cum][3])
+            base[1]['contents'][0]['contents'][1]['text'] = delta
+            base[1]['contents'][2]['contents'][0]['text'] = '{:,}'.format(world_data[cum][4]) #death_num
             if world_data[cum][5] == 'NEW':
-                confirm_delta = 'NEW'
+                delta = 'NEW'
             else:
-                confirm_delta = '{:+,d}'.format(world_data[cum][5])
-            json_dict['contents'][c+2]['body']['contents'][i]['contents'][1]['contents'][2]['contents'][1]['text'] = confirm_delta
+                delta = '{:+,d}'.format(world_data[cum][5])
+            base[1]['contents'][2]['contents'][1]['text'] = delta
             cum += 1
 
     return json_dict

@@ -512,13 +512,29 @@
                     "text": "국가"
                   },
                   {
-                    "type": "text",
-                    "text": "-월 -일 --:--",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "KST -월 -일 --:--",
+                        "size": "sm",
+                        "gravity": "center",
+                        "align": "start",
+                        "flex": 0,
+                        "color": "#aaaaaa"
+                      },
+                      {
+                        "type": "separator"
+                      },
+                      {
+                        "type": "text",
+                        "text": "-",
+                        "size": "sm",
+                        "color": "#aaaaaa"
+                      }
+                    ],
+                    "spacing": "sm"
                   }
                 ],
                 "flex": 15
@@ -591,13 +607,29 @@
                     "text": "국가"
                   },
                   {
-                    "type": "text",
-                    "text": "-월 -일 --:--",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "KST -월 -일 --:--",
+                        "size": "sm",
+                        "gravity": "center",
+                        "align": "start",
+                        "flex": 0,
+                        "color": "#aaaaaa"
+                      },
+                      {
+                        "type": "separator"
+                      },
+                      {
+                        "type": "text",
+                        "text": "-",
+                        "size": "sm",
+                        "color": "#aaaaaa"
+                      }
+                    ],
+                    "spacing": "sm"
                   }
                 ],
                 "flex": 15
@@ -670,13 +702,29 @@
                     "text": "국가"
                   },
                   {
-                    "type": "text",
-                    "text": "-월 -일 --:--",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "KST -월 -일 --:--",
+                        "size": "sm",
+                        "gravity": "center",
+                        "align": "start",
+                        "flex": 0,
+                        "color": "#aaaaaa"
+                      },
+                      {
+                        "type": "separator"
+                      },
+                      {
+                        "type": "text",
+                        "text": "-",
+                        "size": "sm",
+                        "color": "#aaaaaa"
+                      }
+                    ],
+                    "spacing": "sm"
                   }
                 ],
                 "flex": 15
@@ -749,13 +797,29 @@
                     "text": "국가"
                   },
                   {
-                    "type": "text",
-                    "text": "-월 -일 --:--",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "KST -월 -일 --:--",
+                        "size": "sm",
+                        "gravity": "center",
+                        "align": "start",
+                        "flex": 0,
+                        "color": "#aaaaaa"
+                      },
+                      {
+                        "type": "separator"
+                      },
+                      {
+                        "type": "text",
+                        "text": "-",
+                        "size": "sm",
+                        "color": "#aaaaaa"
+                      }
+                    ],
+                    "spacing": "sm"
                   }
                 ],
                 "flex": 15
@@ -843,13 +907,29 @@
                     "text": "국가"
                   },
                   {
-                    "type": "text",
-                    "text": "-월 -일 --:--",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "KST -월 -일 --:--",
+                        "size": "sm",
+                        "gravity": "center",
+                        "align": "start",
+                        "flex": 0,
+                        "color": "#aaaaaa"
+                      },
+                      {
+                        "type": "separator"
+                      },
+                      {
+                        "type": "text",
+                        "text": "-",
+                        "size": "sm",
+                        "color": "#aaaaaa"
+                      }
+                    ],
+                    "spacing": "sm"
                   }
                 ],
                 "flex": 15
@@ -922,13 +1002,29 @@
                     "text": "국가"
                   },
                   {
-                    "type": "text",
-                    "text": "-월 -일 --:--",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "KST -월 -일 --:--",
+                        "size": "sm",
+                        "gravity": "center",
+                        "align": "start",
+                        "flex": 0,
+                        "color": "#aaaaaa"
+                      },
+                      {
+                        "type": "separator"
+                      },
+                      {
+                        "type": "text",
+                        "text": "-",
+                        "size": "sm",
+                        "color": "#aaaaaa"
+                      }
+                    ],
+                    "spacing": "sm"
                   }
                 ],
                 "flex": 15
@@ -1001,13 +1097,29 @@
                     "text": "국가"
                   },
                   {
-                    "type": "text",
-                    "text": "-월 -일 --:--",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "KST -월 -일 --:--",
+                        "size": "sm",
+                        "gravity": "center",
+                        "align": "start",
+                        "flex": 0,
+                        "color": "#aaaaaa"
+                      },
+                      {
+                        "type": "separator"
+                      },
+                      {
+                        "type": "text",
+                        "text": "-",
+                        "size": "sm",
+                        "color": "#aaaaaa"
+                      }
+                    ],
+                    "spacing": "sm"
                   }
                 ],
                 "flex": 15
@@ -1080,13 +1192,29 @@
                     "text": "국가"
                   },
                   {
-                    "type": "text",
-                    "text": "-월 -일 --:--",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "KST -월 -일 --:--",
+                        "size": "sm",
+                        "gravity": "center",
+                        "align": "start",
+                        "flex": 0,
+                        "color": "#aaaaaa"
+                      },
+                      {
+                        "type": "separator"
+                      },
+                      {
+                        "type": "text",
+                        "text": "-",
+                        "size": "sm",
+                        "color": "#aaaaaa"
+                      }
+                    ],
+                    "spacing": "sm"
                   }
                 ],
                 "flex": 15
@@ -1159,13 +1287,29 @@
                     "text": "국가"
                   },
                   {
-                    "type": "text",
-                    "text": "-월 -일 --:--",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "KST -월 -일 --:--",
+                        "size": "sm",
+                        "gravity": "center",
+                        "align": "start",
+                        "flex": 0,
+                        "color": "#aaaaaa"
+                      },
+                      {
+                        "type": "separator"
+                      },
+                      {
+                        "type": "text",
+                        "text": "-",
+                        "size": "sm",
+                        "color": "#aaaaaa"
+                      }
+                    ],
+                    "spacing": "sm"
                   }
                 ],
                 "flex": 15
@@ -1253,13 +1397,29 @@
                     "text": "국가"
                   },
                   {
-                    "type": "text",
-                    "text": "-월 -일 --:--",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "KST -월 -일 --:--",
+                        "size": "sm",
+                        "gravity": "center",
+                        "align": "start",
+                        "flex": 0,
+                        "color": "#aaaaaa"
+                      },
+                      {
+                        "type": "separator"
+                      },
+                      {
+                        "type": "text",
+                        "text": "-",
+                        "size": "sm",
+                        "color": "#aaaaaa"
+                      }
+                    ],
+                    "spacing": "sm"
                   }
                 ],
                 "flex": 15
@@ -1332,13 +1492,29 @@
                     "text": "국가"
                   },
                   {
-                    "type": "text",
-                    "text": "-월 -일 --:--",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "KST -월 -일 --:--",
+                        "size": "sm",
+                        "gravity": "center",
+                        "align": "start",
+                        "flex": 0,
+                        "color": "#aaaaaa"
+                      },
+                      {
+                        "type": "separator"
+                      },
+                      {
+                        "type": "text",
+                        "text": "-",
+                        "size": "sm",
+                        "color": "#aaaaaa"
+                      }
+                    ],
+                    "spacing": "sm"
                   }
                 ],
                 "flex": 15
@@ -1411,13 +1587,29 @@
                     "text": "국가"
                   },
                   {
-                    "type": "text",
-                    "text": "-월 -일 --:--",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "KST -월 -일 --:--",
+                        "size": "sm",
+                        "gravity": "center",
+                        "align": "start",
+                        "flex": 0,
+                        "color": "#aaaaaa"
+                      },
+                      {
+                        "type": "separator"
+                      },
+                      {
+                        "type": "text",
+                        "text": "-",
+                        "size": "sm",
+                        "color": "#aaaaaa"
+                      }
+                    ],
+                    "spacing": "sm"
                   }
                 ],
                 "flex": 15
@@ -1490,13 +1682,29 @@
                     "text": "국가"
                   },
                   {
-                    "type": "text",
-                    "text": "-월 -일 --:--",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "KST -월 -일 --:--",
+                        "size": "sm",
+                        "gravity": "center",
+                        "align": "start",
+                        "flex": 0,
+                        "color": "#aaaaaa"
+                      },
+                      {
+                        "type": "separator"
+                      },
+                      {
+                        "type": "text",
+                        "text": "-",
+                        "size": "sm",
+                        "color": "#aaaaaa"
+                      }
+                    ],
+                    "spacing": "sm"
                   }
                 ],
                 "flex": 15
@@ -1569,13 +1777,29 @@
                     "text": "국가"
                   },
                   {
-                    "type": "text",
-                    "text": "-월 -일 --:--",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "KST -월 -일 --:--",
+                        "size": "sm",
+                        "gravity": "center",
+                        "align": "start",
+                        "flex": 0,
+                        "color": "#aaaaaa"
+                      },
+                      {
+                        "type": "separator"
+                      },
+                      {
+                        "type": "text",
+                        "text": "-",
+                        "size": "sm",
+                        "color": "#aaaaaa"
+                      }
+                    ],
+                    "spacing": "sm"
                   }
                 ],
                 "flex": 15
@@ -1663,13 +1887,29 @@
                     "text": "국가"
                   },
                   {
-                    "type": "text",
-                    "text": "-월 -일 --:--",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "KST -월 -일 --:--",
+                        "size": "sm",
+                        "gravity": "center",
+                        "align": "start",
+                        "flex": 0,
+                        "color": "#aaaaaa"
+                      },
+                      {
+                        "type": "separator"
+                      },
+                      {
+                        "type": "text",
+                        "text": "-",
+                        "size": "sm",
+                        "color": "#aaaaaa"
+                      }
+                    ],
+                    "spacing": "sm"
                   }
                 ],
                 "flex": 15
@@ -1742,13 +1982,29 @@
                     "text": "국가"
                   },
                   {
-                    "type": "text",
-                    "text": "-월 -일 --:--",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "KST -월 -일 --:--",
+                        "size": "sm",
+                        "gravity": "center",
+                        "align": "start",
+                        "flex": 0,
+                        "color": "#aaaaaa"
+                      },
+                      {
+                        "type": "separator"
+                      },
+                      {
+                        "type": "text",
+                        "text": "-",
+                        "size": "sm",
+                        "color": "#aaaaaa"
+                      }
+                    ],
+                    "spacing": "sm"
                   }
                 ],
                 "flex": 15
@@ -1821,13 +2077,29 @@
                     "text": "국가"
                   },
                   {
-                    "type": "text",
-                    "text": "-월 -일 --:--",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "KST -월 -일 --:--",
+                        "size": "sm",
+                        "gravity": "center",
+                        "align": "start",
+                        "flex": 0,
+                        "color": "#aaaaaa"
+                      },
+                      {
+                        "type": "separator"
+                      },
+                      {
+                        "type": "text",
+                        "text": "-",
+                        "size": "sm",
+                        "color": "#aaaaaa"
+                      }
+                    ],
+                    "spacing": "sm"
                   }
                 ],
                 "flex": 15
@@ -1900,13 +2172,29 @@
                     "text": "국가"
                   },
                   {
-                    "type": "text",
-                    "text": "-월 -일 --:--",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "KST -월 -일 --:--",
+                        "size": "sm",
+                        "gravity": "center",
+                        "align": "start",
+                        "flex": 0,
+                        "color": "#aaaaaa"
+                      },
+                      {
+                        "type": "separator"
+                      },
+                      {
+                        "type": "text",
+                        "text": "-",
+                        "size": "sm",
+                        "color": "#aaaaaa"
+                      }
+                    ],
+                    "spacing": "sm"
                   }
                 ],
                 "flex": 15
@@ -1979,13 +2267,29 @@
                     "text": "국가"
                   },
                   {
-                    "type": "text",
-                    "text": "-월 -일 --:--",
-                    "size": "sm",
-                    "gravity": "center",
-                    "align": "start",
-                    "flex": 0,
-                    "color": "#aaaaaa"
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "KST -월 -일 --:--",
+                        "size": "sm",
+                        "gravity": "center",
+                        "align": "start",
+                        "flex": 0,
+                        "color": "#aaaaaa"
+                      },
+                      {
+                        "type": "separator"
+                      },
+                      {
+                        "type": "text",
+                        "text": "-",
+                        "size": "sm",
+                        "color": "#aaaaaa"
+                      }
+                    ],
+                    "spacing": "sm"
                   }
                 ],
                 "flex": 15

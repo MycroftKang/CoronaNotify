@@ -49,6 +49,8 @@ class FetchBot:
         old = load('globaldata.bin', {})
 
         world_data = []
+        default_data = ['NEW', 'NEW', '-']
+        newls = {}
 
         for i in range(num):
             attribute = data_dict['features'][i]['attributes']
@@ -56,24 +58,29 @@ class FetchBot:
             last_str = 'KST '+time.strftime('%m.%d %H:%M', time.localtime(last))
             con_id = attribute['Country_Region']
             confirmednum = attribute['Confirmed']
-            oldconfirm = old.get(con_id, ['NEW', 'NEW'])[0]
+            oldconfirm = old.get(con_id, default_data)[0]
             if oldconfirm == 'NEW':
                 confirm_delta = 'NEW'
             else:
                 confirm_delta = confirmednum-oldconfirm
             deathnum = attribute['Deaths']
-            olddeath = old.get(con_id, ['NEW', 'NEW'])[1]
+            olddeath = old.get(con_id, default_data)[1]
             if olddeath == 'NEW':
                 death_delta = 'NEW'
             else:
                 death_delta = deathnum-olddeath
-            country_data = [str(i+1)+'. '+con_id, last_str, confirmednum, confirm_delta, deathnum, death_delta]
+            oldrank = old.get(con_id, default_data)[2]
+            if oldrank == '-':
+                rank_delta = '-'
+            else:
+                rank_delta = (i+1)-oldrank
+            country_data = [str(i+1)+'. '+con_id, last_str, confirmednum, confirm_delta, deathnum, death_delta, rank_delta]
             world_data.append(country_data)
             if savedata:
-                old[con_id]=[confirmednum, deathnum]
+                newls[con_id]=[confirmednum, deathnum, i+1]
 
         if savedata:
-            save(old, 'globaldata.bin')
+            save(newls, 'globaldata.bin')
         
         # print(world_data)
         end = time.time()
@@ -103,7 +110,7 @@ class FetchBot:
                         sendError("PIPELINE "+line.id+'에서 get_data() 오류가 발견되어 삭제합니다.')
                         self.lines.remove(line)
                         continue
-                    sendtoBot_card(edit1_json(data, line.id, line.url2, MGLocalFetchBot.getAll(), self.get_world_data(19)), 'MGLabsBot: 전일대비 {}명 증가'.format(data[2][0]))
+                    sendtoBot_card(edit1_json(data, line.id, line.url2, MGLocalFetchBot.getAll(), self.get_world_data(19)), 'MGLabsBot: 전일대비 {}명 증가'.format(data[2][0]), line.msg)
                     line.save_data()
                     return
                 time.sleep(random.uniform(3,5))
@@ -116,7 +123,7 @@ class FetchBot:
             if line.test_run():
                 print(line.id+' 업데이트 확인됨.')
                 data = line.get_data()
-                sendtoBot_Error(edit1_json(data, line.id, line.url2, MGLocalFetchBot.getAll(False), self.get_world_data(19, False)), 'MGLabsBot: 전일대비 {}명 증가'.format(data[2][0]))
+                sendtoBot_Error(edit1_json(data, line.id, line.url2, MGLocalFetchBot.getAll(False), self.get_world_data(19, False)), 'MGLabsBot: 전일대비 {}명 증가'.format(data[2][0]), line.msg)
                 self.lines.remove(line)
             time.sleep(3)
         print('테스트 완료')
