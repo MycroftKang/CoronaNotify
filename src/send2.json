@@ -341,7 +341,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 15
                   },
                   {
                     "type": "separator",
@@ -366,7 +367,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 13
                   }
                 ],
                 "flex": 12
@@ -436,7 +438,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 15
                   },
                   {
                     "type": "separator",
@@ -461,7 +464,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 13
                   }
                 ],
                 "flex": 12
@@ -531,7 +535,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 15
                   },
                   {
                     "type": "separator",
@@ -556,7 +561,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 13
                   }
                 ],
                 "flex": 12
@@ -626,7 +632,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 15
                   },
                   {
                     "type": "separator",
@@ -651,7 +658,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 13
                   }
                 ],
                 "flex": 12
@@ -736,7 +744,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 15
                   },
                   {
                     "type": "separator",
@@ -761,7 +770,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 13
                   }
                 ],
                 "flex": 12
@@ -831,7 +841,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 15
                   },
                   {
                     "type": "separator",
@@ -856,7 +867,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 13
                   }
                 ],
                 "flex": 12
@@ -926,7 +938,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 15
                   },
                   {
                     "type": "separator",
@@ -951,7 +964,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 13
                   }
                 ],
                 "flex": 12
@@ -1021,7 +1035,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 15
                   },
                   {
                     "type": "separator",
@@ -1046,7 +1061,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 13
                   }
                 ],
                 "flex": 12
@@ -1116,7 +1132,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 15
                   },
                   {
                     "type": "separator",
@@ -1141,7 +1158,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 13
                   }
                 ],
                 "flex": 12
@@ -1226,7 +1244,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 15
                   },
                   {
                     "type": "separator",
@@ -1251,7 +1270,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 13
                   }
                 ],
                 "flex": 12
@@ -1321,7 +1341,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 15
                   },
                   {
                     "type": "separator",
@@ -1346,7 +1367,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 13
                   }
                 ],
                 "flex": 12
@@ -1416,7 +1438,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 15
                   },
                   {
                     "type": "separator",
@@ -1441,7 +1464,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 13
                   }
                 ],
                 "flex": 12
@@ -1511,7 +1535,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 15
                   },
                   {
                     "type": "separator",
@@ -1536,7 +1561,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 13
                   }
                 ],
                 "flex": 12
@@ -1606,7 +1632,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 15
                   },
                   {
                     "type": "separator",
@@ -1631,7 +1658,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 13
                   }
                 ],
                 "flex": 12
@@ -1716,7 +1744,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 15
                   },
                   {
                     "type": "separator",
@@ -1741,7 +1770,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 13
                   }
                 ],
                 "flex": 12
@@ -1811,7 +1841,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 15
                   },
                   {
                     "type": "separator",
@@ -1836,7 +1867,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 13
                   }
                 ],
                 "flex": 12
@@ -1906,7 +1938,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 15
                   },
                   {
                     "type": "separator",
@@ -1931,7 +1964,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 13
                   }
                 ],
                 "flex": 12
@@ -2001,7 +2035,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 15
                   },
                   {
                     "type": "separator",
@@ -2026,7 +2061,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 13
                   }
                 ],
                 "flex": 12
@@ -2096,7 +2132,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 15
                   },
                   {
                     "type": "separator",
@@ -2121,7 +2158,8 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 13
                   }
                 ],
                 "flex": 12
