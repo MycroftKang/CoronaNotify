@@ -107,6 +107,15 @@ def replybyBot_card(card, replyToken, title='Corona Notify'):
     print(response.text)
     return response
 
+def replybyBot(text, replyToken):
+    TOKEN = API_KEY_FOR_BOT
+    response = requests.post('https://api.line.me/v2/bot/message/reply', headers={'Content-Type':'application/json', 'Authorization': 'Bearer ' + TOKEN}, json={'replyToken': replyToken, 'messages':[{
+            "type":"text",
+            "text":str(text),
+        }]})
+    print(response.text)
+    return response
+
 def edit2_json(local_data, world_data, file='send2.json'):
     with open(file, 'rt', encoding='utf-8') as f:
         json_dict = json.load(f)

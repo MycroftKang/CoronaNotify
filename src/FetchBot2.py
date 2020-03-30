@@ -141,6 +141,10 @@ try:
     elif '--renew' in sys.argv:
         indexnum = sys.argv.index('--renew')
         FetchBot.renew(sys.argv[indexnum+1])
+    elif '--setLC' in sys.argv:
+        indexnum = sys.argv.index('--setLC')
+        MGLocalFetchBot.getAll()
+        replybyBot('[System] Local Case Data가 재설정되었습니다.', sys.argv[indexnum+1])
     else:
         bot = FetchBot()
         bot.run()
