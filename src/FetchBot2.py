@@ -144,7 +144,8 @@ try:
     elif '--setLC' in sys.argv:
         indexnum = sys.argv.index('--setLC')
         MGLocalFetchBot.getAll()
-        replybyBot('[System] Local Case Data가 재설정되었습니다.', sys.argv[indexnum+1])
+        data = load('localdata.bin')
+        replybyBot('[System]\nLocal Case Data가 재설정되었습니다.\n'+str(data), sys.argv[indexnum+1])
     else:
         bot = FetchBot()
         bot.run()
