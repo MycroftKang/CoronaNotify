@@ -135,8 +135,15 @@ def edit2_json(local_data, world_data, file='send2.json'):
         for i in range(j):
             base = json_dict['contents'][c+1]['body']['contents'][i]['contents']
 
-            base[0]['contents'][0]['text'] = world_data[cum][0] #name
-            base[0]['contents'][1]['contents'][0]['text'] = world_data[cum][1] #index
+            if ((c == 0) and (i == 0)):
+                for k in range(3):
+                    print(world_data[cum][k])
+                    base[2*k]['contents'][1]['text'] = '{:,}'.format(world_data[cum][k])
+                cum += 1
+                continue
+
+            base[0]['contents'][0]['contents'][0]['text'] = '{:02}'.format(world_data[cum][0])
+            base[0]['contents'][1]['text'] = world_data[cum][1] #name
 
             delta = world_data[cum][6]
             if delta == '-':
@@ -152,8 +159,8 @@ def edit2_json(local_data, world_data, file='send2.json'):
                 rank_delta = 'D{}'.format(delta)
                 rank_color = Color.BLUE
 
-            base[0]['contents'][1]['contents'][2]['text'] = rank_delta
-            base[0]['contents'][1]['contents'][2]['color'] = rank_color
+            base[0]['contents'][0]['contents'][2]['text'] = rank_delta
+            base[0]['contents'][0]['contents'][2]['color'] = rank_color
 
             base[1]['contents'][0]['contents'][0]['text'] = '{:,}'.format(world_data[cum][2]) #confirmed_num
             if world_data[cum][3] == 'NEW':
@@ -201,8 +208,15 @@ def edit1_json(data, id, link, local_data, world_data, file='send1.json'):
         for i in range(j):
             base = json_dict['contents'][c+2]['body']['contents'][i]['contents']
 
-            base[0]['contents'][0]['text'] = world_data[cum][0] #name
-            base[0]['contents'][1]['contents'][0]['text'] = world_data[cum][1] #index
+            if ((c == 0) and (i == 0)):
+                for k in range(3):
+                    print(world_data[cum][k])
+                    base[2*k]['contents'][1]['text'] = '{:,}'.format(world_data[cum][k])
+                cum += 1
+                continue
+
+            base[0]['contents'][0]['contents'][0]['text'] = '{:02}'.format(world_data[cum][0])
+            base[0]['contents'][1]['text'] = world_data[cum][1] #name
 
             delta = world_data[cum][6]
             if delta == '-':
@@ -218,8 +232,8 @@ def edit1_json(data, id, link, local_data, world_data, file='send1.json'):
                 rank_delta = 'D{}'.format(delta)
                 rank_color = Color.BLUE
 
-            base[0]['contents'][1]['contents'][2]['text'] = rank_delta
-            base[0]['contents'][1]['contents'][2]['color'] = rank_color
+            base[0]['contents'][0]['contents'][2]['text'] = rank_delta
+            base[0]['contents'][0]['contents'][2]['color'] = rank_color
 
             base[1]['contents'][0]['contents'][0]['text'] = '{:,}'.format(world_data[cum][2]) #confirmed_num
             if world_data[cum][3] == 'NEW':

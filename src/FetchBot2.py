@@ -43,19 +43,40 @@ class FetchBot:
     def get_world_data(num, savedata=True):
         print('World Data 수집 시작')
         start = time.time()
-        x = requests.get('https://services1.arcgis.com/0MSEUqKaxRlEPj5g/arcgis/rest/services/ncov_cases/FeatureServer/2/query?f=json&where=Confirmed%20%3E%200&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&orderByFields=Confirmed%20desc&resultOffset=0&resultRecordCount=200&cacheHint=true')
+        header = {
+        'Accept':'*/*',
+        'Accept-encoding':'gzip, deflate',
+        'Cache-Control':'no-cache',
+        'Pragma':'no-cache',
+        'Referer':'https://www.arcgis.com/apps/opsdashboard/index.html',
+        'Origin':'https://www.arcgis.com',
+        'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36'
+        }
+
+        res1 = requests.get('https://services9.arcgis.com/N9p5hsImWXAccRNI/arcgis/rest/services/Nc2JKvYFoAEOFCG5JSI6/FeatureServer/1/query?f=json&where=1%3D1&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&outStatistics=%5B%7B%22statisticType%22%3A%22sum%22%2C%22onStatisticField%22%3A%22Confirmed%22%2C%22outStatisticFieldName%22%3A%22value%22%7D%5D&outSR=102100&cacheHint=true', headers=header)
+        res2 = requests.get('https://services9.arcgis.com/N9p5hsImWXAccRNI/arcgis/rest/services/Nc2JKvYFoAEOFCG5JSI6/FeatureServer/2/query?f=json&where=1%3D1&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&outStatistics=%5B%7B%22statisticType%22%3A%22sum%22%2C%22onStatisticField%22%3A%22Recovered%22%2C%22outStatisticFieldName%22%3A%22value%22%7D%5D&outSR=102100&cacheHint=true', headers=header)
+        res3 = requests.get('https://services9.arcgis.com/N9p5hsImWXAccRNI/arcgis/rest/services/Nc2JKvYFoAEOFCG5JSI6/FeatureServer/1/query?f=json&where=1%3D1&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&outStatistics=%5B%7B%22statisticType%22%3A%22sum%22%2C%22onStatisticField%22%3A%22Deaths%22%2C%22outStatisticFieldName%22%3A%22value%22%7D%5D&outSR=102100&cacheHint=true', headers=header)
+
+        total_data = []
+        for r in [res1, res2, res3]:
+            data_dict = r.json()
+            total_data.append(data_dict['features'][0]['attributes']['value'])
+
+        del res1
+        del res2
+        del res3
+
+        x = requests.get('https://services9.arcgis.com/N9p5hsImWXAccRNI/arcgis/rest/services/Nc2JKvYFoAEOFCG5JSI6/FeatureServer/2/query?f=json&where=1%3D1&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&orderByFields=Confirmed%20desc&outSR=102100&resultOffset=0&resultRecordCount=190&cacheHint=true', headers=header)
         data_dict = x.json()
 
         old = load('globaldata.bin', {})
 
-        world_data = []
+        world_data = [total_data]
         default_data = ['NEW', 'NEW', '-']
         newls = {}
 
         for i in range(num):
             attribute = data_dict['features'][i]['attributes']
-            last = int(attribute['Last_Update']/1000)
-            last_str = 'KST '+time.strftime('%m.%d %H:%M', time.localtime(last))
             con_id = attribute['Country_Region']
             confirmednum = attribute['Confirmed']
             oldconfirm = old.get(con_id, default_data)[0]
@@ -74,7 +95,7 @@ class FetchBot:
                 rank_delta = '-'
             else:
                 rank_delta = (i+1)-oldrank
-            country_data = [str(i+1)+'. '+con_id, last_str, confirmednum, confirm_delta, deathnum, death_delta, rank_delta]
+            country_data = [i+1, con_id, confirmednum, confirm_delta, deathnum, death_delta, rank_delta]
             world_data.append(country_data)
             if savedata:
                 newls[con_id]=[confirmednum, deathnum, i+1]
@@ -110,7 +131,7 @@ class FetchBot:
                         sendError("PIPELINE "+line.id+'에서 get_data() 오류가 발견되어 삭제합니다.')
                         self.lines.remove(line)
                         continue
-                    sendtoBot_card(edit1_json(data, line.id, line.url2, MGLocalFetchBot.getAll(), self.get_world_data(19)), 'MGLabsBot: 전일대비 {}명 증가'.format(data[2][0]), line.msg)
+                    sendtoBot_card(edit1_json(data, line.id, line.url2, MGLocalFetchBot.getAll(), self.get_world_data(18)), 'MGLabsBot: 전일대비 {}명 증가'.format(data[2][0]), line.msg)
                     line.save_data()
                     return
                 time.sleep(random.uniform(3,5))
@@ -123,14 +144,14 @@ class FetchBot:
             if line.test_run():
                 print(line.id+' 업데이트 확인됨.')
                 data = line.get_data()
-                sendtoBot_Error(edit1_json(data, line.id, line.url2, MGLocalFetchBot.getAll(False), self.get_world_data(19, False)), 'MGLabsBot: 전일대비 {}명 증가'.format(data[2][0]), line.msg)
+                sendtoBot_Error(edit1_json(data, line.id, line.url2, MGLocalFetchBot.getAll(False), self.get_world_data(18, False)), 'MGLabsBot: 전일대비 {}명 증가'.format(data[2][0]), line.msg)
                 self.lines.remove(line)
             time.sleep(3)
         print('테스트 완료')
 
     @staticmethod
     def renew(replyToken):
-        replybyBot_card(edit2_json(MGLocalFetchBot.getAll(False), FetchBot.get_world_data(19, False)), replyToken, 'MGLabsBot: 정보가 업데이트 되었습니다.')
+        replybyBot_card(edit2_json(MGLocalFetchBot.getAll(False), FetchBot.get_world_data(18, False)), replyToken, 'MGLabsBot: 정보가 업데이트 되었습니다.')
         print('업데이트 완료')
         
 try:
@@ -145,7 +166,7 @@ try:
         indexnum = sys.argv.index('--setLC')
         MGLocalFetchBot.getAll()
         data = load('localdata.bin')
-        replybyBot('Local Case Data가 재설정되었습니다.\n'+str(data), sys.argv[indexnum+1])
+        replybyBot('Local Cases Data가 재설정되었습니다.\n'+str(data), sys.argv[indexnum+1])
     else:
         bot = FetchBot()
         bot.run()
