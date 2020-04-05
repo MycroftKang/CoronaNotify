@@ -71,9 +71,15 @@ class FetchBot:
 
         old = load('globaldata.bin', {})
 
-        world_data = [total_data]
+        oldtotal = old['total']
+        temp = []
+
+        for i in range(3):
+            temp.append([total_data[i], total_data[i]-oldtotal[i]])
+        
+        world_data = [temp]
         default_data = ['NEW', 'NEW', '-']
-        newls = {}
+        newls = {'total':total_data}
 
         for i in range(num):
             attribute = data_dict['features'][i]['attributes']
@@ -131,7 +137,7 @@ class FetchBot:
                         sendError("PIPELINE "+line.id+'에서 get_data() 오류가 발견되어 삭제합니다.')
                         self.lines.remove(line)
                         continue
-                    sendtoBot_card(edit1_json(data, line.id, line.url2, MGLocalFetchBot.getAll(), self.get_world_data(18)), 'MGLabsBot: 전일대비 {}명 증가'.format(data[2][0]), line.msg)
+                    sendtoBot_card(edit1_json(data, line.id, line.url2, MGLocalFetchBot.getAll(), self.get_world_data(28)), 'MGLabsBot: 전일대비 {}명 증가'.format(data[2][0]), line.msg)
                     line.save_data()
                     return
                 time.sleep(random.uniform(3,5))
@@ -144,7 +150,7 @@ class FetchBot:
             if line.test_run():
                 print(line.id+' 업데이트 확인됨.')
                 data = line.get_data()
-                sendtoBot_Error(edit1_json(data, line.id, line.url2, MGLocalFetchBot.getAll(False), self.get_world_data(18, False)), 'MGLabsBot: 전일대비 {}명 증가'.format(data[2][0]), line.msg)
+                sendtoBot_Error(edit1_json(data, line.id, line.url2, MGLocalFetchBot.getAll(False), self.get_world_data(28, False)), 'MGLabsBot: 전일대비 {}명 증가'.format(data[2][0]), line.msg)
                 self.lines.remove(line)
             time.sleep(3)
         print('테스트 완료')

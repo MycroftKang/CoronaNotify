@@ -128,7 +128,7 @@ def edit2_json(local_data, world_data, file='send2.json'):
             base[i]['contents'][1]['contents'][0]['contents'][0]['text'] = str(local_data[i][2]) #num
             base[i]['contents'][1]['contents'][0]['contents'][1]['text'] = '{:+,d}'.format(local_data[i][3]) #delta
     
-    forms = [4, 5, 5, 5]
+    forms = [4, 5, 5, 5, 5, 5]
     cum = 0
     
     for c, j in enumerate(forms):
@@ -138,7 +138,8 @@ def edit2_json(local_data, world_data, file='send2.json'):
             if ((c == 0) and (i == 0)):
                 for k in range(3):
                     print(world_data[cum][k])
-                    base[2*k]['contents'][1]['text'] = '{:,}'.format(world_data[cum][k])
+                    base[2*k]['contents'][0]['text'] = '{:,}'.format(world_data[cum][k][0])
+                    base[2*k]['contents'][1]['text'] = '{:+,d}'.format(world_data[cum][k][1])
                 cum += 1
                 continue
 
@@ -201,7 +202,7 @@ def edit1_json(data, id, link, local_data, world_data, file='send1.json'):
             base[i]['contents'][1]['contents'][0]['contents'][0]['text'] = str(local_data[i][2]) #num
             base[i]['contents'][1]['contents'][0]['contents'][1]['text'] = '{:+,d}'.format(local_data[i][3]) #delta
     
-    forms = [4, 5, 5, 5]
+    forms = [4, 5, 5, 5, 5, 5]
     cum = 0
     
     for c, j in enumerate(forms):
@@ -211,7 +212,8 @@ def edit1_json(data, id, link, local_data, world_data, file='send1.json'):
             if ((c == 0) and (i == 0)):
                 for k in range(3):
                     print(world_data[cum][k])
-                    base[2*k]['contents'][1]['text'] = '{:,}'.format(world_data[cum][k])
+                    base[2*k]['contents'][0]['text'] = '{:,}'.format(world_data[cum][k][0])
+                    base[2*k]['contents'][1]['text'] = '{:+,d}'.format(world_data[cum][k][1])
                 cum += 1
                 continue
 
@@ -248,6 +250,9 @@ def edit1_json(data, id, link, local_data, world_data, file='send1.json'):
                 delta = '{:+,d}'.format(world_data[cum][5])
             base[1]['contents'][2]['contents'][1]['text'] = delta
             cum += 1
+
+            # with open('temp2.json', 'wt', encoding='utf-8') as f:
+            #     json.dump(json_dict, f, ensure_ascii=False)
 
     return json_dict
 

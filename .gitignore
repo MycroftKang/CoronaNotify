@@ -3,6 +3,7 @@ read.py
 *.bin
 *.sh
 test*.py
+temp*
 *.pyc
 world.jpg
 launch.json
