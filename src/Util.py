@@ -128,7 +128,7 @@ def edit2_json(local_data, world_data, file='send2.json'):
             base[i]['contents'][1]['contents'][0]['contents'][0]['text'] = str(local_data[i][2]) #num
             base[i]['contents'][1]['contents'][0]['contents'][1]['text'] = '{:+,d}'.format(local_data[i][3]) #delta
     
-    forms = [4, 5, 5, 5, 5, 5]
+    forms = [4, 5, 5, 5, 5, 5, 5]
     cum = 0
     
     for c, j in enumerate(forms):
@@ -202,7 +202,7 @@ def edit1_json(data, id, link, local_data, world_data, file='send1.json'):
             base[i]['contents'][1]['contents'][0]['contents'][0]['text'] = str(local_data[i][2]) #num
             base[i]['contents'][1]['contents'][0]['contents'][1]['text'] = '{:+,d}'.format(local_data[i][3]) #delta
     
-    forms = [4, 5, 5, 5, 5, 5]
+    forms = [4, 5, 5, 5, 5, 5, 5]
     cum = 0
     
     for c, j in enumerate(forms):
@@ -317,6 +317,7 @@ class Material:
         print(res)
         self.soup = BeautifulSoup(res.text, 'html.parser')
         self.parseUpdate()
+        print('---'+self.id)
         print('PARSE: '+str(self.update))
         print('UPDATE: '+str(self.update > Material.data[0]))
         return (self.update > Material.data[0])

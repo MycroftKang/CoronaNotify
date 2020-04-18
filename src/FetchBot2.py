@@ -24,7 +24,7 @@ SOFTWARE.
 
 import requests
 from bs4 import BeautifulSoup
-import time, random, sys, re, traceback
+import time, random, sys, re, traceback, threading
 
 from Util import *
 from LocalFetchBot import MGLocalFetchBot
@@ -36,7 +36,10 @@ class FetchBot:
             # self.lines = [PipeLine1(), PipeLine2(test_selector['2']), PipeLine3(test_selector['3']), PipeLine6(test_selector['6']), PipeLine7()] 
             self.lines = [PipeLine1()]
         else:
-            self.lines = [PipeLine1(), PipeLine2(), PipeLine3(), PipeLine6(), PipeLine7()]
+            self.found = False
+            self.fetchdata = []
+            self.lines = [PipeLine1(), PipeLine3(), PipeLine6(), PipeLine7()]
+            self.line2 = PipeLine2()
             # self.line4 = PipeLine4()
 
     @staticmethod
@@ -114,33 +117,54 @@ class FetchBot:
         print('World Data 수집 끝', end-start)
         return world_data
 
-    def run(self):
-        sendError('정보 수집 시작!')
-        while True:
+    def flow1(self):
+        while not (len(self.lines) == 0):
             for line in self.lines:
-                if len(self.lines) == 0:
-                    sendError('모든 PIPELINE에서 오류가 발견되어 종료되었습니다.')
+                if self.found:
                     return
-                try:
-                    check = line.run()
-                except:
-                    sendError("PIPELINE "+line.id+'에서 오류가 발견되어 삭제합니다.')
-                    self.lines.remove(line)
-                    continue
-                print(line.id+' 업데이트 체크 중...')
-                if check:
-                    print(line.id+' 업데이트 확인됨.')
-                    sendError("PIPELINE "+line.id+'에서 업데이트 확인됨.')
+                if line.run():
+                    if self.found:
+                        return
+                    self.found = True
                     try:
-                        data = line.get_data()
+                        self.fetchdata.append([line.get_data(), line.id, line.url2, line.msg])
                     except:
                         sendError("PIPELINE "+line.id+'에서 get_data() 오류가 발견되어 삭제합니다.')
                         self.lines.remove(line)
                         continue
-                    sendtoBot_card(edit1_json(data, line.id, line.url2, MGLocalFetchBot.getAll(), self.get_world_data(28)), 'MGLabsBot: 전일대비 {}명 증가'.format(data[2][0]), line.msg)
                     line.save_data()
                     return
                 time.sleep(random.uniform(3,5))
+
+    def flow2(self):
+        while not self.found:
+            if self.line2.run():
+                if self.found:
+                    return
+                self.found = True
+                try:
+                    self.fetchdata.append([self.line2.get_data(), self.line2.id, self.line2.url2, self.line2.msg])
+                except:
+                    sendError("PIPELINE "+self.line2.id+'에서 get_data() 오류가 발견되어 삭제합니다.')
+                    return
+                self.line2.save_data()
+                return
+            time.sleep(random.uniform(3,5))
+
+    def run(self):
+        # sendError('정보 수집 시작!')
+        print('Start')
+        th1 = threading.Thread(target=self.flow1)
+        th2 = threading.Thread(target=self.flow2)
+        th1.start()
+        th2.start()
+        print('join')
+        th1.join()
+        th2.join()
+        print('pass')
+        print(self.fetchdata)
+        datals = self.fetchdata[0]
+        sendtoBot_card(edit1_json(datals[0], datals[1], datals[2], MGLocalFetchBot.getAll(), self.get_world_data(33)), 'MGLabsBot: 전일대비 {}명 증가'.format(datals[0][2][0]), datals[3])
 
     def test_run(self):
         print('테스트 정보 수집 시작!')
@@ -150,14 +174,14 @@ class FetchBot:
             if line.test_run():
                 print(line.id+' 업데이트 확인됨.')
                 data = line.get_data()
-                sendtoBot_Error(edit1_json(data, line.id, line.url2, MGLocalFetchBot.getAll(False), self.get_world_data(28, False)), 'MGLabsBot: 전일대비 {}명 증가'.format(data[2][0]), line.msg)
+                sendtoBot_Error(edit1_json(data, line.id, line.url2, MGLocalFetchBot.getAll(False), self.get_world_data(33, False)), 'MGLabsBot: 전일대비 {}명 증가'.format(data[2][0]), line.msg)
                 self.lines.remove(line)
             time.sleep(3)
         print('테스트 완료')
 
     @staticmethod
     def renew(replyToken):
-        replybyBot_card(edit2_json(MGLocalFetchBot.getAll(False), FetchBot.get_world_data(28, False)), replyToken, 'MGLabsBot: 정보가 업데이트 되었습니다.')
+        replybyBot_card(edit2_json(MGLocalFetchBot.getAll(False), FetchBot.get_world_data(33, False)), replyToken, 'MGLabsBot: 정보가 업데이트 되었습니다.')
         print('업데이트 완료')
         
 try:
