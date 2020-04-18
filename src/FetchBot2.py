@@ -152,7 +152,9 @@ class FetchBot:
             time.sleep(random.uniform(3,5))
 
     def run(self):
-        # sendError('정보 수집 시작!')
+        sendError('정보 수집 시작!')
+        Ldata = MGLocalFetchBot.getAll()
+        Gdata = self.get_world_data(33)
         print('Start')
         th1 = threading.Thread(target=self.flow1)
         th2 = threading.Thread(target=self.flow2)
@@ -164,7 +166,7 @@ class FetchBot:
         print('pass')
         print(self.fetchdata)
         datals = self.fetchdata[0]
-        sendtoBot_card(edit1_json(datals[0], datals[1], datals[2], MGLocalFetchBot.getAll(), self.get_world_data(33)), 'MGLabsBot: 전일대비 {}명 증가'.format(datals[0][2][0]), datals[3])
+        sendtoBot_card(edit1_json(datals[0], datals[1], datals[2], Ldata, Gdata), 'MGLabsBot: 전일대비 {}명 증가'.format(datals[0][2][0]), datals[3])
 
     def test_run(self):
         print('테스트 정보 수집 시작!')
