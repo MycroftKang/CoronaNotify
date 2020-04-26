@@ -3544,7 +3544,9 @@
                   },
                   {
                     "type": "text",
-                    "text": "국가"
+                    "text": "국가",
+                    "color": "#5B7DED",
+                    "weight": "bold"
                   }
                 ],
                 "flex": 13
@@ -3800,6 +3802,9 @@
       "styles": {
         "header": {
           "backgroundColor": "#eceff1"
+        },
+        "body": {
+          "backgroundColor": "#EFEFF5"
         }
       }
     },

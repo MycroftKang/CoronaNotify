@@ -84,8 +84,19 @@ class FetchBot:
         default_data = ['NEW', 'NEW', '-']
         newls = {'total':total_data}
 
+        for i in range(len(data_dict['features'])):
+            if 'Korea' in data_dict['features'][i]['attributes']['Country_Region']:
+                korea = i
+                break
+        
+        crt = num-5
+
         for i in range(num):
+            if i >= crt:
+                i = korea + (i-crt-2)
+            
             attribute = data_dict['features'][i]['attributes']
+
             con_id = attribute['Country_Region']
             confirmednum = attribute['Confirmed']
             oldconfirm = old.get(con_id, default_data)[0]
