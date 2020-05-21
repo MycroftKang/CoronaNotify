@@ -26,4 +26,4 @@ deploy-to-server:
     - cd /home/gitlab-runner/CoronaNotify/src
     - ls
   tags:
-    - deploy
+    - mgylabs-mulgyeol
