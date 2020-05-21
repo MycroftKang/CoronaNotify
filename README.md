@@ -67,4 +67,4 @@ python3 FetchBot2.py
 ```
 
 ## Preview
-<img src="/docs/v3.jpg" width="30%">
+<img src="/docs/v4.jpg" width="30%">

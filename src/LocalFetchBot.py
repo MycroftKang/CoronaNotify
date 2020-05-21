@@ -39,7 +39,7 @@ class MGLocalFetchBot:
         #[url, num, index]
         bundle = [['https://www.suwon.go.kr/web/safesuwon/corona/PD_index.do#none', 'body > div.layout > div > ul > li:nth-child(1) > div > div.status.clearfix > table > tbody > tr > td:nth-child(1)', 'body > div.layout > div > ul > li:nth-child(1) > div > div.status.clearfix > div'],
         ['http://www.yongin.go.kr/index.do', '#corona_top > div > ul > li:nth-child(1) > p', '#corona_top > div > p:nth-child(5)'],
-        ['http://www.seongnam.go.kr/coronaIndex.html', '#corona_page > div.corona_page_top > div > div.contents_all > div.pc_view > table > tbody > tr > td:nth-child(1)', '#corona_page > div.corona_page_top > div > div.contents_all > span']]
+        ['https://corona.seongnam.go.kr/', '#corona_page > div.corona_page_top > div > div.contents_all > div.pc_view > table > tbody > tr > td:nth-child(1)', '#corona_page > div.corona_page_top > div > div.contents_all > span']]
         
         threads = []
 
@@ -74,7 +74,7 @@ class MGLocalFetchBot:
             save(numls, 'localdata.bin')
         
         print('Local Data 수집 끝', end-start)
-        # print(datals)
+        print(datals)
         return datals
 
     @staticmethod
