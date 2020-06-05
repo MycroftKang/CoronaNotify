@@ -24,7 +24,7 @@ SOFTWARE.
 
 import requests
 from bs4 import BeautifulSoup
-import time, random, sys, re, traceback, threading
+import time, random, sys, re, traceback, threading, datetime
 
 from Util import *
 from LocalFetchBot import MGLocalFetchBot
@@ -38,9 +38,17 @@ class FetchBot:
         else:
             self.found = False
             self.fetchdata = []
-            self.lines = [PipeLine1(), PipeLine3(), PipeLine6(), PipeLine7()]
+            # self.lines = [PipeLine1(), PipeLine3(), PipeLine6(), PipeLine7()]
             self.line2 = PipeLine2()
             # self.line4 = PipeLine4()
+
+    def get_wait_time(self):
+        minute = datetime.datetime.now().minute
+        if minute < 10:
+            t = 0.09*(minute-10)**2 + 1
+            return (t, t+1)
+        else:
+            return (1, 2)
 
     @staticmethod
     def get_world_data(num, savedata=True):
@@ -160,19 +168,19 @@ class FetchBot:
                     return
                 self.line2.save_data()
                 return
-            time.sleep(random.uniform(3,5))
+            time.sleep(random.uniform(*self.get_wait_time()))
 
     def run(self):
         sendError('정보 수집 시작!')
         Ldata = MGLocalFetchBot.getAll()
         Gdata = self.get_world_data(33)
         print('Start')
-        th1 = threading.Thread(target=self.flow1)
+        # th1 = threading.Thread(target=self.flow1)
         th2 = threading.Thread(target=self.flow2)
-        th1.start()
+        # th1.start()
         th2.start()
         print('join')
-        th1.join()
+        # th1.join()
         th2.join()
         print('pass')
         print(self.fetchdata)
