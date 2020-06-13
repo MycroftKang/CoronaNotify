@@ -80,7 +80,7 @@ class MGLocalFetchBot:
     @staticmethod
     def Fetch_local_case1(data, idx):
         try:
-            res = requests.get(data[0], timeout=3)
+            res = requests.get(data[0], timeout=5)
             soup = BeautifulSoup(res.text, 'html.parser')
             ni = soup.select(data[2])[0].text.split(',')
             num = int(soup.select(data[1])[0].text.replace('\r', '').replace('\n', '').replace('\t', '').replace('명', ''))
@@ -91,7 +91,7 @@ class MGLocalFetchBot:
     @staticmethod
     def Fetch_local_case2():
         try:
-            res = requests.post('http://27.101.50.5/prog/stat/corona/json.do', timeout=3)
+            res = requests.post('http://27.101.50.5/prog/stat/corona/json.do', timeout=5)
             datadict = res.json()
             index = datadict['status_date']
             m = re.search('(.+기준)', index)

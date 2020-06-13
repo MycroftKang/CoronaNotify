@@ -27,7 +27,7 @@ import requests
 import pickle
 from bs4 import BeautifulSoup
 import requests
-import json
+import json, re
 from APIKey import *
 
 DEV_MODE = False
@@ -100,6 +100,19 @@ def sendtoBot_card(card, title='Corona Notify', notice=None):
             return response
     else:
         sendtoBot_Error(card, title, notice)
+
+def sendtoBot_text(text):
+    if not DEV_MODE:
+        tar = GROUP_ID
+    else:
+        tar = TEST_GROUP_ID
+    TOKEN = API_KEY_FOR_BOT
+    response = requests.post(API_REQUEST_URL, headers={'Content-Type':'application/json', 'Authorization': 'Bearer ' + TOKEN}, json={'to':tar,'messages':[{
+        "type":"text",
+        "text":str(text),
+    }]})
+    print(response.text)
+    return response
 
 def replybyBot_card(card, replyToken, title='Corona Notify'):
     TOKEN = API_KEY_FOR_BOT
@@ -256,6 +269,77 @@ def edit1_json(data, id, link, local_data, world_data, file='send1.json'):
 
     return json_dict
 
+def edit3_json(data, id, link, local_data, world_data, file='send3.json'):
+    with open(file, 'rt', encoding='utf-8') as f:
+        json_dict = json.load(f)
+
+    json_dict['contents'][0]['body']['contents'][0]['contents'][2]['text'] = '{} 기준'.format(data[0])
+
+    json_dict['contents'][0]['body']['contents'][1]['contents'][1]['text'] = 'PIPELINE '+str(id)
+    json_dict['contents'][0]['footer']['contents'][0]['action']['uri'] = link
+
+    base = json_dict['contents'][1]['body']['contents']
+    for i in range(len(local_data)):
+        if not len(local_data[i]) == 0:
+            base[i]['contents'][0]['contents'][0]['text'] = local_data[i][0] #name
+            base[i]['contents'][0]['contents'][1]['text'] = local_data[i][1] #index
+            base[i]['contents'][1]['contents'][0]['contents'][0]['text'] = str(local_data[i][2]) #num
+            base[i]['contents'][1]['contents'][0]['contents'][1]['text'] = '{:+,d}'.format(local_data[i][3]) #delta
+    
+    forms = [4, 5, 5, 5, 5, 5, 5]
+    cum = 0
+    
+    for c, j in enumerate(forms):
+        for i in range(j):
+            base = json_dict['contents'][c+2]['body']['contents'][i]['contents']
+
+            if ((c == 0) and (i == 0)):
+                for k in range(3):
+                    print(world_data[cum][k])
+                    base[2*k]['contents'][0]['text'] = '{:,}'.format(world_data[cum][k][0])
+                    base[2*k]['contents'][1]['text'] = '{:+,d}'.format(world_data[cum][k][1])
+                cum += 1
+                continue
+
+            base[0]['contents'][0]['contents'][0]['text'] = '{:02}'.format(world_data[cum][0])
+            base[0]['contents'][1]['text'] = world_data[cum][1] #name
+
+            delta = world_data[cum][6]
+            if delta == '-':
+                rank_delta = 'UN'
+                rank_color = Color.GREEN
+            elif delta == 0:
+                rank_delta = 'NC'
+                rank_color = Color.GRAY
+            elif delta<0:
+                rank_delta = 'U{}'.format(delta*(-1))
+                rank_color = Color.RED
+            else:
+                rank_delta = 'D{}'.format(delta)
+                rank_color = Color.BLUE
+
+            base[0]['contents'][0]['contents'][2]['text'] = rank_delta
+            base[0]['contents'][0]['contents'][2]['color'] = rank_color
+
+            base[1]['contents'][0]['contents'][0]['text'] = '{:,}'.format(world_data[cum][2]) #confirmed_num
+            if world_data[cum][3] == 'NEW':
+                delta = 'NEW'
+            else:
+                delta = '{:+,d}'.format(world_data[cum][3])
+            base[1]['contents'][0]['contents'][1]['text'] = delta
+            base[1]['contents'][2]['contents'][0]['text'] = '{:,}'.format(world_data[cum][4]) #death_num
+            if world_data[cum][5] == 'NEW':
+                delta = 'NEW'
+            else:
+                delta = '{:+,d}'.format(world_data[cum][5])
+            base[1]['contents'][2]['contents'][1]['text'] = delta
+            cum += 1
+
+            # with open('temp2.json', 'wt', encoding='utf-8') as f:
+            #     json.dump(json_dict, f, ensure_ascii=False)
+
+    return json_dict
+
 def table_parse(table, data):
     """
     return ['확진환자', '격리해제', '사망']
@@ -271,6 +355,23 @@ def table_parse(table, data):
                     break
                 else:
                     t += 1
+    if len(newls) == 3:
+        return newls
+
+    keyls = [['확진자', '확진'], ['격리해제'], ['사망']]
+    
+    newls = []
+    t = 0
+    for i in range(len(table.columns)):
+        tar = str(table[i][1])
+        if tar in keyls[t]:
+            num = table[i][3].replace(',', '')
+            newls.append(int(re.match('[0-9]+', num).group()))
+            if t>1:
+                break
+            else:
+                t += 1
+
     return newls
      
 class Material:

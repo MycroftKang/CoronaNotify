@@ -185,7 +185,14 @@ class FetchBot:
         print('pass')
         print(self.fetchdata)
         datals = self.fetchdata[0]
-        sendtoBot_card(edit1_json(datals[0], datals[1], datals[2], Ldata, Gdata), 'MGLabsBot: 전일대비 {}명 증가'.format(datals[0][2][0]), datals[3])
+        try:
+            card = edit1_json(datals[0], datals[1], datals[2], Ldata, Gdata)
+            title = 'MGYL Bot: 전일대비 {}명 증가'.format(datals[0][2][0])
+        except:
+            card = edit3_json(datals[0], datals[1], datals[2], Ldata, Gdata)
+            title = 'MGYL Bot: {} 기준 COVID-19 현황 업데이트'.format(datals[0][0])
+        
+        sendtoBot_card(card, title, datals[3])
 
     def test_run(self):
         print('테스트 정보 수집 시작!')

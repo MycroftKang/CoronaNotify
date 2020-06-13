@@ -96,13 +96,17 @@ class PipeLine2(Tool):
             res = self.request(self.url2)
             ls = pd.read_html(res.text)
             table = ls[0]
+            print(table)
             try:
                 self.newls = table_parse(table, self.data)
             except:
-                num1 = int(table.iloc[1,2])
-                num2 = int(table.iloc[1,3])
-                num3 = int(table.iloc[1,5])
-                self.newls = [num1, num2, num3]
+                try:
+                    num1 = int(table.iloc[1,2])
+                    num2 = int(table.iloc[1,3])
+                    num3 = int(table.iloc[1,5])
+                    self.newls = [num1, num2, num3]
+                except:
+                    self.newls = []
             print('NEWLS', self.newls)
         except Exception as e:
             sendError(self.id+' parseAll 오류가 발생했습니다. '+str(e))
