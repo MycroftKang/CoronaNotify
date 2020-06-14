@@ -19,7 +19,7 @@ if sys.argv[1].lower() == 'show':
     print(time.ctime(data[0]))
 elif sys.argv[1].lower() == 'update':
     if sys.argv[2].lower() == 'data':
-        newls = [i for i in sys.argv[3:]]
+        newls = [int(i) for i in sys.argv[3:]]
         save([data[0], newls])
         print(load())
 else:
