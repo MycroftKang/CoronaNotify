@@ -24,16 +24,24 @@ SOFTWARE.
 
 import requests
 from bs4 import BeautifulSoup
-import time, random, sys, re, traceback, threading, datetime
+import time
+import random
+import sys
+import re
+import traceback
+import threading
+import datetime
 
 from Util import *
 from LocalFetchBot import MGLocalFetchBot
 from PIPELINES import PipeLine1, PipeLine2, PipeLine3, PipeLine6, PipeLine7
-       
+
+
 class FetchBot:
-    def __init__(self, test_selector={'2':None, '3':None, '6':None}):
+    def __init__(self, test_selector={'2': None, '3': None, '6': None}):
+        self.global_newls = None
         if '--test' in sys.argv:
-            # self.lines = [PipeLine1(), PipeLine2(test_selector['2']), PipeLine3(test_selector['3']), PipeLine6(test_selector['6']), PipeLine7()] 
+            # self.lines = [PipeLine1(), PipeLine2(test_selector['2']), PipeLine3(test_selector['3']), PipeLine6(test_selector['6']), PipeLine7()]
             self.lines = [PipeLine1()]
         else:
             self.found = False
@@ -50,18 +58,17 @@ class FetchBot:
         else:
             return (1, 2)
 
-    @staticmethod
-    def get_world_data(num, savedata=True):
+    def get_world_data(self, num, savedata=True):
         print('World Data 수집 시작')
         start = time.time()
         header = {
-        'Accept':'*/*',
-        'Accept-encoding':'gzip, deflate',
-        'Cache-Control':'no-cache',
-        'Pragma':'no-cache',
-        'Referer':'https://www.arcgis.com/apps/opsdashboard/index.html',
-        'Origin':'https://www.arcgis.com',
-        'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36'
+            'Accept': '*/*',
+            'Accept-encoding': 'gzip, deflate',
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache',
+            'Referer': 'https://www.arcgis.com/apps/opsdashboard/index.html',
+            'Origin': 'https://www.arcgis.com',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36'
         }
 
         res1 = requests.get('https://services9.arcgis.com/N9p5hsImWXAccRNI/arcgis/rest/services/Nc2JKvYFoAEOFCG5JSI6/FeatureServer/1/query?f=json&where=1%3D1&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&outStatistics=%5B%7B%22statisticType%22%3A%22sum%22%2C%22onStatisticField%22%3A%22Confirmed%22%2C%22outStatisticFieldName%22%3A%22value%22%7D%5D&outSR=102100&cacheHint=true', headers=header)
@@ -87,22 +94,22 @@ class FetchBot:
 
         for i in range(3):
             temp.append([total_data[i], total_data[i]-oldtotal[i]])
-        
+
         world_data = [temp]
         default_data = ['NEW', 'NEW', '-']
-        newls = {'total':total_data}
+        newls = {'total': total_data}
 
         for i in range(len(data_dict['features'])):
             if 'Korea' in data_dict['features'][i]['attributes']['Country_Region']:
                 korea = i
                 break
-        
+
         crt = num-5
 
         for i in range(num):
             if i >= crt:
                 i = korea + (i-crt-2)
-            
+
             attribute = data_dict['features'][i]['attributes']
 
             con_id = attribute['Country_Region']
@@ -123,18 +130,22 @@ class FetchBot:
                 rank_delta = '-'
             else:
                 rank_delta = (i+1)-oldrank
-            country_data = [i+1, con_id, confirmednum, confirm_delta, deathnum, death_delta, rank_delta]
+            country_data = [i+1, con_id, confirmednum,
+                            confirm_delta, deathnum, death_delta, rank_delta]
             world_data.append(country_data)
             if savedata:
-                newls[con_id]=[confirmednum, deathnum, i+1]
+                newls[con_id] = [confirmednum, deathnum, i+1]
 
         if savedata:
-            save(newls, 'globaldata.bin')
-        
+            self.global_newls = newls
+
         # print(world_data)
         end = time.time()
         print('World Data 수집 끝', end-start)
         return world_data
+
+    def save_global_newls(self):
+        save(self.global_newls, 'globaldata.bin')
 
     def flow1(self):
         while not (len(self.lines) == 0):
@@ -146,26 +157,39 @@ class FetchBot:
                         return
                     self.found = True
                     try:
-                        self.fetchdata.append([line.get_data(), line.id, line.url2, line.msg])
+                        self.fetchdata.append(
+                            [line.get_data(), line.id, line.url2, line.msg])
                     except:
-                        sendError("PIPELINE "+line.id+'에서 get_data() 오류가 발견되어 삭제합니다.')
+                        sendError("PIPELINE "+line.id +
+                                  '에서 get_data() 오류가 발견되어 삭제합니다.')
                         self.lines.remove(line)
                         continue
                     line.save_data()
                     return
-                time.sleep(random.uniform(3,5))
+                time.sleep(random.uniform(3, 5))
 
     def flow2(self):
+        error = 0
         while not self.found:
             if self.line2.run():
                 if self.found:
                     return
                 self.found = True
                 try:
-                    self.fetchdata.append([self.line2.get_data(), self.line2.id, self.line2.url2, self.line2.msg])
+                    self.fetchdata.append(
+                        [self.line2.get_data(), self.line2.id, self.line2.url2, self.line2.msg])
                 except:
-                    sendError("PIPELINE "+self.line2.id+'에서 get_data() 오류가 발견되어 삭제합니다.')
-                    return
+                    if error < 3:
+                        error += 1
+                        dt = 15 * error
+                        sendError("PIPELINE "+self.line2.id +
+                                  '에서 get_data() 오류가 발견되어 {}초 후 다시 시작합니다.'.format(dt))
+                        time.sleep(dt)
+                        continue
+                    else:
+                        sendError("PIPELINE "+self.line2.id +
+                                  '에서 get_data() 오류가 발견되어 삭제합니다.')
+                        return
                 self.line2.save_data()
                 return
             time.sleep(random.uniform(*self.get_wait_time()))
@@ -191,8 +215,10 @@ class FetchBot:
         except:
             card = edit3_json(datals[0], datals[1], datals[2], Ldata, Gdata)
             title = 'MGYL Bot: {} 기준 COVID-19 현황 업데이트'.format(datals[0][0])
-        
+
         sendtoBot_card(card, title, datals[3])
+        self.save_global_newls()
+        MGLocalFetchBot.save_newls()
 
     def test_run(self):
         print('테스트 정보 수집 시작!')
@@ -202,29 +228,19 @@ class FetchBot:
             if line.test_run():
                 print(line.id+' 업데이트 확인됨.')
                 data = line.get_data()
-                sendtoBot_Error(edit1_json(data, line.id, line.url2, MGLocalFetchBot.getAll(False), self.get_world_data(33, False)), 'MGLabsBot: 전일대비 {}명 증가'.format(data[2][0]), line.msg)
+                sendtoBot_Error(edit1_json(data, line.id, line.url2, MGLocalFetchBot.getAll(
+                    False), self.get_world_data(33, False)), 'MGLabsBot: 전일대비 {}명 증가'.format(data[2][0]), line.msg)
                 self.lines.remove(line)
             time.sleep(3)
         print('테스트 완료')
 
-    @staticmethod
-    def renew(replyToken):
-        replybyBot_card(edit2_json(MGLocalFetchBot.getAll(False), FetchBot.get_world_data(33, False)), replyToken, 'MGLabsBot: 정보가 업데이트 되었습니다.')
-        print('업데이트 완료')
-        
+
 try:
     if '--test' in sys.argv:
-        ts = [['#listView > ul:nth-child(?) > li.title > a'], ['#content > div > div.board_list > table > tbody > tr:nth-child(?) > td.ta_l > a'], ['#sub_content > div.board_list > table > tbody > tr:nth-child(?) > td.ta_l.inl_z > a']]
-        bot = FetchBot({'2':ts[0], '3':ts[1], '6':ts[2]})
+        ts = [['#listView > ul:nth-child(?) > li.title > a'], ['#content > div > div.board_list > table > tbody > tr:nth-child(?) > td.ta_l > a'], [
+            '#sub_content > div.board_list > table > tbody > tr:nth-child(?) > td.ta_l.inl_z > a']]
+        bot = FetchBot({'2': ts[0], '3': ts[1], '6': ts[2]})
         bot.test_run()
-    elif '--renew' in sys.argv:
-        indexnum = sys.argv.index('--renew')
-        FetchBot.renew(sys.argv[indexnum+1])
-    elif '--setLC' in sys.argv:
-        indexnum = sys.argv.index('--setLC')
-        MGLocalFetchBot.getAll()
-        data = load('localdata.bin')
-        replybyBot('Local Cases Data가 재설정되었습니다.\n'+str(data), sys.argv[indexnum+1])
     else:
         bot = FetchBot()
         bot.run()
