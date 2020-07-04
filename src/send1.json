@@ -463,7 +463,12 @@
             ]
           }
         ],
-        "spacing": "xl"
+        "spacing": "xl",
+        "action": {
+          "type": "uri",
+          "label": "action",
+          "uri": "https://www.gg.go.kr/contents/contents.do?ciIdx=1150&menuId=2909"
+        }
       },
       "styles": {
         "header": {

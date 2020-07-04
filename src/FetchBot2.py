@@ -157,8 +157,8 @@ class FetchBot:
                         return
                     self.found = True
                     try:
-                        self.fetchdata.append(
-                            [line.get_data(), line.id, line.url2, line.msg])
+                        self.fetchdata = [
+                            line.get_data(), line.id, line.url2, line.msg]
                     except:
                         sendError("PIPELINE "+line.id +
                                   '에서 get_data() 오류가 발견되어 삭제합니다.')
@@ -176,8 +176,8 @@ class FetchBot:
                     return
                 self.found = True
                 try:
-                    self.fetchdata.append(
-                        [self.line2.get_data(), self.line2.id, self.line2.url2, self.line2.msg])
+                    self.fetchdata = [self.line2.get_data(
+                    ), self.line2.id, self.line2.url2, self.line2.msg]
                 except:
                     if error < 3:
                         error += 1
@@ -189,6 +189,8 @@ class FetchBot:
                     else:
                         sendError("PIPELINE "+self.line2.id +
                                   '에서 get_data() 오류가 발견되어 삭제합니다.')
+                        self.fetchdata = [[self.line2.strfupdate], self.line2.id,
+                                          self.line2.url2, self.line2.msg]
                         return
                 self.line2.save_data()
                 return
@@ -208,7 +210,7 @@ class FetchBot:
         th2.join()
         print('pass')
         print(self.fetchdata)
-        datals = self.fetchdata[0]
+        datals = self.fetchdata
         try:
             card = edit1_json(datals[0], datals[1], datals[2], Ldata, Gdata)
             title = 'MGYL Bot: 전일대비 {}명 증가'.format(datals[0][2][0])
