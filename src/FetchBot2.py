@@ -185,6 +185,7 @@ class FetchBot:
                         sendError("PIPELINE "+self.line2.id +
                                   '에서 get_data() 오류가 발견되어 {}초 후 다시 시작합니다.'.format(dt))
                         time.sleep(dt)
+                        self.found = False
                         continue
                     else:
                         sendError("PIPELINE "+self.line2.id +

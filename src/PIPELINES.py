@@ -27,11 +27,14 @@ import time
 import re
 import pandas as pd
 
-#Cov19 발생동향
+# Cov19 발생동향
+
+
 class PipeLine1(Tool):
     def __init__(self):
         url = 'http://ncov.mohw.go.kr/bdBoardList_Real.do?brdId=&brdGubun=&ncvContSeq=&contSeq=&board_id=&gubun='
-        selectors = ['#content > div > div:nth-child(5) > table > tbody > tr > td:nth-child('+str(x)+')' for x in [1, 2, 4]]
+        selectors = [
+            '#content > div > div:nth-child(5) > table > tbody > tr > td:nth-child('+str(x)+')' for x in [1, 2, 4]]
         self.msg = None
         selectors.insert(0, '#content > div > p')
         super().__init__(url, selectors, '1')
@@ -44,7 +47,8 @@ class PipeLine1(Tool):
             for i in range(len(self.selectors)):
                 if i == 0:
                     continue
-                self.newls.append(int(self.soup.select(self.selectors[i])[0].text.replace('\xa0', '').replace(',','').replace('명', '')))
+                self.newls.append(int(self.soup.select(self.selectors[i])[
+                                  0].text.replace('\xa0', '').replace(',', '').replace('명', '')))
             self.url2 = self.url
             print('NEWLS', self.newls)
         except Exception as e:
@@ -53,13 +57,14 @@ class PipeLine1(Tool):
 
     def parseUpdate(self):
         try:
-            updatestr = self.soup.select(self.selectors[0])[0].text #기준시간
+            updatestr = self.soup.select(self.selectors[0])[0].text  # 기준시간
             print('RAW: '+updatestr)
             m = re.search('\((\d+)\D+(\d+)\D+(\d+시).*\)', updatestr)
             updatestr = '{}월 {}일 {}'.format(m.group(1), m.group(2), m.group(3))
             updatestr = updatestr.replace('00시', '0시')
             self.strfupdate = updatestr
-            self.update = time.mktime(time.strptime('2020년 '+updatestr, '%Y년 %m월 %d일 %H시'))
+            self.update = time.mktime(time.strptime(
+                '2020년 '+updatestr, '%Y년 %m월 %d일 %H시'))
         except Exception as e:
             print("Erro u2 "+str(e))
             # raise e
@@ -67,7 +72,9 @@ class PipeLine1(Tool):
             self.update = Material.data[0]
             # raise TypeError
 
-#질병관리본부
+# 질병관리본부
+
+
 class PipeLine2(Tool):
     def __init__(self, test_selectors=None):
         url = 'https://www.cdc.go.kr/board/board.es?mid=a20501000000&bid=0015'
@@ -80,12 +87,12 @@ class PipeLine2(Tool):
         super().__init__(url, selectors, '2')
         self.msg = '이 파이프라인은 Learn more을 통해\n지역별 상세 통계를 제공합니다.'
         self.http_header1 = {
-            'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-            'Accept-Encoding':'gzip, deflate, br',
-            'Accept-Language':'ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7',
-            'Connection':'keep-alive',
-            'Host':'www.cdc.go.kr',
-            'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36'}
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Accept-Language': 'ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7',
+            'Connection': 'keep-alive',
+            'Host': 'www.cdc.go.kr',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36'}
 
     def parseAll(self):
         try:
@@ -101,26 +108,30 @@ class PipeLine2(Tool):
                 self.newls = table_parse(table, self.data)
             except:
                 try:
-                    num1 = int(table.iloc[1,2])
-                    num2 = int(table.iloc[1,3])
-                    num3 = int(table.iloc[1,5])
+                    num1 = int(table.iloc[1, 2])
+                    num2 = int(table.iloc[1, 3])
+                    num3 = int(table.iloc[1, 5])
                     self.newls = [num1, num2, num3]
                 except:
                     self.newls = []
             print('NEWLS', self.newls)
         except Exception as e:
             sendError(self.id+' parseAll 오류가 발생했습니다. '+str(e))
+            print(res.text)
             raise TypeError
 
     def parseUpdate(self):
         try:
-            updatestr = self.soup.select(self.selectors[0])[0].get('title') #기준시간
+            updatestr = self.soup.select(self.selectors[0])[
+                0].get('title')  # 기준시간
             print('RAW: '+updatestr)
             m = re.search('\((\d+월\s*\d+일.*\d+시.*)\)', updatestr)
             if m:
-                updatestr = m.group(1).replace(',','').replace(' 기준', '').strip()
+                updatestr = m.group(1).replace(
+                    ',', '').replace(' 기준', '').strip()
                 self.strfupdate = updatestr
-                self.update = time.mktime(time.strptime('2020년 '+updatestr, '%Y년 %m월 %d일 %H시'))
+                self.update = time.mktime(time.strptime(
+                    '2020년 '+updatestr, '%Y년 %m월 %d일 %H시'))
             elif self.TEST_MODE:
                 raise TypeError
             else:
@@ -137,14 +148,18 @@ class PipeLine2(Tool):
         if self.test_seltem == None:
             self.test_seltem = self.selectors[0]
         self.linenum += 1
-        self.selectors[0] = self.test_seltem.replace('?', str(2*self.linenum-1))
+        self.selectors[0] = self.test_seltem.replace(
+            '?', str(2*self.linenum-1))
 
-#Cov19
+# Cov19
+
+
 class PipeLine3(Tool):
     def __init__(self, test_selectors=None):
         url = 'http://ncov.mohw.go.kr/tcmBoardList.do?brdId=&brdGubun=&dataGubun=&ncvContSeq=&contSeq=&board_id=140&gubun='
         if test_selectors == None:
-            selectors = ['#content > div > div.board_list > table > tbody > tr:nth-child(1) > td.ta_l > a']
+            selectors = [
+                '#content > div > div.board_list > table > tbody > tr:nth-child(1) > td.ta_l > a']
             self.TEST_MODE = False
         else:
             selectors = test_selectors
@@ -158,16 +173,17 @@ class PipeLine3(Tool):
                 self.parseUpdate()
             code = self.soup.select(self.selectors[0])[0].get('onclick')
             code = code.split(',')[3].replace("'", '')
-            self.url2 = 'http://ncov.mohw.go.kr/tcmBoardView.do?brdId=&brdGubun=&dataGubun=&ncvContSeq={0}&contSeq={0}&board_id=140&gubun=BDJ'.format(code)
+            self.url2 = 'http://ncov.mohw.go.kr/tcmBoardView.do?brdId=&brdGubun=&dataGubun=&ncvContSeq={0}&contSeq={0}&board_id=140&gubun=BDJ'.format(
+                code)
             res = self.request(self.url2)
             ls = pd.read_html(res.text)
             table = ls[0]
             try:
                 self.newls = table_parse(table, self.data)
             except:
-                num1 = int(table.iloc[1,2])
-                num2 = int(table.iloc[1,3])
-                num3 = int(table.iloc[1,5])
+                num1 = int(table.iloc[1, 2])
+                num2 = int(table.iloc[1, 3])
+                num3 = int(table.iloc[1, 5])
                 self.newls = [num1, num2, num3]
             print('NEWLS', self.newls)
         except Exception as e:
@@ -176,13 +192,14 @@ class PipeLine3(Tool):
 
     def parseUpdate(self):
         try:
-            updatestr = self.soup.select(self.selectors[0])[0].text #기준시간
+            updatestr = self.soup.select(self.selectors[0])[0].text  # 기준시간
             print('RAW: '+updatestr)
             m = re.search('\((\d+월\s*\d+일.*\d+시.*)\)', updatestr)
             if m:
                 updatestr = m.group(1).strip()
                 self.strfupdate = updatestr
-                self.update = time.mktime(time.strptime('2020년 '+updatestr, '%Y년 %m월 %d일 %H시'))
+                self.update = time.mktime(time.strptime(
+                    '2020년 '+updatestr, '%Y년 %m월 %d일 %H시'))
             elif self.TEST_MODE:
                 raise TypeError('매칭되지 않음')
             else:
@@ -194,6 +211,7 @@ class PipeLine3(Tool):
             self.update = Material.data[0]
             # sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
             # raise TypeError
+
 
 class PipeLine4(Material):
     def __init__(self):
@@ -214,31 +232,33 @@ class PipeLine4(Material):
         return self.Check_Update()
 
     def Check_Update(self):
-        a = self.soup.find('div', {'class':'box_image'}).find('img')
+        a = self.soup.find('div', {'class': 'box_image'}).find('img')
         link = 'http://ncov.mohw.go.kr'+a.get('src')
         res = requests.get(link)
         if res.content == self.img:
             return False
-        else: 
+        else:
             return True
 
     def send_image(self):
         del self.img
-        a = self.soup.find('div', {'class':'box_image'}).find('img')
+        a = self.soup.find('div', {'class': 'box_image'}).find('img')
         link = 'http://ncov.mohw.go.kr'+a.get('src')
         res = requests.get(link)
         with open('world.jpg', 'wb') as f:
             f.write(res.content)
         sendNoti('\n전세계 코로나19 발생현황\n\nPIPELINE 4', res.content)
 
+
 class PipeLine5(Tool):
     def __init__(self):
         url = 'http://ncov.mohw.go.kr/bdBoardList_Real.do?brdId=&brdGubun=&ncvContSeq=&contSeq=&board_id=&gubun='
-        super().__init__(url, None,'5')
+        super().__init__(url, None, '5')
 
     def parseUpdate(self):
         try:
-            bundle = self.soup.find('div', {'class':'bvc_txt'}).findAll('p', {'class':'s_descript'})
+            bundle = self.soup.find('div', {'class': 'bvc_txt'}).findAll(
+                'p', {'class': 's_descript'})
             for idx in bundle:
                 if ('16시' in idx.text) or ('16 시' in idx.text):
                     m = re.search('.*(\d+월)\s*(\d+일)\s*(\d+시)\s*기준', idx.text)
@@ -265,12 +285,15 @@ class PipeLine5(Tool):
     def save_data(self):
         save([self.update, [self.newls[0], Material.data[1][1], Material.data[1][2]]])
 
-#보건복지부
+# 보건복지부
+
+
 class PipeLine6(Tool):
     def __init__(self, test_selectors=None):
         url = 'http://www.mohw.go.kr/react/al/sal0301ls.jsp?PAR_MENU_ID=04&MENU_ID=0403'
         if test_selectors == None:
-            selectors = ['#sub_content > div.board_list > table > tbody > tr:nth-child(1) > td.ta_l.inl_z > a']
+            selectors = [
+                '#sub_content > div.board_list > table > tbody > tr:nth-child(1) > td.ta_l.inl_z > a']
             self.TEST_MODE = False
         else:
             selectors = test_selectors
@@ -278,12 +301,12 @@ class PipeLine6(Tool):
         super().__init__(url, selectors, '6')
         self.msg = '이 파이프라인은 Learn more을 통해\n지역별 상세 통계를 제공합니다.'
         self.http_header1 = {
-            'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-            'Accept-Encoding':'gzip, deflate',
-            'Accept-Language':'ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7',
-            'Connection':'keep-alive',
-            'Host':'www.mohw.go.kr',
-            'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36'}
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+            'Accept-Encoding': 'gzip, deflate',
+            'Accept-Language': 'ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7',
+            'Connection': 'keep-alive',
+            'Host': 'www.mohw.go.kr',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36'}
 
     def parseAll(self):
         try:
@@ -297,9 +320,9 @@ class PipeLine6(Tool):
             try:
                 self.newls = table_parse(table, self.data)
             except:
-                num1 = int(table.iloc[1,2])
-                num2 = int(table.iloc[1,3])
-                num3 = int(table.iloc[1,5])
+                num1 = int(table.iloc[1, 2])
+                num2 = int(table.iloc[1, 3])
+                num3 = int(table.iloc[1, 5])
                 self.newls = [num1, num2, num3]
             print('NEWLS', self.newls)
         except Exception as e:
@@ -308,13 +331,14 @@ class PipeLine6(Tool):
 
     def parseUpdate(self):
         try:
-            updatestr = self.soup.select(self.selectors[0])[0].text #기준시간
+            updatestr = self.soup.select(self.selectors[0])[0].text  # 기준시간
             print('RAW: '+updatestr)
             m = re.search('\((\d+월\s*\d+일.*\d+시.*)\)', updatestr)
             if m:
                 updatestr = m.group(1).strip()
                 self.strfupdate = updatestr
-                self.update = time.mktime(time.strptime('2020년 '+updatestr, '%Y년 %m월 %d일 %H시'))
+                self.update = time.mktime(time.strptime(
+                    '2020년 '+updatestr, '%Y년 %m월 %d일 %H시'))
             elif self.TEST_MODE:
                 raise TypeError
             else:
@@ -327,11 +351,14 @@ class PipeLine6(Tool):
             # sendError(self.id+' parseUpdate 오류가 발생했습니다. '+str(e))
             # raise TypeError
 
+
 class PipeLine7(Tool):
     def __init__(self):
         url = 'http://ncov.mohw.go.kr/'
-        selectors = ['body > div > div.mainlive_container > div > div > div > div.live_left > div.liveNum > ul > li:nth-child('+str(x)+') > span.num' for x in [1, 2, 4]]
-        selectors.insert(0, 'body > div > div.mainlive_container > div > div > div > div.live_left > h2 > a > span')
+        selectors = ['body > div > div.mainlive_container > div > div > div > div.live_left > div.liveNum > ul > li:nth-child('+str(
+            x)+') > span.num' for x in [1, 2, 4]]
+        selectors.insert(
+            0, 'body > div > div.mainlive_container > div > div > div > div.live_left > h2 > a > span')
         super().__init__(url, selectors, '7')
         self.msg = None
 
@@ -343,7 +370,8 @@ class PipeLine7(Tool):
             for i in range(len(self.selectors)):
                 if i == 0:
                     continue
-                self.newls.append(int(self.soup.select(self.selectors[i])[0].text.replace('\xa0', '').replace(',','').replace('명', '').replace('(누적)', '')))
+                self.newls.append(int(self.soup.select(self.selectors[i])[0].text.replace(
+                    '\xa0', '').replace(',', '').replace('명', '').replace('(누적)', '')))
             self.url2 = self.url
             print('NEWLS', self.newls)
         except Exception as e:
@@ -352,13 +380,14 @@ class PipeLine7(Tool):
 
     def parseUpdate(self):
         try:
-            updatestr = self.soup.select(self.selectors[0])[0].text #기준시간
+            updatestr = self.soup.select(self.selectors[0])[0].text  # 기준시간
             print('RAW: '+updatestr)
             m = re.search('\((\d+)\D+(\d+)\D+(\d+시).*\)', updatestr)
             updatestr = '{}월 {}일 {}'.format(m.group(1), m.group(2), m.group(3))
             updatestr = updatestr.replace('00시', '0시')
             self.strfupdate = updatestr
-            self.update = time.mktime(time.strptime('2020년 '+updatestr, '%Y년 %m월 %d일 %H시'))
+            self.update = time.mktime(time.strptime(
+                '2020년 '+updatestr, '%Y년 %m월 %d일 %H시'))
         except Exception as e:
             print("Erro u7 "+str(e))
             # raise e
