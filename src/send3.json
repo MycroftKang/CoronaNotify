@@ -121,12 +121,18 @@
           },
           {
             "type": "text",
-            "text": "MGYL Bot",
-            "size": "xs",
+            "text": "···",
+            "size": "md",
             "gravity": "center",
-            "align": "end"
+            "align": "end",
+            "weight": "bold"
           }
-        ]
+        ],
+        "action": {
+          "type": "uri",
+          "label": "action",
+          "uri": "https://www.gg.go.kr/contents/contents.do?ciIdx=1150&menuId=2909"
+        }
       },
       "body": {
         "type": "box",
@@ -153,7 +159,7 @@
                     "color": "#aaaaaa"
                   }
                 ],
-                "flex": 0
+                "flex": 12
               },
               {
                 "type": "box",
@@ -165,11 +171,11 @@
                     "contents": [
                       {
                         "type": "text",
-                        "text": "N/A",
                         "align": "end",
                         "gravity": "center",
                         "size": "md",
-                        "color": "#de481f"
+                        "color": "#de481f",
+                        "text": "N/A"
                       },
                       {
                         "type": "text",
@@ -178,9 +184,37 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 1
+                  },
+                  {
+                    "type": "separator",
+                    "margin": "sm"
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "N/A",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#f59d35"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ],
+                    "flex": 1
                   }
-                ]
+                ],
+                "flex": 5
               }
             ]
           },
@@ -205,7 +239,7 @@
                     "color": "#aaaaaa"
                   }
                 ],
-                "flex": 7
+                "flex": 12
               },
               {
                 "type": "box",
@@ -217,11 +251,11 @@
                     "contents": [
                       {
                         "type": "text",
-                        "text": "N/A",
                         "align": "end",
                         "gravity": "center",
                         "size": "md",
-                        "color": "#de481f"
+                        "color": "#de481f",
+                        "text": "N/A"
                       },
                       {
                         "type": "text",
@@ -230,13 +264,39 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 1
+                  },
+                  {
+                    "type": "separator",
+                    "margin": "sm"
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "N/A",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#f59d35"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ],
+                    "flex": 1
                   }
                 ],
-                "flex": 1
+                "flex": 5
               }
-            ],
-            "flex": 0
+            ]
           },
           {
             "type": "box",
@@ -259,7 +319,7 @@
                     "color": "#aaaaaa"
                   }
                 ],
-                "flex": 7
+                "flex": 12
               },
               {
                 "type": "box",
@@ -271,11 +331,11 @@
                     "contents": [
                       {
                         "type": "text",
-                        "text": "N/A",
                         "align": "end",
                         "gravity": "center",
                         "size": "md",
-                        "color": "#de481f"
+                        "color": "#de481f",
+                        "text": "N/A"
                       },
                       {
                         "type": "text",
@@ -284,10 +344,37 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 1
+                  },
+                  {
+                    "type": "separator",
+                    "margin": "sm"
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "N/A",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#f59d35"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ],
+                    "flex": 1
                   }
                 ],
-                "flex": 1
+                "flex": 5
               }
             ]
           },
@@ -312,7 +399,7 @@
                     "color": "#aaaaaa"
                   }
                 ],
-                "flex": 7
+                "flex": 12
               },
               {
                 "type": "box",
@@ -324,11 +411,11 @@
                     "contents": [
                       {
                         "type": "text",
-                        "text": "N/A",
                         "align": "end",
                         "gravity": "center",
                         "size": "md",
-                        "color": "#de481f"
+                        "color": "#de481f",
+                        "text": "N/A"
                       },
                       {
                         "type": "text",
@@ -337,20 +424,42 @@
                         "gravity": "center",
                         "size": "sm"
                       }
-                    ]
+                    ],
+                    "flex": 1
+                  },
+                  {
+                    "type": "separator",
+                    "margin": "sm"
+                  },
+                  {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "N/A",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "md",
+                        "color": "#f59d35"
+                      },
+                      {
+                        "type": "text",
+                        "text": "+0",
+                        "align": "end",
+                        "gravity": "center",
+                        "size": "sm"
+                      }
+                    ],
+                    "flex": 1
                   }
                 ],
-                "flex": 1
+                "flex": 5
               }
             ]
           }
         ],
-        "spacing": "xl",
-        "action": {
-          "type": "uri",
-          "label": "action",
-          "uri": "https://www.gg.go.kr/contents/contents.do?ciIdx=1150&menuId=2909"
-        }
+        "spacing": "xl"
       },
       "styles": {
         "header": {

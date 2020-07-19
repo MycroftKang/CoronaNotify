@@ -38,25 +38,30 @@ class MGLocalFetchBot:
 
     @staticmethod
     def getAll(datasave=True):
+        """
+        return [index, time, num1, num1delta, num2, num2delta]
+        """
         print('Local Data 수집 시작')
 
         MGLocalFetchBot.old = load('localdata.bin')
-        #[url, num, index]
-        bundle = [['https://www.suwon.go.kr/web/safesuwon/corona/PD_index.do#none', 'body > div.layout > div > ul > li:nth-child(1) > div > div.status.clearfix > table > tbody > tr > td:nth-child(1)', 'body > div.layout > div > ul > li:nth-child(1) > div > div.status.clearfix > div'],
-                  ['http://www.yongin.go.kr/index.do',
-                      '#corona_top > div > ul > li:nth-child(1) > p', '#corona_top > div > p:nth-child(5)'],
-                  ['https://corona.seongnam.go.kr/', '#corona_page > div.corona_page_top > div > div.contents_all > div.pc_view > table > tbody > tr > td:nth-child(1)', '#corona_page > div.corona_page_top > div > div.contents_all > span']]
+        #[url, num1, num2, index]
+        bundle = [['https://www.suwon.go.kr/web/safesuwon/corona/PD_index.do#none', 'body > div.layout > div > ul > li:nth-child(1) > div > div.status.clearfix > table > tbody > tr > td:nth-child(1)', 'body > div.layout > div > ul > li:nth-child(1) > div > div.status.clearfix > table:nth-child(2) > tbody > tr > td:nth-child(2)', 'body > div.layout > div > ul > li:nth-child(1) > div > div.status.clearfix > div'],
+                  ['https://corona.seongnam.go.kr/', '#corona_page > div.corona_page_top > div > div.contents_all > div.pc_view > table > tbody > tr > td:nth-child(1) > b', '#corona_page > div.corona_page_top > div > div.contents_all > div.pc_view > table > tbody > tr > td:nth-child(3) > b', '#corona_page > div.corona_page_top > div > div.contents_all > span']]
 
         threads = []
 
         i = 0
+        idx_ls = [0, 2]
         for data in bundle:
             threads.append(threading.Thread(
-                target=MGLocalFetchBot.Fetch_local_case1, args=(data, i)))
+                target=MGLocalFetchBot.Fetch_local_case1, args=(data, idx_ls[i])))
             i += 1
 
         threads.append(threading.Thread(
             target=MGLocalFetchBot.Fetch_local_case2))
+
+        threads.append(threading.Thread(
+            target=MGLocalFetchBot.Fetch_local_case3))
 
         start = time.time()
         for x in threads:
@@ -69,13 +74,14 @@ class MGLocalFetchBot:
         datals = []
         if datasave:
             numls = []
+        print(MGLocalFetchBot.local_data)
         for k, v in sorted(MGLocalFetchBot.local_data.items()):
             datals.append(v)
             if datasave:
                 if len(v) == 0:
                     numls.append(MGLocalFetchBot.old[k])
                 else:
-                    numls.append(v[2])
+                    numls.append([v[2], v[4]])
 
         # print(numls)
         if datasave:
@@ -85,17 +91,22 @@ class MGLocalFetchBot:
         print(datals)
         return datals
 
+    # [index, time, num1, num1delta, num2, num2delta]
     @staticmethod
     def Fetch_local_case1(data, idx):
         try:
             res = requests.get(data[0], timeout=5)
             soup = BeautifulSoup(res.text, 'html.parser')
-            ni = soup.select(data[2])[0].text.split(',')
-            num = int(soup.select(data[1])[0].text.replace('\r', '').replace(
+            ni = soup.select(data[3])[0].text.split(',')
+            num = int(soup.select_one(data[1]).text.replace('\r', '').replace(
                 '\n', '').replace('\t', '').replace('명', ''))
+            num2 = int(soup.select_one(data[2]).text.replace('명', ''))
             MGLocalFetchBot.local_data[idx] = [
-                ni[0], ni[1].strip(' '), num, num-MGLocalFetchBot.old[idx]]
-        except:
+                ni[0], ni[1].strip(' '), num, num-MGLocalFetchBot.old[idx][0], num2, num2-MGLocalFetchBot.old[idx][1]]
+        except Exception as e:
+            import traceback
+            print(e)
+            print(traceback.print_exc())
             MGLocalFetchBot.local_data[idx] = []
 
     @staticmethod
@@ -109,10 +120,26 @@ class MGLocalFetchBot:
             if m:
                 index = m.group(1)
             num = datadict['item_1']
+            num2 = num - datadict['item_5']
             MGLocalFetchBot.local_data[3] = [
-                '천안시청', index, num, num-MGLocalFetchBot.old[3]]
+                '천안시청', index, num, num-MGLocalFetchBot.old[3][0], num2, num2-MGLocalFetchBot.old[3][1]]
         except:
             MGLocalFetchBot.local_data[3] = []
+
+    @staticmethod
+    def Fetch_local_case3():
+        res = requests.get('http://www.yongin.go.kr/health/ictsd/index.do')
+        soup = BeautifulSoup(res.text, 'html.parser')
+        num2 = int(soup.select_one(
+            '#coronabox_1 > div.coronacon_le > div > div:nth-child(1) > div.tbl_st1.tbl_corona.tbl_corona2 > table > tbody > tr > td:nth-child(1) > b > span').text)
+        niso = int(soup.select_one(
+            '#coronabox_1 > div.coronacon_le > div > div:nth-child(1) > div.tbl_st1.tbl_corona.tbl_corona2 > table > tbody > tr > td:nth-child(2) > b > span').text)
+        num = num2+niso
+        ni = soup.select_one(
+            '#coronabox_1 > div.coronacon_le > div > div:nth-child(1) > h4 > span').text.split(',')
+
+        MGLocalFetchBot.local_data[1] = [
+            ni[0], ni[1], num, num-MGLocalFetchBot.old[1][0], num2, num2-MGLocalFetchBot.old[1][1]]
 
     @staticmethod
     def save_newls():

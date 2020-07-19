@@ -21,9 +21,6 @@ deploy-to-server:
   only:
     - master
   script:
-    - ls
     - cp src/* /home/gitlab-runner/CoronaNotify/src/
-    - cd /home/gitlab-runner/CoronaNotify/src
-    - ls
   tags:
     - mgylabs-mulgyeol

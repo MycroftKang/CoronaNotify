@@ -162,6 +162,10 @@ def edit2_json(local_data, world_data, file='send2.json'):
                 local_data[i][2])  # num
             base[i]['contents'][1]['contents'][0]['contents'][1]['text'] = '{:+,d}'.format(
                 local_data[i][3])  # delta
+            base[i]['contents'][1]['contents'][2]['contents'][0]['text'] = str(
+                local_data[i][4])  # num2
+            base[i]['contents'][1]['contents'][2]['contents'][1]['text'] = '{:+,d}'.format(
+                local_data[i][5])  # delta
 
     forms = [4, 5, 5, 5, 5, 5, 5]
     cum = 0
@@ -249,6 +253,10 @@ def edit1_json(data, id, link, local_data, world_data, file='send1.json'):
                 local_data[i][2])  # num
             base[i]['contents'][1]['contents'][0]['contents'][1]['text'] = '{:+,d}'.format(
                 local_data[i][3])  # delta
+            base[i]['contents'][1]['contents'][2]['contents'][0]['text'] = str(
+                local_data[i][4])  # num2
+            base[i]['contents'][1]['contents'][2]['contents'][1]['text'] = '{:+,d}'.format(
+                local_data[i][5])  # delta
 
     forms = [4, 5, 5, 5, 5, 5, 5]
     cum = 0
@@ -331,6 +339,10 @@ def edit3_json(data, id, link, local_data, world_data, file='send3.json'):
                 local_data[i][2])  # num
             base[i]['contents'][1]['contents'][0]['contents'][1]['text'] = '{:+,d}'.format(
                 local_data[i][3])  # delta
+            base[i]['contents'][1]['contents'][2]['contents'][0]['text'] = str(
+                local_data[i][4])  # num2
+            base[i]['contents'][1]['contents'][2]['contents'][1]['text'] = '{:+,d}'.format(
+                local_data[i][5])  # delta
 
     forms = [4, 5, 5, 5, 5, 5, 5]
     cum = 0

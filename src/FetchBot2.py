@@ -42,7 +42,7 @@ class FetchBot:
         self.global_newls = None
         if '--test' in sys.argv:
             # self.lines = [PipeLine1(), PipeLine2(test_selector['2']), PipeLine3(test_selector['3']), PipeLine6(test_selector['6']), PipeLine7()]
-            self.lines = [PipeLine1()]
+            self.lines = [PipeLine2(test_selector['2'])]
         else:
             self.found = False
             self.fetchdata = []
@@ -53,10 +53,10 @@ class FetchBot:
     def get_wait_time(self):
         minute = datetime.datetime.now().minute
         if minute < 10:
-            t = 0.09*(minute-10)**2 + 1
-            return (t, t+1)
+            t = -0.14*(minute**2) + 20
+            return (t, t+2)
         else:
-            return (1, 2)
+            return (3, 5)
 
     def get_world_data(self, num, savedata=True):
         print('World Data 수집 시작')
@@ -242,7 +242,7 @@ try:
     if '--test' in sys.argv:
         ts = [['#listView > ul:nth-child(?) > li.title > a'], ['#content > div > div.board_list > table > tbody > tr:nth-child(?) > td.ta_l > a'], [
             '#sub_content > div.board_list > table > tbody > tr:nth-child(?) > td.ta_l.inl_z > a']]
-        bot = FetchBot({'2': ts[0], '3': ts[1], '6': ts[2]})
+        bot = FetchBot({'2': ts[0]})
         bot.test_run()
     else:
         bot = FetchBot()
