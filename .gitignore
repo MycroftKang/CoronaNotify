@@ -7,3 +7,5 @@ temp*
 *.pyc
 world.jpg
 launch.json
+src/table2.txt
+src/table.txt

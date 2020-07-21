@@ -112,6 +112,7 @@ class PipeLine2(Tool):
                     self.newls = table_parse(ls[0], self.data)
                 except:
                     self.newls = []
+                    raise TypeError
             print('NEWLS', self.newls)
         except Exception as e:
             sendError(self.id+' parseAll 오류가 발생했습니다. '+str(e))

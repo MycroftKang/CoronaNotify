@@ -409,9 +409,20 @@ def table_parse2(table1, table2, table3):
     """
     return ['확진환자', '격리해제', '사망']
     """
-    needs = [table1[1][2], table2[2][3], table3[1][2], table3[4][2]]
-    for i, n in enumerate(needs):
-        needs[i] = int(re.match('[0-9]+', n).group())
+    needs = []
+    for t in [table1, table2]:
+        last_row = len(t)-1
+        for c in range(len(t.columns)):
+            tar = str(t.iloc[last_row, c]).replace(',', '').replace('*', '')
+            if tar != None and tar.isdigit():
+                needs.append(int(tar))
+                break
+    last_row = len(table3)-2
+    for c in range(len(table3.columns)):
+        if str(table3.iloc[last_row, c]).replace(',', '').replace('*', '').isdigit():
+            needs.append(int(table3.iloc[last_row, c]))
+            needs.append(int(table3.iloc[last_row, c+3]))
+            break
     newls = [needs[0]+needs[1], needs[2], needs[3]]
     return newls
 
