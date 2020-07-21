@@ -23,6 +23,7 @@ if sys.argv[1].lower() == 'show':
     print(load('localdata.bin'))
 elif sys.argv[1].lower() == 'update':
     if sys.argv[2].lower() == 'global':
+        data = load()
         newls = [int(i) for i in sys.argv[3:]]
         save([data[0], newls])
         print(load())
