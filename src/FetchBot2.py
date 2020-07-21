@@ -178,12 +178,12 @@ class FetchBot:
                 try:
                     self.fetchdata = [self.line2.get_data(
                     ), self.line2.id, self.line2.url2, self.line2.msg]
-                except:
+                except Exception as e:
                     if error < 3:
                         error += 1
                         dt = 15 * error
                         sendError("PIPELINE "+self.line2.id +
-                                  '에서 get_data() 오류가 발견되어 {}초 후 다시 시작합니다.'.format(dt))
+                                  '에서 get_data() "{}" 오류가 발견되어 {}초 후 다시 시작합니다.'.format(e, dt))
                         time.sleep(dt)
                         self.found = False
                         continue
@@ -218,7 +218,6 @@ class FetchBot:
         except:
             card = edit3_json(datals[0], datals[1], datals[2], Ldata, Gdata)
             title = 'MGYL Bot: {} 기준 COVID-19 현황 업데이트'.format(datals[0][0])
-
         sendtoBot_card(card, title, datals[3])
         self.save_global_newls()
         MGLocalFetchBot.save_newls()

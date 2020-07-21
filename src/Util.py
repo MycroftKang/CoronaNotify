@@ -405,6 +405,17 @@ def edit3_json(data, id, link, local_data, world_data, file='send3.json'):
     return json_dict
 
 
+def table_parse2(table1, table2, table3):
+    """
+    return ['확진환자', '격리해제', '사망']
+    """
+    needs = [table1[1][2], table2[2][3], table3[1][2], table3[4][2]]
+    for i, n in enumerate(needs):
+        needs[i] = int(re.match('[0-9]+', n).group())
+    newls = [needs[0]+needs[1], needs[2], needs[3]]
+    return newls
+
+
 def table_parse(table, data):
     """
     return ['확진환자', '격리해제', '사망']

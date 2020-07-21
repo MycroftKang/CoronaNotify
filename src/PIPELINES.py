@@ -102,16 +102,14 @@ class PipeLine2(Tool):
             self.url2 = 'https://www.cdc.go.kr'+link
             res = self.request(self.url2)
             ls = pd.read_html(res.text)
-            table = ls[0]
-            print(table)
+            print(ls[0])
+            print(ls[1])
+            print(ls[2])
             try:
-                self.newls = table_parse(table, self.data)
+                self.newls = table_parse2(ls[0], ls[1], ls[2])
             except:
                 try:
-                    num1 = int(table.iloc[1, 2])
-                    num2 = int(table.iloc[1, 3])
-                    num3 = int(table.iloc[1, 5])
-                    self.newls = [num1, num2, num3]
+                    self.newls = table_parse(ls[0], self.data)
                 except:
                     self.newls = []
             print('NEWLS', self.newls)
