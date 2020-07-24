@@ -414,7 +414,7 @@ def table_parse2(table1, table2, table3):
         last_row = len(t)-1
         for c in range(len(t.columns)):
             tar = str(t.iloc[last_row, c]).replace(',', '').replace('*', '')
-            if tar != None and tar.isdigit():
+            if tar.isdigit():
                 needs.append(int(tar))
                 break
     last_row = len(table3)-2

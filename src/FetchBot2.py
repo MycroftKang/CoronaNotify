@@ -179,7 +179,7 @@ class FetchBot:
                     self.fetchdata = [self.line2.get_data(
                     ), self.line2.id, self.line2.url2, self.line2.msg]
                 except Exception as e:
-                    if error < 3:
+                    if error < 15:
                         error += 1
                         dt = 15 * error
                         sendError("PIPELINE "+self.line2.id +

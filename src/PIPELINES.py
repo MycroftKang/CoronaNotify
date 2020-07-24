@@ -117,7 +117,7 @@ class PipeLine2(Tool):
         except Exception as e:
             sendError(self.id+' parseAll 오류가 발생했습니다. '+str(e))
             print(res.text)
-            raise TypeError
+            raise e
 
     def parseUpdate(self):
         try:
