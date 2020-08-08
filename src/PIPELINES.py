@@ -132,7 +132,7 @@ class PipeLine2(Tool):
                 timedict = dict([k, int(v)] for k, v in timedict.items())
                 d = datetime.datetime(
                     2020, timedict['month'], timedict['date'], timedict['hour'], 0, 0)
-                self.strfupdate = f"{timedict['month']}월 {timedict['date']}일 {timedict['hour']}시 기준"
+                self.strfupdate = f"{timedict['month']}월 {timedict['date']}일 {timedict['hour']}시"
                 self.update = d.timestamp()
             elif self.TEST_MODE:
                 raise TypeError
