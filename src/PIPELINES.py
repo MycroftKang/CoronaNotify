@@ -26,6 +26,7 @@ from Util import *
 import time
 import re
 import pandas as pd
+import datetime
 
 # Cov19 발생동향
 
@@ -124,13 +125,15 @@ class PipeLine2(Tool):
             updatestr = self.soup.select(self.selectors[0])[
                 0].get('title')  # 기준시간
             print('RAW: '+updatestr)
-            m = re.search('\((\d+월\s*\d+일.*\d+시.*)\)', updatestr)
+            m = re.search(
+                '\(((?P<month>\d+)월\s*(?P<date>\d+)일.*?(?P<hour>\d+)시.*?)\)', updatestr)
             if m:
-                updatestr = m.group(1).replace(
-                    ',', '').replace(' 기준', '').strip()
-                self.strfupdate = updatestr
-                self.update = time.mktime(time.strptime(
-                    '2020년 '+updatestr, '%Y년 %m월 %d일 %H시'))
+                timedict: dict = m.groupdict()
+                timedict = dict([k, int(v)] for k, v in timedict.items())
+                d = datetime.datetime(
+                    2020, timedict['month'], timedict['date'], timedict['hour'], 0, 0)
+                self.strfupdate = f"{timedict['month']}월 {timedict['date']}일 {timedict['hour']}시 기준"
+                self.update = d.timestamp()
             elif self.TEST_MODE:
                 raise TypeError
             else:
