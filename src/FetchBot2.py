@@ -51,6 +51,9 @@ class FetchBot:
             # self.line4 = PipeLine4()
 
     def get_wait_time(self):
+        hour = datetime.datetime.now().hour
+        if hour != 10:
+            return (60*5, 60*10)
         minute = datetime.datetime.now().minute
         if minute < 10:
             t = -0.14*(minute**2) + 20
