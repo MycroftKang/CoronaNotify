@@ -46,7 +46,7 @@ class MGLocalFetchBot:
         MGLocalFetchBot.old = load('localdata.bin')
         #[url, num1, num2, index]
         bundle = [['https://www.suwon.go.kr/web/safesuwon/corona/PD_index.do#none', 'body > div.layout > div > ul > li:nth-child(1) > div > div.status.clearfix > table > tbody > tr > td:nth-child(1)', 'body > div.layout > div > ul > li:nth-child(1) > div > div.status.clearfix > table:nth-child(2) > tbody > tr > td:nth-child(2)', 'body > div.layout > div > ul > li:nth-child(1) > div > div.status.clearfix > div'],
-                  ['https://corona.seongnam.go.kr/', '#corona_page > div.corona_page_top > div > div.contents_all > div.pc_view > table > tbody > tr > td:nth-child(1) > b', '#corona_page > div.corona_page_top > div > div.contents_all > div.pc_view > table > tbody > tr > td:nth-child(3) > b', '#corona_page > div.corona_page_top > div > div.contents_all > span']]
+                  ['https://corona.seongnam.go.kr/', '#value01', '#value03', '#corona_page > div.corona_page_top > div > div.contents_all > span']]
 
         threads = []
 
@@ -144,3 +144,6 @@ class MGLocalFetchBot:
     @staticmethod
     def save_newls():
         save(MGLocalFetchBot.newls, 'localdata.bin')
+
+if __name__ == '__main__':
+    print('Result:', MGLocalFetchBot.getAll())
