@@ -198,7 +198,7 @@ class FetchBot:
                         return
                 self.line2.save_data()
                 return
-            time.sleep(random.uniform(*self.get_wait_time()))
+            time.sleep(random.uniform(30, 120))
 
     def run(self):
         sendError('정보 수집 시작!')
