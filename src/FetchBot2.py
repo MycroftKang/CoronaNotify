@@ -52,14 +52,11 @@ class FetchBot:
 
     def get_wait_time(self):
         hour = datetime.datetime.now().hour
-        if hour != 10:
-            return (60*5, 60*10)
         minute = datetime.datetime.now().minute
-        if minute < 10:
-            t = -0.14*(minute**2) + 20
-            return (t, t+2)
+        if (hour, minute) >= (10, 30):
+            sys.exit()
         else:
-            return (3, 5)
+            return (30, 120)
 
     def get_world_data(self, num, savedata=True):
         print('World Data 수집 시작')
@@ -198,7 +195,7 @@ class FetchBot:
                         return
                 self.line2.save_data()
                 return
-            time.sleep(random.uniform(30, 120))
+            time.sleep(random.uniform(*self.get_wait_time()))
 
     def run(self):
         sendError('정보 수집 시작!')
