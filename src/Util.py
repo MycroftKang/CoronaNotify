@@ -23,6 +23,7 @@ SOFTWARE.
 """
 
 import os
+import sys
 import requests
 import pickle
 from bs4 import BeautifulSoup
@@ -31,7 +32,11 @@ import json
 import re
 from APIKey import *
 
-DEV_MODE = False
+if sys.platform == 'win32':
+    DEV_MODE = True
+else:
+    DEV_MODE = False
+
 BASE_PATH = ''
 
 
@@ -43,20 +48,20 @@ class Color:
 
 
 def isfile(file='data.bin', default=[]):
-    if os.path.isfile(BASE_PATH+file):
+    if os.path.isfile(BASE_PATH + file):
         return
     else:
         save(default, file)
 
 
 def save(data, file='data.bin'):
-    with open(BASE_PATH+file, 'wb') as f:
+    with open(BASE_PATH + file, 'wb') as f:
         pickle.dump(data, f)
 
 
 def load(file='data.bin', default=[]):
     isfile(file, default)
-    with open(BASE_PATH+file, 'rb') as f:
+    with open(BASE_PATH + file, 'rb') as f:
         data = pickle.load(f)
     return data
 
@@ -180,7 +185,7 @@ def edit2_json(local_data, world_data, file='send2.json'):
                     print(world_data[cum][k])
                     base[2 *
                          k]['contents'][0]['text'] = '{:,}'.format(world_data[cum][k][0])
-                    base[2*k]['contents'][1]['text'] = '{:+,d}'.format(
+                    base[2 * k]['contents'][1]['text'] = '{:+,d}'.format(
                         world_data[cum][k][1])
                 cum += 1
                 continue
@@ -197,7 +202,7 @@ def edit2_json(local_data, world_data, file='send2.json'):
                 rank_delta = 'NC'
                 rank_color = Color.GRAY
             elif delta < 0:
-                rank_delta = 'U{}'.format(delta*(-1))
+                rank_delta = 'U{}'.format(delta * (-1))
                 rank_color = Color.RED
             else:
                 rank_delta = 'D{}'.format(delta)
@@ -234,7 +239,7 @@ def edit1_json(data, id, link, local_data, world_data, file='send1.json'):
 
     base = json_dict['contents'][0]['body']['contents'][0]['contents']
     for i in range(3):
-        j = 2*i
+        j = 2 * i
         base[j]['contents'][1]['contents'][0]['text'] = "{:,}".format(
             data[1][i])
         base[j]['contents'][1]['contents'][1]['text'] = "({:+,d})".format(
@@ -271,7 +276,7 @@ def edit1_json(data, id, link, local_data, world_data, file='send1.json'):
                     print(world_data[cum][k])
                     base[2 *
                          k]['contents'][0]['text'] = '{:,}'.format(world_data[cum][k][0])
-                    base[2*k]['contents'][1]['text'] = '{:+,d}'.format(
+                    base[2 * k]['contents'][1]['text'] = '{:+,d}'.format(
                         world_data[cum][k][1])
                 cum += 1
                 continue
@@ -288,7 +293,7 @@ def edit1_json(data, id, link, local_data, world_data, file='send1.json'):
                 rank_delta = 'NC'
                 rank_color = Color.GRAY
             elif delta < 0:
-                rank_delta = 'U{}'.format(delta*(-1))
+                rank_delta = 'U{}'.format(delta * (-1))
                 rank_color = Color.RED
             else:
                 rank_delta = 'D{}'.format(delta)
@@ -357,7 +362,7 @@ def edit3_json(data, id, link, local_data, world_data, file='send3.json'):
                     print(world_data[cum][k])
                     base[2 *
                          k]['contents'][0]['text'] = '{:,}'.format(world_data[cum][k][0])
-                    base[2*k]['contents'][1]['text'] = '{:+,d}'.format(
+                    base[2 * k]['contents'][1]['text'] = '{:+,d}'.format(
                         world_data[cum][k][1])
                 cum += 1
                 continue
@@ -374,7 +379,7 @@ def edit3_json(data, id, link, local_data, world_data, file='send3.json'):
                 rank_delta = 'NC'
                 rank_color = Color.GRAY
             elif delta < 0:
-                rank_delta = 'U{}'.format(delta*(-1))
+                rank_delta = 'U{}'.format(delta * (-1))
                 rank_color = Color.RED
             else:
                 rank_delta = 'D{}'.format(delta)
@@ -405,25 +410,52 @@ def edit3_json(data, id, link, local_data, world_data, file='send3.json'):
     return json_dict
 
 
+def hasHangul(text, threshold=1):
+    return len(re.findall('[가-힣]', text)) >= threshold
+
+
+def parse_table_text(raw_text: str):
+    if hasHangul(raw_text, 2):
+        return None
+    if raw_text.isdigit():
+        return int(raw_text)
+    m = re.search('^\d{1,3}(?:[,]\d{3})*', raw_text)
+    if m:
+        tar = m.group().replace(',', '')
+        return int(tar) if tar.isdigit() else None
+
+
 def table_parse2(table1, table2, table3):
     """
-    return ['확진환자', '격리해제', '사망']
+    return ['확진', '완치', '사망']
     """
     needs = []
-    for t in [table1, table2]:
-        last_row = len(t)-1
-        for c in range(len(t.columns)):
-            tar = str(t.iloc[last_row, c]).replace(',', '').replace('*', '')
-            if tar.isdigit():
-                needs.append(int(tar))
+    for i, t in enumerate([table1, table2]):
+        last_row = len(t) - 1
+        for r in range(last_row, 0, -1):
+            for c in range(len(t.columns)):
+                raw_tar = str(t.iloc[r, c])
+                tar = parse_table_text(raw_tar)
+                if tar:
+                    needs.append(tar)
+                    break
+            if len(needs) == i + 1:
                 break
-    last_row = len(table3)-2
+
+    last_row = len(table3) - 2
     for c in range(len(table3.columns)):
-        if str(table3.iloc[last_row, c]).replace(',', '').replace('*', '').isdigit():
-            needs.append(int(table3.iloc[last_row, c]))
-            needs.append(int(table3.iloc[last_row, c+3]))
+        for r in range(last_row, 0, -1):
+            raw_tar = str(table3.iloc[r, c])
+            tar = parse_table_text(raw_tar)
+            if tar:
+                needs.append(tar)
+                needs.append(parse_table_text(table3.iloc[r, c + 3]))
+                break
+        if len(needs) == 4:
             break
-    newls = [needs[0]+needs[1], needs[2], needs[3]]
+
+    print(needs)
+    newls = [needs[0] + needs[1], needs[2], needs[3]]
     return newls
 
 
@@ -492,7 +524,7 @@ class Material:
                 i += 1
                 print(e)
                 if i == 5:
-                    sendError('request Error: '+e)
+                    sendError('request Error: ' + e)
                     raise e
                 continue
 
@@ -507,9 +539,9 @@ class Material:
         print(res)
         self.soup = BeautifulSoup(res.text, 'html.parser')
         self.parseUpdate()
-        print('---'+self.id)
-        print('PARSE: '+str(self.update))
-        print('UPDATE: '+str(self.update > Material.data[0]))
+        print('---' + self.id)
+        print('PARSE: ' + str(self.update))
+        print('UPDATE: ' + str(self.update > Material.data[0]))
         return (self.update > Material.data[0])
 
 
@@ -546,11 +578,11 @@ class Tool(Material):
             self.parseUpdate()
         except TypeError:
             return False
-        print('TESTRUN::P'+self.id+'::self.strfupdate '+str(self.strfupdate))
-        print('TESTRUN::P'+self.id+'::self.update '+str(self.update))
-        print('TESTRUN::P'+self.id+'::compare ' +
+        print('TESTRUN::P' + self.id + '::self.strfupdate ' + str(self.strfupdate))
+        print('TESTRUN::P' + self.id + '::self.update ' + str(self.update))
+        print('TESTRUN::P' + self.id + '::compare ' +
               str(self.update > Material.data[0]))
-        return True
+        return (self.update > Material.data[0])
 
     def get_data(self):
         """
@@ -561,7 +593,7 @@ class Tool(Material):
 
         if not (len(Material.data) == 0):
             for i in range(len(self.newls)):
-                delta.append(self.newls[i]-Material.data[1][i])
+                delta.append(self.newls[i] - Material.data[1][i])
 
         return [self.strfupdate, self.newls, delta]
 

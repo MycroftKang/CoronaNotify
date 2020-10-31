@@ -1,0 +1,19 @@
+{
+    "python.terminal.executeInFileDir": true,
+    "python.terminal.activateEnvironment": true,
+    "python.terminal.launchArgs": [],
+    "python.autoComplete.extraPaths": [
+        "src"
+    ],
+    "python.formatting.autopep8Args": [
+        "--ignore",
+        "E402"
+    ],
+    "editor.formatOnSave": true,
+    "python.analysis.extraPaths": [
+        "src"
+    ],
+    "terminal.integrated.env.windows": {
+        "PATH": "${env:PATH}${workspaceFolder}\\scripts"
+    }
+}

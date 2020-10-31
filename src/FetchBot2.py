@@ -53,7 +53,7 @@ class FetchBot:
     def get_wait_time(self):
         hour = datetime.datetime.now().hour
         minute = datetime.datetime.now().minute
-        if (hour, minute) >= (10, 30):
+        if (hour, minute) >= (10, 30) and not DEV_MODE:
             sys.exit()
         else:
             return (30, 120)
@@ -218,9 +218,10 @@ class FetchBot:
         except:
             card = edit3_json(datals[0], datals[1], datals[2], Ldata, Gdata)
             title = 'MGYL Bot: {} 기준 COVID-19 현황 업데이트'.format(datals[0][0])
-        sendtoBot_card(card, title, datals[3])
-        self.save_global_newls()
-        MGLocalFetchBot.save_newls()
+        if not '--debug' in sys.argv:
+            sendtoBot_card(card, title)
+            self.save_global_newls()
+            MGLocalFetchBot.save_newls()
 
     def test_run(self):
         print('테스트 정보 수집 시작!')

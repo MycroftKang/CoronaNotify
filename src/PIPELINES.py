@@ -125,6 +125,8 @@ class PipeLine2(Tool):
             updatestr = self.soup.select(self.selectors[0])[
                 0].get('title')  # 기준시간
             print('RAW: '+updatestr)
+            if not '코로나' in updatestr:
+                raise TypeError
             m = re.search(
                 '\(((?P<month>\d+)월\s*(?P<date>\d+)일.*?(?P<hour>\d+)시.*?)\)', updatestr)
             if m:
