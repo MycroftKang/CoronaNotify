@@ -78,7 +78,7 @@ class PipeLine1(Tool):
 
 class PipeLine2(Tool):
     def __init__(self, test_selectors=None):
-        url = 'https://www.cdc.go.kr/board/board.es?mid=a20501000000&bid=0015'
+        url = 'http://www.kdca.go.kr/board/board.es?mid=a20501000000&bid=0015'
         if test_selectors == None:
             selectors = ['#listView > ul:nth-child(1) > li.title > a']
             self.TEST_MODE = False
@@ -92,7 +92,7 @@ class PipeLine2(Tool):
             'Accept-Encoding': 'gzip, deflate, br',
             'Accept-Language': 'ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7',
             'Connection': 'keep-alive',
-            'Host': 'www.cdc.go.kr',
+            'Host': 'www.kdca.go.kr',
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36'}
 
     def parseAll(self):
@@ -100,7 +100,7 @@ class PipeLine2(Tool):
             if self.update == None:
                 self.parseUpdate()
             link = self.soup.select(self.selectors[0])[0].get('href')
-            self.url2 = 'https://www.cdc.go.kr'+link
+            self.url2 = 'http://www.kdca.go.kr' + link
             res = self.request(self.url2)
             ls = pd.read_html(res.text)
             print(ls[0])
