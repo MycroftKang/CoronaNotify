@@ -128,7 +128,7 @@ class MGLocalFetchBot:
 
     @staticmethod
     def Fetch_local_case3():
-        res = requests.get('http://www.yongin.go.kr/health/ictsd/index.do')
+        res = requests.get('https://corona.yongin.go.kr/index.do')
         soup = BeautifulSoup(res.text, 'html.parser')
         num2 = int(soup.select_one(
             '#coronabox_1 > div.coronacon_le > div > div:nth-child(1) > div.tbl_st1.tbl_corona.tbl_corona2 > table > tbody > tr > td:nth-child(1) > b > span').text)
