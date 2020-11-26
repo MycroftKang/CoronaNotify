@@ -102,7 +102,8 @@ class PipeLine2(Tool):
             link = self.soup.select(self.selectors[0])[0].get('href')
             self.url2 = 'http://www.kdca.go.kr' + link
             res = self.request(self.url2)
-            ls = pd.read_html(res.text)
+            pd.set_option('display.max_columns', None)
+            ls = pd.read_html(res.text, thousands=None)
             print(ls[0])
             print(ls[1])
             print(ls[2])
