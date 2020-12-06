@@ -78,11 +78,12 @@ def sendNoti(msg, img=None):
 
 
 def sendError(msg, img=None):
-    TARGET_URL = 'https://notify-api.line.me/api/notify'
-    TOKEN = API_KEY_FOR_ERROR
-    response = requests.post(TARGET_URL, headers={
-                             'Authorization': 'Bearer ' + TOKEN}, data={'message': msg}, files={'imageFile': img})
-    return response
+    if not DEV_MODE:
+        TARGET_URL = 'https://notify-api.line.me/api/notify'
+        TOKEN = API_KEY_FOR_ERROR
+        response = requests.post(TARGET_URL, headers={
+                                'Authorization': 'Bearer ' + TOKEN}, data={'message': msg}, files={'imageFile': img})
+        return response
 
 
 def sendtoBot_Error(card, title='Corona Notify', notice=None):
@@ -153,6 +154,16 @@ def replybyBot(text, replyToken):
     print(response.text)
     return response
 
+
+def truncate_number(num, threshold=0):
+    if threshold >= len(str(num)):
+        return num
+
+    magnitude = 0
+    while abs(num) >= 1000:
+        magnitude += 1
+        num /= 1000.0
+    return '{:.2f}'.format(num).rstrip('0').rstrip('.') + ['', 'K', 'M', 'G', 'T', 'P'][magnitude]
 
 def edit2_json(local_data, world_data, file='send2.json'):
     with open(file, 'rt', encoding='utf-8') as f:
@@ -242,7 +253,7 @@ def edit1_json(data, id, link, local_data, world_data, file='send1.json'):
         j = 2 * i
         base[j]['contents'][1]['contents'][0]['text'] = "{:,}".format(
             data[1][i])
-        base[j]['contents'][1]['contents'][1]['text'] = "({:+,d})".format(
+        base[j]['contents'][1]['contents'][1]['text'] = "{:+,d}".format(
             data[2][i])
 
     json_dict['contents'][0]['body']['contents'][1]['contents'][1]['text'] = 'PIPELINE ' + \
@@ -275,9 +286,9 @@ def edit1_json(data, id, link, local_data, world_data, file='send1.json'):
                 for k in range(3):
                     print(world_data[cum][k])
                     base[2 *
-                         k]['contents'][0]['text'] = '{:,}'.format(world_data[cum][k][0])
+                         k]['contents'][0]['text'] = '{:,}'.format(truncate_number(world_data[cum][k][0], 8))
                     base[2 * k]['contents'][1]['text'] = '{:+,d}'.format(
-                        world_data[cum][k][1])
+                        truncate_number(world_data[cum][k][1], 8))
                 cum += 1
                 continue
 
@@ -303,14 +314,14 @@ def edit1_json(data, id, link, local_data, world_data, file='send1.json'):
             base[0]['contents'][0]['contents'][2]['color'] = rank_color
 
             base[1]['contents'][0]['contents'][0]['text'] = '{:,}'.format(
-                world_data[cum][2])  # confirmed_num
+                truncate_number(world_data[cum][2], 8))  # confirmed_num
             if world_data[cum][3] == 'NEW':
                 delta = 'NEW'
             else:
                 delta = '{:+,d}'.format(world_data[cum][3])
             base[1]['contents'][0]['contents'][1]['text'] = delta
             base[1]['contents'][2]['contents'][0]['text'] = '{:,}'.format(
-                world_data[cum][4])  # death_num
+                truncate_number(world_data[cum][4], 6))  # death_num
             if world_data[cum][5] == 'NEW':
                 delta = 'NEW'
             else:

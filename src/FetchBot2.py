@@ -179,9 +179,9 @@ class FetchBot:
                     self.fetchdata = [self.line2.get_data(
                     ), self.line2.id, self.line2.url2, self.line2.msg]
                 except Exception as e:
-                    if error < 15:
+                    if error < 5:
                         error += 1
-                        dt = 15 * error
+                        dt = 10 * error
                         sendError("PIPELINE "+self.line2.id +
                                   '에서 get_data() "{}" 오류가 발견되어 {}초 후 다시 시작합니다.'.format(e, dt))
                         time.sleep(dt)
@@ -249,7 +249,7 @@ try:
         bot = FetchBot()
         bot.run()
 except Exception as e:
-    sendError('오류로 인한 종료: '+str(e))
+    sendError('오류로 인한 종료: ' + str(traceback.format_exc()))
     print(traceback.format_exc())
 else:
     sendError('정상적으로 종료되었습니다.')
