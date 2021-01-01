@@ -65,7 +65,7 @@ class PipeLine1(Tool):
             updatestr = updatestr.replace('00시', '0시')
             self.strfupdate = updatestr
             self.update = time.mktime(time.strptime(
-                '2020년 '+updatestr, '%Y년 %m월 %d일 %H시'))
+                f'{datetime.datetime.now().year}년 '+updatestr, '%Y년 %m월 %d일 %H시'))
         except Exception as e:
             print("Erro u2 "+str(e))
             # raise e
@@ -133,8 +133,9 @@ class PipeLine2(Tool):
             if m:
                 timedict: dict = m.groupdict()
                 timedict = dict([k, int(v)] for k, v in timedict.items())
+                now = datetime.datetime.now()
                 d = datetime.datetime(
-                    2020, timedict['month'], timedict['date'], timedict['hour'], 0, 0)
+                    now.year, timedict['month'], timedict['date'], timedict['hour'], 0, 0)
                 self.strfupdate = f"{timedict['month']}월 {timedict['date']}일 {timedict['hour']}시"
                 self.update = d.timestamp()
             elif self.TEST_MODE:
@@ -204,7 +205,7 @@ class PipeLine3(Tool):
                 updatestr = m.group(1).strip()
                 self.strfupdate = updatestr
                 self.update = time.mktime(time.strptime(
-                    '2020년 '+updatestr, '%Y년 %m월 %d일 %H시'))
+                    f'{datetime.datetime.now().year}년 '+updatestr, '%Y년 %m월 %d일 %H시'))
             elif self.TEST_MODE:
                 raise TypeError('매칭되지 않음')
             else:
@@ -343,7 +344,7 @@ class PipeLine6(Tool):
                 updatestr = m.group(1).strip()
                 self.strfupdate = updatestr
                 self.update = time.mktime(time.strptime(
-                    '2020년 '+updatestr, '%Y년 %m월 %d일 %H시'))
+                    f'{datetime.datetime.now().year}년 '+updatestr, '%Y년 %m월 %d일 %H시'))
             elif self.TEST_MODE:
                 raise TypeError
             else:
@@ -392,7 +393,7 @@ class PipeLine7(Tool):
             updatestr = updatestr.replace('00시', '0시')
             self.strfupdate = updatestr
             self.update = time.mktime(time.strptime(
-                '2020년 '+updatestr, '%Y년 %m월 %d일 %H시'))
+                f'{datetime.datetime.now().year}년 '+updatestr, '%Y년 %m월 %d일 %H시'))
         except Exception as e:
             print("Erro u7 "+str(e))
             # raise e
